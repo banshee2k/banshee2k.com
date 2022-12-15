@@ -1,0 +1,167 @@
+{% extends 'layouts/main.html' %}
+{% block title %}Standings{% endblock %}
+
+{% block css %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/bracket.css') }}">
+{% endblock %}
+
+{% block content %}
+<div class="flex-xl-nowrap mx-auto px-4 py-5">
+  <h1>"End Of Season" Tournament</h1>
+  <h2>Playoff Bracket</h2>
+  <div class="tournament-bracket tournament-bracket--rounded">
+    <div class="tournament-bracket__round tournament-bracket__round--quarterfinals">
+      <h3 class="tournament-bracket__round-title">Quarterfinals</h3>
+      <ul class="tournament-bracket__list">
+          {% for row in bracket["Quarterfinals"] %}
+            <li class="tournament-bracket__item">
+              <div class="tournament-bracket__match" tabindex="0">
+                <table class="tournament-bracket__table">
+                  <thead class="sr-only">
+                    <tr>
+                      <th>Country</th>
+                      <th>Score</th>
+                    </tr>
+                  </thead>
+                  <tbody class="tournament-bracket__content">
+                    <tr class="tournament-bracket__team">
+                      <td class="tournament-bracket__country">
+                          <span class="text-muted seed small">{{ row['home']['seed'] }}</span>
+                          <abbr data-bs-toggle="tooltip" data-bs-placement="top" class="tournament-bracket__code small" title="{{ row['home']['team'] }}"> {{ row['home']['abbr'] }}</abbr>
+                          <span class="tournament-bracket__flag flag-icon" aria-label="Flag">
+                              <img src="/static/img/logos/{{ row['home']['icon'] }}.svg" width="20px"/>
+                          </span>
+                      </td>
+                      <td class="tournament-bracket__score">
+                        <span class="tournament-bracket__number">{{ row['home']['won'] }}</span>
+                      </td>
+                    </tr>
+                    <tr class="tournament-bracket__team">
+                      <td class="tournament-bracket__country">
+                          <abbr data-bs-toggle="tooltip" data-bs-placement="top" class="tournament-bracket__code small" title="{{ row['away']['team'] }}">{{ row['away']['abbr'] }}</abbr>
+                          <span class="tournament-bracket__flag flag-icon" aria-label="Flag">
+                              <img src="/static/img/logos/{{ row['away']['icon'] }}.svg" width="20px"/>
+                          </span>
+                          <span class="text-muted seed small">{{ row['away']['seed'] }}</span>
+                      </td>
+                      <td class="tournament-bracket__score">
+                        <span class="tournament-bracket__number">{{ row['away']['won'] }}</span>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </li>
+          {% endfor %}
+      </ul>
+    </div>
+    <div class="tournament-bracket__round tournament-bracket__round--semifinals">
+      <h3 class="tournament-bracket__round-title">Semifinals</h3>
+      <ul class="tournament-bracket__list">
+        {% for row in bracket["Semifinals"] %}
+            <li class="tournament-bracket__item">
+              <div class="tournament-bracket__match" tabindex="0">
+                <table class="tournament-bracket__table">
+                  <thead class="sr-only">
+                    <tr>
+                      <th>Country</th>
+                      <th>Score</th>
+                    </tr>
+                  </thead>
+                  <tbody class="tournament-bracket__content">
+                    <tr class="tournament-bracket__team">
+                      <td class="tournament-bracket__country">
+                          <span class="text-muted seed small">{{ row['home']['seed'] }}</span>
+                          <abbr data-bs-toggle="tooltip" data-bs-placement="top" class="tournament-bracket__code small" title="{{ row['home']['team'] }}"> {{ row['home']['abbr'] }}</abbr>
+                          <span class="tournament-bracket__flag flag-icon" aria-label="Flag">
+                              {% if row['home']['icon'] != 'TBD' %}
+                              <img src="/static/img/logos/{{ row['home']['icon'] }}.svg" width="20px"/>
+                              {% endif %}
+                          </span>
+                      </td>
+                      <td class="tournament-bracket__score">
+                        <span class="tournament-bracket__number">{{ row['home']['won'] }}</span>
+                      </td>
+                    </tr>
+                    <tr class="tournament-bracket__team">
+                      <td class="tournament-bracket__country">
+                          <abbr data-bs-toggle="tooltip" data-bs-placement="top" class="tournament-bracket__code small" title="{{ row['away']['team'] }}">{{ row['away']['abbr'] }}</abbr>
+                          <span class="tournament-bracket__flag flag-icon" aria-label="Flag">
+                              {% if row['home']['icon'] != 'TBD' %}
+                              <img src="/static/img/logos/{{ row['away']['icon'] }}.svg" width="20px"/>
+                              {% endif %}
+                          </span>
+                          <span class="text-muted seed small">{{ row['away']['seed'] }}</span>
+                      </td>
+                      <td class="tournament-bracket__score">
+                        <span class="tournament-bracket__number">{{ row['away']['won'] }}</span>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </li>
+          {% endfor %}
+      </ul>
+    </div>
+    <div class="tournament-bracket__round tournament-bracket__round--gold">
+      <h3 class="tournament-bracket__round-title">Finals</h3>
+      <ul class="tournament-bracket__list">
+        {% for row in bracket["Finals"] %}
+            <li class="tournament-bracket__item">
+              <div class="tournament-bracket__match" tabindex="0">
+                <table class="tournament-bracket__table">
+                  <thead class="sr-only">
+                    <tr>
+                      <th>Country</th>
+                      <th>Score</th>
+                    </tr>
+                  </thead>
+                  <tbody class="tournament-bracket__content">
+                    <tr class="tournament-bracket__team">
+                      <td class="tournament-bracket__country">
+                          <span class="text-muted seed small">{{ row['home']['seed'] }}</span>
+                          <abbr data-bs-toggle="tooltip" data-bs-placement="top" class="tournament-bracket__code small" title="{{ row['home']['team'] }}"> {{ row['home']['abbr'] }}</abbr>
+                          <span class="tournament-bracket__flag flag-icon" aria-label="Flag">
+                              {% if row['home']['icon'] != 'TBD' %}
+                              <img src="/static/img/logos/{{ row['home']['icon'] }}.svg" width="20px"/>
+                              {% endif %}
+                          </span>
+                      </td>
+                      <td class="tournament-bracket__score">
+                        <span class="tournament-bracket__number">{{ row['home']['won'] }}</span>
+                      </td>
+                    </tr>
+                    <tr class="tournament-bracket__team">
+                      <td class="tournament-bracket__country">
+                          <abbr data-bs-toggle="tooltip" data-bs-placement="top" class="tournament-bracket__code small" title="{{ row['away']['team'] }}">{{ row['away']['abbr'] }}</abbr>
+                          <span class="tournament-bracket__flag flag-icon" aria-label="Flag">
+                              {% if row['home']['icon'] != 'TBD' %}
+                              <img src="/static/img/logos/{{ row['away']['icon'] }}.svg" width="20px"/>
+                              {% endif %}
+                          </span>
+                          <span class="text-muted seed small">{{ row['away']['seed'] }}</span>
+                      </td>
+                      <td class="tournament-bracket__score">
+                        <span class="tournament-bracket__number">{{ row['away']['won'] }}</span>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </li>
+          {% endfor %}
+      </ul>
+    </div>
+  </div>
+</div>
+{% endblock %}
+
+{% block js %}
+<script>
+    var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
+    var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+        return new bootstrap.Tooltip(tooltipTriggerEl)
+    })
+</script>
+{% endblock %}

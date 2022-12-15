@@ -1,0 +1,127 @@
+{% extends 'layouts/main.html' %}
+
+{% block title %}Banshee 2K{% endblock %}
+
+{% block css %}
+<link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css"/>
+<link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick-theme.css"/>
+{% endblock %}
+
+{% block content %}
+<section class="section section-sm bg-light">
+    <div class="slider hide">
+        {% for row in scores[:5] %}
+        <div>
+            <div id="atom-body" class="atom score-card">
+                <div class="scoreCardTitle"></div>
+                <a class="btn-link bg-light scoreCardContainer rounded-1" href="/games/{{ row['id'] }}">
+                    <div class="header">
+                        <div class="title">{{ row['date'] }}</div>
+                        <div class="state {{ 'twitch' if row['stream'] else '' }}">
+                            Final {{ ' | <i class="fa-brands fa-twitch"></i>' | safe if row['stream'] else '' }}
+                        </div>
+                    </div>
+                    <div class="teamContainer">
+                        <div class="logo winner">
+                            <img alt="home-logo" src="/static/img/logos/{{ row['home'] }}.png" class="rounded" />
+                        </div>
+                        <div class="rank"></div>
+                        {% if row['home_score'] > row['away_score'] %}
+                            <div class="teamName"><b>{{ row['home'] }}</b></div>
+                            <div class="score"><b>{{ row['home_score'] }}</b></div>
+                        {% else %}
+                            <div class="teamName">{{ row['home'] }}</div>
+                            <div class="score">{{ row['home_score'] }}</div>
+                        {% endif %}
+                    </div>
+                    <div class="teamContainer">
+                        <div class="logo">
+                            <img alt="away-logo" src="/static/img/logos/{{ row['away'] }}.png" class="rounded" />
+                        </div>
+                        <div class="rank"></div>
+                        {% if row['away_score'] > row['home_score'] %}
+                            <div class="teamName"><b>{{ row['away'] }}</b></div>
+                            <div class="score"><b>{{ row['away_score'] }}</b></div>
+                        {% else %}
+                            <div class="teamName">{{ row['away'] }}</div>
+                            <div class="score">{{ row['away_score'] }}</div>
+                        {% endif %}
+                    </div>
+                </a>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</section>
+
+<section class="section container-fluid mb-2 pb-2">
+    <div class="px-4 pt-4 my-2 text-center border-bottom">
+        <!--<h1 class="mb-3 fw-semibold">Banshee 2K League</h1>-->
+        <img src="/static/img/logo.png" width="200" alt="League logo" class="d-block mx-auto mb-3 animate__animated animate__bounceInDown">
+        <div class="col-lg-6 mx-auto mb-5">
+          <p class="lead mb-4">The Banshee 2K league is a non-toxic, Pro-Am league for NBA 2K23.</p>
+          <div class="d-grid gap-2 d-sm-flex justify-content-sm-center mb-2">
+            <button type="button" class="btn btn-primary btn-lg px-4 me-sm-3">Learn more</button>
+            <button type="button" class="btn btn-outline-secondary btn-lg px-4">Contact us</button>
+          </div>
+          <small class="text-muted"><i class="fab fa-xbox"></i> The league is currently <b>Xbox Series X|S</b> only.</small>
+        </div>
+        <div class="overflow-hidden" style="max-height: 35vh;">
+          <div class="container px-5">
+            <img src="/static/img/preview2.png" class="img-fluid border rounded-3 shadow-lg mb-4" alt="Example image" width="700" height="500" loading="lazy">
+          </div>
+        </div>
+      </div>
+</section>
+
+<section class="section">
+    <div class="container-fluid">
+      <div class="row justify-content-center text-center">
+        <div class="col-md-5">
+          <h2 class="h4"><i class="fab fa-discord"></i> An active community</h2>
+          <p>Schedule scrimmages, meet other players, or just hang out on Discord.</p>
+        </div>
+        <div class="col-md-5">
+          <h2 class="h4"><i class="fa-brands fa-twitch"></i> Watch Live</h2>
+          <p>All league games are livestreamed and available for on-demand replay.</p>
+        </div>
+        <div class="col-md-5">
+          <h2 class="h4"><i class="fas fa-chart-area"></i> Detailed Stats</h2>
+          <p>Track your gameplay with unmatched team and individual stats.</p>
+        </div>
+      </div>
+    </div>
+</section>
+
+{% endblock %}
+
+{% block js %}
+<script type="text/javascript" src="{{ url_for('static', filename='js/dep/jquery-3.6.2.min.js') }}"></script>
+<script type="text/javascript" src="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
+<script type="text/javascript">
+    $(document).ready(function() {
+        $('.slider').slick({
+            autoplay: false,
+            arrows: false,
+            dots: true,
+            slidesToShow: 4,
+            responsive: [
+                {
+                    breakpoint: 1024,
+                    settings: {
+                        slidesToShow: 3,
+                    },
+                },
+                {
+                    breakpoint: 600,
+                    settings: {
+                        slidesToShow: 2,
+                    },
+                },
+            ],
+        });
+        $(".slider").removeClass("hide");
+    });
+</script>
+
+{% endblock %}

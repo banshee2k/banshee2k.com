@@ -1,0 +1,137 @@
+<!doctype html>
+<html lang="en" class="h-100">
+   <head>
+      <meta charset="utf-8">
+      <title>{% block title %}{% endblock %}</title>
+      <meta name="description" content="">
+      <meta name="author" content="">
+      <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+      <meta name="color-scheme" content="light dark">
+      <meta name="theme-color" content="#111111" media="(prefers-color-scheme: light)">
+      <meta name="theme-color" content="#eeeeee" media="(prefers-color-scheme: dark)">
+
+      <meta property="og:type" content="website"/>
+      <meta property="og:title" content="Banshee 2K" />
+      <meta property="og:description" content="An Xbox Series X|S Pro-Am league for casual play."/>
+      <meta property="og:image" content="https://user-images.githubusercontent.com/8785025/208942409-b00f063c-b6c5-4332-abe3-9a5dcbf09de9.png"/>
+      <meta property="og:url" content="{{ request.path }}" />
+
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
+      {% assets "css_all" %}
+      <link rel="stylesheet" href="{{ ASSET_URL }}" type="text/css" />
+      {% endassets %}
+      <link rel="stylesheet" href="{{ url_for('static', filename='css/custom.css') }}">
+      <link rel="stylesheet" href="{{ url_for('static', filename='css/profile-card.css') }}">
+      {% block css %} {% endblock %}
+      <link rel="shortcut icon" href="/static/favicon.ico">
+   </head>
+   <body class="d-flex flex-column h-100">
+      <div class="header-bar"></div>
+      <nav class="navbar navbar-expand-md navbar-light bg-light">
+         <div class="container-fluid">
+            <a class="navbar-brand" href="/">
+            <img src="/static/img/logo.png" alt="" height="35" class="d-inline-block align-text-top">
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+               <i class="fa-solid fa-bars"></i>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarCollapse">
+               <ul class="navbar-nav me-auto mb-2 mb-md-0">
+                 <li class="nav-item">
+                    <a class="nav-link {% if request.path == '/' %}active{% endif %}" aria-current="page" href="/">Home</a>
+                 </li>
+                  <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle {% if request.path == '/s1/schedule' or request.path == '/s1/standings' %}active{% endif %}" href="#" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    League
+                    </a>
+                    <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                        <li><a class="dropdown-item disabled" href="/s1/schedule">Rules</a></li>
+                        <li><a class="dropdown-item disabled" href="/s1/schedule">Schedule</a></li>
+                        <li><a class="dropdown-item disabled" href="/s1/standings">Standings</a></li>
+                    </ul>
+                 </li>
+                  <li class="nav-item dropdown">
+                     <a class="nav-link dropdown-toggle {% if request.path in ['/stats/s1/player', '/stats/s1/team', '/stats/s1/records'] %}active{% endif %}" href="#" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                     Stats
+                     </a>
+                     <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                        <li><a class="dropdown-item" href="/stats/player">Player</a></li>
+                        <li><a class="dropdown-item" href="/stats/team">Team</a></li>
+                        <li><a class="dropdown-item" href="/stats/records">Records</a></li>
+                     </ul>
+                  </li>
+                  <li class="nav-item dropdown">
+                     <a class="nav-link dropdown-toggle {% if 'teams' in request.path  %}active{% endif %}" href="#" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                     Teams
+                     </a>
+                     <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                        {% for team in teams %}
+                            <li><a class="dropdown-item" href="/teams/{{ team['abbr'] }}">{{ team["name"] }}</a></li>
+                        {% endfor %}
+                     </ul>
+                  </li>
+               </ul>
+               <hr class="d-md-none">
+               <ul class="navbar-nav flex-row flex-wrap ms-md-auto">
+                  <li class="nav-item col-6 col-md-auto">
+                     <a class="nav-link p-2 disabled" href="https://discord.gg/2VBR8dQ2gb" target="_blank" rel="noopener">
+                     <i class="fa-brands fa-discord fa-lg"></i>
+                     <small class="d-md-none ms-2">Discord</small>
+                     </a>
+                  </li>
+                  <li class="nav-item col-6 col-md-auto">
+                     <a class="nav-link p-2 disabled" href="https://www.instagram.com/2kaveragejoes" target="_blank" rel="noopener">
+                     <i class="fa-brands fa-instagram fa-lg"></i>
+                     <small class="d-md-none ms-2">Instagram</small>
+                     </a>
+                  </li>
+                  <li class="nav-item col-6 col-md-auto">
+                     <a class="nav-link p-2 disabled" href="https://www.tiktok.com/@2kaveragejoes" target="_blank" rel="noopener">
+                     <i class="fa-brands fa-tiktok fa-lg"></i>
+                     <small class="d-md-none ms-2">TikTok</small>
+                     </a>
+                  </li>
+                  <li class="nav-item col-6 col-md-auto">
+                     <a class="nav-link p-2 disabled" href="https://github.com/averagejoes2k" target="_blank" rel="noopener">
+                     <i class="fa-brands fa-github fa-lg"></i>
+                     <small class="d-md-none ms-2">GitHub</small>
+                     </a>
+                  </li>
+               </ul>
+            </div>
+         </div>
+      </nav>
+      <!-- Begin page content -->
+      <main class="flex-shrink-0">
+         <div class="container-fluid p-0">
+            {% block content %}{% endblock %}
+         </div>
+      </main>
+      <div class="container-fluid">
+        <footer class="d-flex flex-wrap justify-content-between align-items-center py-3 my-4 border-top">
+          <div class="col-md-4 d-flex align-items-center">
+            <a href="/" class="mb-3 me-2 mb-md-0 text-muted text-decoration-none lh-1">
+               <img src="/static/img/logo.png" alt="" height="25" class="d-inline-block align-text-top">
+            </a>
+            <span class="mb-3 mb-md-0 text-muted">&copy; 2022</span>
+          </div>
+          <ul class="nav col-md-4 justify-content-end list-unstyled d-flex">
+             <li class="ms-3"><a class="text-muted" href="mailto:2kaveragejoes@gmail.com">Contact</a></li>
+             <li class="ms-3"><a class="text-muted" href="https://github.com/averagejoes2k/averagejoes2k/issues/new" target="_blank">Report a bug</a></li>
+          </ul>
+        </footer>
+      </div>
+      {% assets "js_all" %}
+      <script type="text/javascript" src="{{ ASSET_URL }}"></script>
+      {% endassets %}
+      <script>
+        var popoverTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="popover"]'))
+        var popoverList = popoverTriggerList.map(function (popoverTriggerEl) {
+          return new bootstrap.Popover(popoverTriggerEl, {html: true, trigger: ''})
+        })
+    </script>
+      {% block js %} {% endblock %}
+   </body>
+</html>

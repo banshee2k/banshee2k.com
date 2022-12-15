@@ -1,0 +1,269 @@
+{% extends 'layouts/main.html' %}
+{% block title %}{{ team }}{% endblock %}
+
+{% block css %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/game.css') }}">
+{% endblock %}
+
+{% block content %}
+<div class="flex-xl-nowrap mx-auto px-4 py-3">
+    <div class="card">
+        <div class="card-header">
+           Game Scoreboard
+        </div>
+        <div class="card-body">
+           <div class="game-result">
+              <section class="game-result__section">
+                 <header class="game-result__header">
+                    <h3 class="game-result__title">Banshee 2K League</h3>
+                    <time class="game-result__date" datetime="2017-03-17">{{ game["date"] }}</time>
+                 </header>
+                 <div class="game-result__content">
+                    <!-- 1st Team -->
+                    <div class="game-result__team game-result__team--first">
+                       <figure class="game-result__team-logo">
+                          <img src="/static/img/logos/{{ game[game['winner']] }}.png" alt="" width="100px" class="rounded">
+                       </figure>
+                       <div class="game-result__team-info">
+                          <!-- <h5 class="game-result__team-name">game['home']</h5>  -->
+                          <div class="game-result__team-desc">{{ game[game['winner']] }}</div>
+                       </div>
+                    </div>
+                    <!-- 1st Team / End -->
+                    <div class="game-result__score-wrap">
+                       <div class="game-result__score">
+                          <span class="game-result__score-result game-result__score-result--winner">{{ game[game['winner'] + 'total'] }}</span>
+                          <span class="game-result__score-dash">-</span>
+                          <span class="game-result__score-result game-result__score-result--loser">{{ game[game['loser'] + 'total'] }}</span>
+                       </div>
+                       {% set stream = ' | <a href="' + game["stream"] + '" target="blank">Stream <i class="fa-brands fa-twitch"></i></a>' %}
+                       <div class="game-result__score-label">Final Score {{ stream | safe if game['stream'] else '' }}</div>
+                    </div>
+                    <!-- 2nd Team -->
+                    <div class="game-result__team game-result__team--second">
+                       <figure class="game-result__team-logo">
+                          <img src="/static/img/logos/{{ game[game['loser']] }}.png" alt="" height="100px" class="rounded">
+                       </figure>
+                       <div class="game-result__team-info">
+                          <!-- <h5 class="game-result__team-name">Sharks</h5> -->
+                          <div class="game-result__team-desc">{{ game[game['loser']] }}</div>
+                       </div>
+                    </div>
+                    <!-- 2nd Team / End -->
+                 </div>
+                 <div class="game-result__stats">
+                    <div class="row">
+                       <div class="col-12 col-md-6 order-md-2 game-result__stats-scoreboard">
+                          <div class="game-result__table-stats">
+                             <div class="table-responsive">
+                                <table class="table table__cell-center table-wrap-bordered table-thead-color">
+                                   <thead>
+                                      <tr>
+                                         <th>Scoreboard</th>
+                                         <th>1st</th>
+                                         <th>2nd</th>
+                                         <th>3rd</th>
+                                         <th>4th</th>
+                                         <th>F</th>
+                                      </tr>
+                                   </thead>
+                                   <tbody>
+                                      <tr>
+                                         <th><a href="/teams/{{ game[game['winner'] + 'ab'] }}">{{ game[game['winner']] }}</a></th>
+                                         <td>{{ game[game['winner'] + "1"] }}</td>
+                                         <td>{{ game[game['winner'] + "2"] }}</td>
+                                         <td>{{ game[game['winner'] + "3"] }}</td>
+                                         <td>{{ game[game['winner'] + "4"] }}</td>
+                                         <td>{{ game[game['winner'] + "total"] }}</td>
+                                      </tr>
+                                      <tr>
+                                         <th><a href="/teams/{{ game[game['loser'] + 'ab'] }}">{{ game[game['loser']] }}</a></th>
+                                         <td>{{ game[game['loser'] + "1"] }}</td>
+                                         <td>{{ game[game['loser'] + "2"] }}</td>
+                                         <td>{{ game[game['loser'] + "3"] }}</td>
+                                         <td>{{ game[game['loser'] + "4"] }}</td>
+                                         <td>{{ game[game['loser'] + "total"] }}</td>
+                                      </tr>
+                                   </tbody>
+                                </table>
+                             </div>
+                          </div>
+                       </div>
+                       <div class="col-6 col-md-3 order-md-1 game-result__stats-team-1">
+                            <!-- Progress: Assists -->
+                            <div class="progress-stats">
+                               <div class="progress__label">AST</div>
+                               <div class="progress">
+                                  <div class="progress__bar progress__bar-width-{{ game[game['winner'] + 'past'] }}" role="progressbar" aria-valuenow="{{ game[game['winner'] + 'past'] }}" aria-valuemin="0" aria-valuemax="100"></div>
+                               </div>
+                               <div class="progress__number">{{ game[game['winner'] + 'oast'] }}</div>
+                            </div>
+                            <!-- Progress: Assists / End --><!-- Progress: Rebounds -->
+                            <div class="progress-stats">
+                               <div class="progress__label">Reb</div>
+                               <div class="progress">
+                                  <div class="progress__bar progress__bar-width-{{ game[game['winner'] + 'preb'] }}" role="progressbar" aria-valuenow="{{ game[game['winner'] + 'preb'] }}" aria-valuemin="0" aria-valuemax="100"></div>
+                               </div>
+                               <div class="progress__number">{{ game[game['winner'] + 'oreb'] }}</div>
+                            </div>
+                            <!-- Progress: Rebounds / End --><!-- Progress: Steals -->
+                            <div class="progress-stats">
+                               <div class="progress__label">STL</div>
+                               <div class="progress">
+                                  <div class="progress__bar progress__bar-width-{{ game[game['winner'] + 'pstl'] }}" role="progressbar" aria-valuenow="{{ game[game['winner'] + 'pstl'] }}" aria-valuemin="0" aria-valuemax="100"></div>
+                               </div>
+                               <div class="progress__number">{{ game[game['winner'] + 'ostl'] }}</div>
+                            </div>
+                            <!-- Progress: Steals / End --><!-- Progress: Blocks -->
+                            <div class="progress-stats">
+                               <div class="progress__label">3PM</div>
+                               <div class="progress">
+                                  <div class="progress__bar progress__bar-width-{{ game[game['winner'] + 'p3pm'] }}" role="progressbar" aria-valuenow="{{ game[game['winner'] + 'p3pm'] }}" aria-valuemin="0" aria-valuemax="100"></div>
+                               </div>
+                               <div class="progress__number">{{ game[game['winner'] + 'o3pm'] }}</div>
+                            </div>
+                            <!-- Progress: Blocks / End --><!-- Progress: Fouls -->
+                            <div class="progress-stats">
+                               <div class="progress__label">TOV</div>
+                               <div class="progress">
+                                  <div class="progress__bar progress__bar-width-{{ game[game['winner'] + 'ptov'] }}" role="progressbar" aria-valuenow="{{ game[game['winner'] + 'tov'] }}" aria-valuemin="0" aria-valuemax="100"></div>
+                               </div>
+                               <div class="progress__number">{{ game[game['winner'] + 'otov'] }}</div>
+                            </div>
+                            <!-- Progress: Fouls / End -->
+                       </div>
+                       <div class="col-6 col-md-3 order-md-3 game-result__stats-team-2">
+                          <!-- Progress: Assists -->
+                          <div class="progress-stats">
+                             <div class="progress__label">AST</div>
+                             <div class="progress">
+                                <div class="progress__bar progress__bar--info progress__bar-width-{{ game[game['loser'] + 'past'] }}" role="progressbar" aria-valuenow="{{ game[game['loser'] + 'past'] }}" aria-valuemin="0" aria-valuemax="100"></div>
+                             </div>
+                             <div class="progress__number">{{ game[game['loser'] + 'oast'] }}</div>
+                          </div>
+                          <!-- Progress: Assists / End --><!-- Progress: Rebounds -->
+                          <div class="progress-stats">
+                             <div class="progress__label">Reb</div>
+                             <div class="progress">
+                                <div class="progress__bar progress__bar--info progress__bar-width-{{ game[game['loser'] + 'preb'] }}" role="progressbar" aria-valuenow="{{ game[game['loser'] + 'preb'] }}" aria-valuemin="0" aria-valuemax="100"></div>
+                             </div>
+                             <div class="progress__number">{{ game[game['loser'] + 'oreb'] }}</div>
+                          </div>
+                          <!-- Progress: Rebounds / End --><!-- Progress: Steals -->
+                          <div class="progress-stats">
+                             <div class="progress__label">STL</div>
+                             <div class="progress">
+                                <div class="progress__bar progress__bar--info progress__bar-width-{{ game[game['loser'] + 'pstl'] }}" role="progressbar" aria-valuenow="{{ game[game['loser'] + 'pstl'] }}" aria-valuemin="0" aria-valuemax="100"></div>
+                             </div>
+                             <div class="progress__number">{{ game[game['loser'] + 'ostl'] }}</div>
+                          </div>
+                          <!-- Progress: Steals / End --><!-- Progress: Blocks -->
+                          <div class="progress-stats">
+                             <div class="progress__label">3PM</div>
+                             <div class="progress">
+                                <div class="progress__bar progress__bar--info progress__bar-width-{{ game[game['loser'] + 'p3pm'] }}" role="progressbar" aria-valuenow="{{ game[game['loser'] + 'p3pm'] }}" aria-valuemin="0" aria-valuemax="100"></div>
+                             </div>
+                             <div class="progress__number">{{ game[game['loser'] + 'o3pm'] }}</div>
+                          </div>
+                          <!-- Progress: Blocks / End --><!-- Progress: Fouls -->
+                          <div class="progress-stats">
+                             <div class="progress__label">TOV</div>
+                             <div class="progress">
+                                <div class="progress__bar progress__bar--info progress__bar-width-{{ game[game['loser'] + 'ptov'] }}" role="progressbar" aria-valuenow="{{ game[game['loser'] + 'tov'] }}" aria-valuemin="0" aria-valuemax="100"></div>
+                             </div>
+                             <div class="progress__number">{{ game[game['loser'] + 'otov'] }}</div>
+                          </div>
+                          <!-- Progress: Fouls / End -->
+                       </div>
+                    </div>
+                 </div>
+              </section>
+              <section class="game-result__section">
+                 <header class="game-result__subheader card__subheader">
+                    <h5 class="game-result__subtitle">Boxscore</h5>
+                 </header>
+                 <div class="game-result__content mb-0">
+                    <div class="table-responsive">
+                    <table class="table table-hover">
+                        <thead>
+                          <tr>
+                            <th>Player</th>
+                            <th>PTS</th>
+                            <th>REB</th>
+                            <th>AST</th>
+                            <th>STL</th>
+                            <th>BLK</th>
+                            <th>FLS</th>
+                            <th>TOV</th>
+                            <th>FGA/FGM</th>
+                            <th>3PA/3PM</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                            {% for row in boxscore %}
+                            {% if row['name'] == game[game['winner']] %}
+                          <tr>
+                            <td><button type="button" class="btn btn-link" data-bs-toggle="popover" data-bs-content="{{ profile_card(row['pid'], profiles) }}">{{ row['gamertag'] }}</button></td>
+                            <td>{{ row['pts'] }}</td>
+                            <td>{{ row['reb'] }}</td>
+                            <td>{{ row['ast'] }}</td>
+                            <td>{{ row['stl'] }}</td>
+                            <td>{{ row['blk'] }}</td>
+                            <td>{{ row['fls'] }}</td>
+                            <td>{{ row['to'] }}</td>
+                            <td>{{ row['fgm'] }} / {{ row['fga'] }}</td>
+                            <td>{{ row['3pm'] }} / {{ row['3pa'] }}</td>
+                          </tr>
+                          {% endif %}
+                        {% endfor %}
+                        </tbody>
+                      </table>
+                    </div>
+                      <hr>
+                      <div class="table-responsive">
+                      <table class="table table-hover">
+                        <thead>
+                          <tr>
+                            <th>Player</th>
+                            <th>PTS</th>
+                            <th>REB</th>
+                            <th>AST</th>
+                            <th>STL</th>
+                            <th>BLK</th>
+                            <th>FLS</th>
+                            <th>TOV</th>
+                            <th>FGA/FGM</th>
+                            <th>3PA/3PM</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                            {% for row in boxscore %}
+                            {% if row['name'] == game[game['loser']] %}
+                          <tr>
+                            <td><button type="button" class="btn btn-link" data-bs-toggle="popover" data-bs-content="{{ profile_card(row['pid'], profiles) }}">{{ row['gamertag'] }}</button></td>
+                            <td>{{ row['pts'] }}</td>
+                            <td>{{ row['reb'] }}</td>
+                            <td>{{ row['ast'] }}</td>
+                            <td>{{ row['stl'] }}</td>
+                            <td>{{ row['blk'] }}</td>
+                            <td>{{ row['fls'] }}</td>
+                            <td>{{ row['to'] }}</td>
+                            <td>{{ row['fgm'] }} / {{ row['fga'] }}</td>
+                            <td>{{ row['3pm'] }} / {{ row['3pa'] }}</td>
+                          </tr>
+                          {% endif %}
+                        {% endfor %}
+                        </tbody>
+                      </table>
+                    </div>
+                 </div>
+              </section>
+           </div>
+           <!-- Game Result / End -->
+        </div>
+     </div>
+</div>
+{% endblock %}
+
+{% block js %}
+{% endblock %}

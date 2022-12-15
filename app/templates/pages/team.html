@@ -1,0 +1,134 @@
+{% extends 'layouts/main.html' %}
+{% block title %}{{ team }}{% endblock %}
+
+{% block css %}
+<link rel="stylesheet" href="https://unpkg.com/bootstrap-table@1.20.2/dist/bootstrap-table.min.css">
+{% endblock %}
+
+{% block content %}
+<div class="flex-xl-nowrap mx-auto px-4 py-3">
+    <img alt="home-logo" src="/static/img/logos/{{ team }}.png" class="rounded mx-auto d-block" width="250px" />
+
+    <h2 class="text-center pt-3">Season Totals</h2>
+    <select id="type-select" class="form-select mb-3" aria-label="Default select example">
+        {% for row in events %}
+            <option value="{{ row['id'] }}">{{ row['name'] }}</option>
+        {% endfor %}
+    </select>
+
+    <div class="table-responsive regular">
+        <table class="table table-striped table-bordered"
+               data-toggle="table"
+               data-sortable="true"
+               data-sort-name="PTS"
+               data-sort-order="desc">
+          <thead>
+            <tr>
+              <th scope="col" data-sortable="true">Player</th>
+              <th scope="col" data-sortable="true" data-field="GP">GP</th>
+              <th scope="col" data-sortable="true" data-field="FGM">FGM</th>
+              <th scope="col" data-sortable="true" data-field="FGA">FGA</th>
+              <th scope="col" data-sortable="true" data-field="FGP">FG%</th>
+              <th scope="col" data-sortable="true" data-field="TPM">3PM</th>
+              <th scope="col" data-sortable="true" data-field="TPA">3PA</th>
+              <th scope="col" data-sortable="true" data-field="TPP">3P%</th>
+              <th scope="col" data-sortable="true" data-field="REB">REB</th>
+              <th scope="col" data-sortable="true" data-field="AST">AST</th>
+              <th scope="col" data-sortable="true" data-field="STL">STL</th>
+              <th scope="col" data-sortable="true" data-field="BLK">BLK</th>
+              <th scope="col" data-sortable="true" data-field="TOV">TOV</th>
+              <th scope="col" data-sortable="true" data-field="PTS">PTS</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for row in stats %}
+            <tr>
+                <td><button type="button" class="btn btn-link" data-bs-toggle="popover" data-bs-content="{{ profile_card(row['id'], profiles) }}">{{ row['name'] }}</button></td>
+                <td>{{ row['gp'] }}</td>
+                <td>{{ '%0.0f' | format(row['fgm']) }}</td>
+                <td>{{ '%0.0f' | format(row['fga']) }}</td>
+                <td>{{ '%0.2f' | format(row['fg%'] or 0) }}</td>
+                <td>{{ '%0.0f' | format(row['3pm']) }}</td>
+                <td>{{ '%0.0f' | format(row['3pa']) }}</td>
+                <td>{{ '%0.2f' | format(row['3p%'] or 0) }}</td>
+                <td>{{ '%0.2f' | format(row['reb']) }}</td>
+                <td>{{ '%0.2f' | format(row['ast']) }}</td>
+                <td>{{ '%0.2f' | format(row['stl']) }}</td>
+                <td>{{ '%0.2f' | format(row['blk']) }}</td>
+                <td>{{ '%0.2f' | format(row['tov']) }}</td>
+                <td>{{ '%0.2f' | format(row['pts']) }}</td>
+            </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    <h2 class="text-center pt-3">Games</h2>
+    <div class="list-group">
+        {% for row in games %}
+        <a href="/games/{{ row['id'] }}" class="list-group-item list-group-item-action d-flex w-100 justify-content-between">{{ row['home'] }} vs. {{ row['away']}} <small class="muted">{{ row['date'] }}</small></a>
+        {% endfor %}
+      </div>
+
+    <h2 class="text-center pt-3">Records</h2>
+    <div class="table-responsive mb-4 regular">
+        <table class="table table-striped table-bordered mt-0"
+               data-toggle="table">
+            <thead>
+                <tr>
+                    <th scope="col" data-field="Stat">Stat</th>
+                    <th scope="col" data-field="Player">Player(s)</th>
+                    <th scope="col" data-field="Record">Record</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for stat, row in records.items() %}
+                <tr>
+                    <td>{{ stat }}</td>
+                    <td><button type="button" class="btn btn-link" data-bs-toggle="popover" data-bs-content="{{ profile_card(row['id'], profiles) }}">{{ row['gamertag'] }}</button></td>
+                    <td>{{ row['computed'] }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+ </div>
+{% endblock %}
+
+{% block js %}
+<!--<script src="https://unpkg.com/bootstrap-table@1.20.2/dist/bootstrap-table.min.js"></script>-->
+<script>
+    /*function show(choice) {
+        if (choice === "regular") {
+            $(".regular").removeClass("hide");
+            $(".playoffs").addClass("hide");
+        } else {
+            $(".playoffs").removeClass("hide");
+            $(".regular").addClass("hide");
+        }
+    }
+
+    $(document).ready(function () {
+        var selectList = $('#box-select option');
+        selectList.sort(function(a,b){
+            a = a.value;
+            b = b.value;
+
+            return a-b;
+        });
+        $('#box-select').html(selectList);
+        $('#box-select').on('change', function() {
+            $(".boxscore").addClass("hide");
+            var selection = "#g" + this.value;
+            $(selection).removeClass("hide");
+        });
+        $("#g1").removeClass("hide");
+
+        $('#type-select').on('change', function() {
+            show(this.value);
+        });
+
+        //show($('#type-select').value);
+    });*/
+</script>
+{% endblock %}

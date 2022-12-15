@@ -1,0 +1,49 @@
+{% extends 'layouts/main.html' %}
+{% block title %}Schedule{% endblock %}
+
+{% block content %}
+<div class="flex-xl-nowrap mx-auto px-4 py-3">
+    <h1 class="text-center">Schedule</h1>
+    <div id="games-list">
+        <div class="input-group flex-nowrap pb-3">
+            <input type="text" class="form-control search" placeholder="Filter by team ..." aria-label="Username" aria-describedby="addon-wrapping">
+        </div>
+        <ul class="list-group list">
+            {% for game in games %}
+                {% if game["status"] == "played" %}
+                    {% if game["hscore"] > game["ascore"] %}
+                        <li class="list-group-item d-flex justify-content-between align-items-center">
+                            <span class="name">
+                            <img src="/static/img/logos/{{ game['away'] }}.svg" height="25px"/> <span class="text-muted"> {{ game['away'] }}</span> <span class="small text-muted">@</span> <img src="/static/img/logos/{{ game['home'] }}.svg" height="25px"/> {{ game['home'] }}
+                            </span>
+                            <span class="badge bg-danger opacity-75 rounded-pill">{{ game['ascore'] }} - {{ game['hscore'] }} (Final)</span>
+                        </li>
+                    {% else %}
+                        <li class="list-group-item d-flex justify-content-between align-items-center">
+                            <span class="name">
+                            <img src="/static/img/logos/{{ game['away'] }}.svg" height="25px"/> {{ game['away'] }} <span class="small text-muted">@</span> <img src="/static/img/logos/{{ game['home'] }}.svg" height="25px"/> <span class="text-muted">{{ game['home'] }}</span>
+                            </span>
+                            <span class="badge bg-danger opacity-75 rounded-pill">{{ game['ascore'] }} - {{ game['hscore'] }} (Final)</span>
+                        </li>
+                    {% endif %}
+                {% else %}
+                    <li class="list-group-item d-flex justify-content-between align-items-center list-group-item-secondary">
+                        <span class="name">
+                        <img src="/static/img/logos/{{ game['away'] }}.svg" height="25px"/> {{ game['away'] }} vs. <img src="/static/img/logos/{{ game['home'] }}.svg" height="25px"/> {{ game['home'] }}
+                        </span>
+                        <span class="badge bg-secondary rounded-pill">TBD</span>
+                    </li>
+                {% endif %}
+            {% endfor %}
+        </ul>
+    </div>
+</div>
+{% endblock %}
+
+{% block js %}
+<script src="//cdnjs.cloudflare.com/ajax/libs/list.js/2.3.1/list.min.js"></script>
+<script>
+    var options = {valueNames: ['name']};
+    var userList = new List('games-list', options);
+</script>
+{% endblock %}

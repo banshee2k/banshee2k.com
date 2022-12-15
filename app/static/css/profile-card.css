@@ -1,0 +1,32 @@
+.avatar.avatar-lg {
+    width: 5rem;
+    height: 5rem;
+    line-height: 5rem;
+  }
+  .avatar {
+    display: inline-block;
+    position: relative;
+    width: 4rem;
+    height: 4rem;
+    text-align: center;
+    border: #dee2e6;
+    border-radius: 50%;
+    background: #fff;
+    /* box-shadow: 0 0.5rem 1rem rgb(0 0 0 / 15%); */
+    line-height: 3rem;
+  }
+
+.popover-title { display: none !important; }
+
+.popover {
+  max-width: 500px !important;
+}
+
+.popover-header{
+display: none !important;
+}
+
+.popover-body {
+  padding: 0px !important;
+  min-width: 200px;
+}

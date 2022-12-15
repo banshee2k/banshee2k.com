@@ -1,0 +1,137 @@
+{% extends 'layouts/main.html' %}
+{% block title %}Team Stats{% endblock %}
+
+{% block css %}
+<link rel="stylesheet" href="https://unpkg.com/bootstrap-table@1.20.2/dist/bootstrap-table.min.css">
+{% endblock %}
+
+{% block content %}
+<div class="flex-xl-nowrap px-4 py-3 mx-auto">
+    <h1 class="text-center">Team Stats</h1>
+    <select id="box-select" class="form-select mb-3" aria-label="Default select example">
+        {% for row in events %}
+            <option value="{{ row['id'] }}">{{ row['name'] }}</option>
+        {% endfor %}
+    </select>
+    <ul class="nav nav-tabs mb-4">
+    <li class="nav-item">
+        <a class="nav-link active" id="nav-team-tab" data-bs-toggle="tab" data-bs-target="#nav-team" type="button" role="tab" aria-controls="nav-team" aria-selected="true">Team</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" id="nav-opp-tab" data-bs-toggle="tab" data-bs-target="#nav-opp" type="button" role="tab" aria-controls="nav-opp" aria-selected="false">Opponent</a>
+    </li>
+    </ul>
+    <div class="tab-content" id="nav-tabContent">
+        <div class="tab-pane fade show active" id="nav-team" role="tabpanel" aria-labelledby="nav-team-tab">
+            <div class="table-responsive regular">
+                <table class="table mt-0" data-toggle="table" data-sortable="true">
+                    <thead>
+                    <tr>
+                        <th scope="col" data-sortable="true">Team</th>
+                        <th scope="col" data-sortable="true">GP</th>
+                        <th scope="col" data-sortable="true">FGM</th>
+                        <th scope="col" data-sortable="true">FGA</th>
+                        <th scope="col" data-sortable="true">FG%</th>
+                        <th scope="col" data-sortable="true">3PM</th>
+                        <th scope="col" data-sortable="true">3PA</th>
+                        <th scope="col" data-sortable="true">3P%</th>
+                        <th scope="col" data-sortable="true">REB</th>
+                        <th scope="col" data-sortable="true">AST</th>
+                        <th scope="col" data-sortable="true">STL</th>
+                        <th scope="col" data-sortable="true">BLK</th>
+                        <th scope="col" data-sortable="true">TOV</th>
+                        <th scope="col" data-sortable="true">PTS</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for row in team %}
+                    <tr>
+                        <td><img src="/static/img/logos/{{ row['name'] }}.png" width="20px" class="rounded" /> {{ row['name'] }}</a></td>
+                        <td>{{ row['gp'] }}</td>
+                        <td>{{ '%0.2f' | format(row['fgm']) }}</td>
+                        <td>{{ '%0.2f' | format(row['fga']) }}</td>
+                        <td>{{ '%0.2f' | format(row['fg%']) }}</td>
+                        <td>{{ '%0.2f' | format(row['3pm']) }}</td>
+                        <td>{{ '%0.2f' | format(row['3pa']) }}</td>
+                        <td>{{ '%0.2f' | format(row['3p%']) }}</td>
+                        <td>{{ '%0.2f' | format(row['reb']) }}</td>
+                        <td>{{ '%0.2f' | format(row['ast']) }}</td>
+                        <td>{{ '%0.2f' | format(row['stl']) }}</td>
+                        <td>{{ '%0.2f' | format(row['blk']) }}</td>
+                        <td>{{ '%0.2f' | format(row['tov']) }}</td>
+                        <td>{{ '%0.2f' | format(row['pts']) }}</td>
+                    </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="tab-pane fade" id="nav-opp" role="tabpanel" aria-labelledby="nav-opp-tab">
+            <div class="table-responsive regular">
+                <table class="table mt-0" data-toggle="table" data-sortable="true">
+                    <thead>
+                    <tr>
+                        <th scope="col" data-sortable="true">Team</th>
+                        <th scope="col" data-sortable="true">GP</th>
+                        <th scope="col" data-sortable="true">FGM</th>
+                        <th scope="col" data-sortable="true">FGA</th>
+                        <th scope="col" data-sortable="true">FG%</th>
+                        <th scope="col" data-sortable="true">3PM</th>
+                        <th scope="col" data-sortable="true">3PA</th>
+                        <th scope="col" data-sortable="true">3P%</th>
+                        <th scope="col" data-sortable="true">REB</th>
+                        <th scope="col" data-sortable="true">AST</th>
+                        <th scope="col" data-sortable="true">STL</th>
+                        <th scope="col" data-sortable="true">BLK</th>
+                        <th scope="col" data-sortable="true">TOV</th>
+                        <th scope="col" data-sortable="true">PTS</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for row in oppo %}
+                    <tr>
+                        <td><img src="/static/img/logos/{{ row['name'] }}.png" width="20px" class="rounded" /> {{ row['name'] }}</a></td>
+                        <td>{{ row['gp'] }}</td>
+                        <td>{{ '%0.2f' | format(row['fgm']) }}</td>
+                        <td>{{ '%0.2f' | format(row['fga']) }}</td>
+                        <td>{{ '%0.2f' | format(row['fg%']) }}</td>
+                        <td>{{ '%0.2f' | format(row['3pm']) }}</td>
+                        <td>{{ '%0.2f' | format(row['3pa']) }}</td>
+                        <td>{{ '%0.2f' | format(row['3p%']) }}</td>
+                        <td>{{ '%0.2f' | format(row['reb']) }}</td>
+                        <td>{{ '%0.2f' | format(row['ast']) }}</td>
+                        <td>{{ '%0.2f' | format(row['stl']) }}</td>
+                        <td>{{ '%0.2f' | format(row['blk']) }}</td>
+                        <td>{{ '%0.2f' | format(row['tov']) }}</td>
+                        <td>{{ '%0.2f' | format(row['pts']) }}</td>
+                    </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block js %}
+<script type="text/javascript" src="{{ url_for('static', filename='js/dep/jquery-3.6.2.min.js') }}"></script>
+<script src="https://unpkg.com/bootstrap-table@1.20.2/dist/bootstrap-table.min.js"></script>
+<script>
+    function show(choice) {
+        if (choice === "regular") {
+            $(".regular").removeClass("hide");
+            $(".playoffs").addClass("hide");
+        } else {
+            $(".playoffs").removeClass("hide");
+            $(".regular").addClass("hide");
+        }
+    }
+
+    $('#box-select').on('change', function() {
+        show(this.value);
+    });
+
+    //show($('#box-select').value);
+</script>
+{% endblock %}
