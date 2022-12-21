@@ -17,7 +17,7 @@
         {% for stat, rows in stats.items() %}
         <div class="col">
             <table class="table table-striped table-bordered mt-0 caption-top">
-                <caption>{{ stat }}</caption>
+                <caption>{{ stat|upper }}</caption>
                 <thead>
                 <tr>
                     <th scope="col">Player</th>
@@ -28,7 +28,7 @@
                 <tbody>
                 {% for row in rows %}
                 <tr>
-                    <td><button type="button" class="btn btn-link" data-bs-toggle="popover" data-bs-content="{{ profile_card(row['id'], profiles) }}">{{ row['gamertag'] }}</button></td>
+                    <td><button type="button" class="btn btn-link" data-bs-toggle="popover" data-bs-content="{{ profile_card(row['pid'], profiles) }}">{{ row['gamertag'] }}</button></td>
                     <td>{{ row['gp'] }}</td>
                     <td>{{ '%0.2f' | format(row[stat]) }}</td>
                 </tr>
