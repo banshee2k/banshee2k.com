@@ -1,2 +1,2 @@
 SELECT * FROM team
-WHERE team.abbr = :abbr;
+WHERE team.abbr = '{abbr}';

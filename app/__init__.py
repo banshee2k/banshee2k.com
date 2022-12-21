@@ -85,6 +85,13 @@ def home():
 def team(name):
     """Render the given team's page."""
     stats = execute("team-stats", name=name)
+    if not stats:
+        # No games played yet ...
+        team = execute("abbr-to-team", abbr=name)[0]
+        return render_template(
+            "pages/team.html", team=team["name"], stats=[], games=[]
+        )
+
     games = execute("games-list", name=name)
     return render_template(
         "pages/team.html", team=stats[0]["name"], stats=stats, games=games
