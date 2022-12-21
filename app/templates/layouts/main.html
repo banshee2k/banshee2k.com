@@ -68,7 +68,7 @@
                      </a>
                      <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
                         {% for team in teams %}
-                            <li><a class="dropdown-item" href="/teams/{{ team['abbr'] }}">{{ team["name"] }}</a></li>
+                            <li><a class="dropdown-item" href="/teams/{{ slugify(team['name']) }}">{{ team["name"] }}</a></li>
                         {% endfor %}
                      </ul>
                   </li>

@@ -51,7 +51,7 @@
                     <tbody>
                     {% for row in team %}
                     <tr>
-                        <td><a href="/teams/{{ row['tid'] }}">{{ row['name'] }}</a></td>
+                        <td><a href="/teams/{{ slugify(row['name']) }}">{{ row['name'] }}</a></td>
                         <td>{{ row['gp'] }}</td>
                         <td>{{ '%0.2f' | format(row['fgm']) }}</td>
                         <td>{{ '%0.2f' | format(row['fga']) }}</td>

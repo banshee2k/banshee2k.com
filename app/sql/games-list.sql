@@ -10,5 +10,5 @@ FROM game
     JOIN team AS away
         ON game.home = away.id
             OR game.away = away.id
-WHERE  home.abbr = '{name}'
+WHERE  home.name = '{name}'
     AND home.id != away.id

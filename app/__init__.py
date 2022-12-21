@@ -7,6 +7,7 @@ from flask import Flask, render_template, request, jsonify
 from flask_assets import Environment, Bundle
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy.sql import text as textual
+from slugify import slugify
 
 db = SQLAlchemy()
 app = Flask(__name__)
@@ -36,6 +37,7 @@ def inject_globals():
         teams=execute("teams"),
         events=execute("events"),
         profiles=profiles,
+        slugify=slugify
     )
 
 
@@ -84,17 +86,18 @@ def home():
 @app.route("/teams/<name>")
 def team(name):
     """Render the given team's page."""
+    name = name.replace('-', ' ').title()
+
     stats = execute("team-stats", name=name)
     if not stats:
         # No games played yet ...
-        team = execute("abbr-to-team", abbr=name)[0]
         return render_template(
-            "pages/team.html", team=team["name"], stats=[], games=[]
+            "pages/team.html", team=name, stats=[], games=[]
         )
 
     games = execute("games-list", name=name)
     return render_template(
-        "pages/team.html", team=stats[0]["name"], stats=stats, games=games
+        "pages/team.html", team=name, stats=stats, games=games
     )
 
 

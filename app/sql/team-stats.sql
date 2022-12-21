@@ -22,7 +22,7 @@ FROM
     team
 WHERE  stats.player = player.id
     AND team.id = player.team_id
-    AND team.abbr = '{name}'
+    AND team.name = '{name}'
 GROUP  BY gamertag,
         team.NAME,
         team.id,
