@@ -30,7 +30,7 @@
                 <tr>
                     <td><button type="button" class="btn btn-link" data-bs-toggle="popover" data-bs-content="{{ profile_card(row['id'], profiles) }}">{{ row['gamertag'] }}</button></td>
                     <td>{{ row['gp'] }}</td>
-                    <td>{{ '%0.2f' | format(row['computed']) }}</td>
+                    <td>{{ '%0.2f' | format(row[stat]) }}</td>
                 </tr>
                 {% endfor %}
                 </tbody>

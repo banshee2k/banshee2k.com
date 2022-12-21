@@ -1,6 +1,8 @@
 import pathlib
 import os
 
+import pandas as pd
+
 from flask import Flask, render_template, request, jsonify
 from flask_assets import Environment, Bundle
 from flask_sqlalchemy import SQLAlchemy
@@ -136,9 +138,13 @@ def games(gid):
 def stats(category):
     """Render the given stat category."""
     if category == "player":
+        df = pd.DataFrame.from_dict(execute("leaders"))
+
         lookup = {}
-        for stat in ["PTS", "REB", "AST", "STL", "BLK", "3PM"]:
-            lookup[stat] = execute("leaders", stat=stat.lower())
+        for stat in ["pts", "reb", "ast", "stl", "blk", "3pm"]:
+            df[stat] = df[stat].astype(float)
+            lookup[stat] = df.nlargest(10, stat).to_dict("records")
+
         return render_template(f"pages/stats/player.html", stats=lookup)
     elif category == "team":
         return render_template(
