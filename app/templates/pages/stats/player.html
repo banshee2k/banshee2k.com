@@ -28,7 +28,7 @@
                 <tbody>
                 {% for row in rows %}
                 <tr>
-                    <td><button type="button" class="btn btn-link" data-bs-toggle="popover" data-bs-content="{{ profile_card(row['id'], profiles) }}">{{ row['gamertag'] }}</button> <small class="text-muted">{{ row['abbr'] }}</small></a></td>
+                    <td><button type="button" class="btn btn-link" data-bs-toggle="popover" data-bs-content="{{ profile_card(row['id'], profiles) }}">{{ row['gamertag'] }}</button></td>
                     <td>{{ row['gp'] }}</td>
                     <td>{{ '%0.2f' | format(row['computed']) }}</td>
                 </tr>
@@ -38,28 +38,6 @@
         </div>
         {% endfor %}
     </div>
-    <div class="card">
-        <div class="card-header">
-           <h4>Glossary</h4>
-        </div>
-        <!--
-        <div class="card-body">
-           <div class="glossary">
-              <div class="glossary__item"><span class="glossary__abbr">W:</span> Wins</div>
-              <div class="glossary__item"><span class="glossary__abbr">GB:</span> Game Back</div>
-              <div class="glossary__item"><span class="glossary__abbr">DIV:</span> Division Record</div>
-              <div class="glossary__item"><span class="glossary__abbr">DIFF:</span> Average Point Differential</div>
-              <div class="glossary__item"><span class="glossary__abbr">L:</span> Losses</div>
-              <div class="glossary__item"><span class="glossary__abbr">Home:</span> Home Record</div>
-              <div class="glossary__item"><span class="glossary__abbr">PPG:</span> Points per Game</div>
-              <div class="glossary__item"><span class="glossary__abbr">STRK:</span> Current Streak</div>
-              <div class="glossary__item"><span class="glossary__abbr">PCT:</span> Winning Percentages</div>
-              <div class="glossary__item"><span class="glossary__abbr">Road:</span> Road Record</div>
-              <div class="glossary__item"><span class="glossary__abbr">OPP PPG:</span> Opponent Points per Game</div>
-              <div class="glossary__item"><span class="glossary__abbr">L10:</span> Record Last 10 Games</div>
-           </div>
-        </div>-->
-     </div>
 </div>
 {% endblock %}
 

@@ -46,7 +46,7 @@
                     <tbody>
                     {% for row in team %}
                     <tr>
-                        <td><img src="/static/img/logos/{{ row['name'] }}.png" width="20px" class="rounded" /> {{ row['name'] }}</a></td>
+                        <td><a href="/teams/{{ row['tid'] }}">{{ row['name'] }}</a></td>
                         <td>{{ row['gp'] }}</td>
                         <td>{{ '%0.2f' | format(row['fgm']) }}</td>
                         <td>{{ '%0.2f' | format(row['fga']) }}</td>
@@ -90,7 +90,7 @@
                     <tbody>
                     {% for row in oppo %}
                     <tr>
-                        <td><img src="/static/img/logos/{{ row['name'] }}.png" width="20px" class="rounded" /> {{ row['name'] }}</a></td>
+                        <td><a href="/teams/{{ row['tid'] }}">{{ row['name'] }}</a></td>
                         <td>{{ row['gp'] }}</td>
                         <td>{{ '%0.2f' | format(row['fgm']) }}</td>
                         <td>{{ '%0.2f' | format(row['fga']) }}</td>
@@ -111,6 +111,27 @@
             </div>
         </div>
     </div>
+    <div class="card mt-4">
+        <div class="card-header">
+           <h4>Glossary</h4>
+        </div>
+        <div class="card-body">
+           <div class="glossary">
+              <div class="glossary__item"><span class="glossary__abbr">W:</span> Wins</div>
+              <div class="glossary__item"><span class="glossary__abbr">GB:</span> Game Back</div>
+              <div class="glossary__item"><span class="glossary__abbr">DIV:</span> Division Record</div>
+              <div class="glossary__item"><span class="glossary__abbr">DIFF:</span> Average Point Differential</div>
+              <div class="glossary__item"><span class="glossary__abbr">L:</span> Losses</div>
+              <div class="glossary__item"><span class="glossary__abbr">Home:</span> Home Record</div>
+              <div class="glossary__item"><span class="glossary__abbr">PPG:</span> Points per Game</div>
+              <div class="glossary__item"><span class="glossary__abbr">STRK:</span> Current Streak</div>
+              <div class="glossary__item"><span class="glossary__abbr">PCT:</span> Winning Percentages</div>
+              <div class="glossary__item"><span class="glossary__abbr">Road:</span> Road Record</div>
+              <div class="glossary__item"><span class="glossary__abbr">OPP PPG:</span> Opponent Points per Game</div>
+              <div class="glossary__item"><span class="glossary__abbr">L10:</span> Record Last 10 Games</div>
+           </div>
+        </div>
+     </div>
 </div>
 {% endblock %}
 

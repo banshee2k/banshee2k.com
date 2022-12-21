@@ -43,7 +43,7 @@
           <tbody>
             {% for row in stats %}
             <tr>
-                <td><button type="button" class="btn btn-link" data-bs-toggle="popover" data-bs-content="{{ profile_card(row['id'], profiles) }}">{{ row['name'] }}</button></td>
+                <td><button type="button" class="btn btn-link" data-bs-toggle="popover" data-bs-content="{{ profile_card(row['pid'], profiles) }}">{{ row['gamertag'] }}</button></td>
                 <td>{{ row['gp'] }}</td>
                 <td>{{ '%0.0f' | format(row['fgm']) }}</td>
                 <td>{{ '%0.0f' | format(row['fga']) }}</td>
@@ -69,66 +69,8 @@
         <a href="/games/{{ row['id'] }}" class="list-group-item list-group-item-action d-flex w-100 justify-content-between">{{ row['home'] }} vs. {{ row['away']}} <small class="muted">{{ row['date'] }}</small></a>
         {% endfor %}
       </div>
-
-    <h2 class="text-center pt-3">Records</h2>
-    <div class="table-responsive mb-4 regular">
-        <table class="table table-striped table-bordered mt-0"
-               data-toggle="table">
-            <thead>
-                <tr>
-                    <th scope="col" data-field="Stat">Stat</th>
-                    <th scope="col" data-field="Player">Player(s)</th>
-                    <th scope="col" data-field="Record">Record</th>
-                </tr>
-            </thead>
-            <tbody>
-                {% for stat, row in records.items() %}
-                <tr>
-                    <td>{{ stat }}</td>
-                    <td><button type="button" class="btn btn-link" data-bs-toggle="popover" data-bs-content="{{ profile_card(row['id'], profiles) }}">{{ row['gamertag'] }}</button></td>
-                    <td>{{ row['computed'] }}</td>
-                </tr>
-                {% endfor %}
-            </tbody>
-        </table>
-    </div>
  </div>
 {% endblock %}
 
 {% block js %}
-<!--<script src="https://unpkg.com/bootstrap-table@1.20.2/dist/bootstrap-table.min.js"></script>-->
-<script>
-    /*function show(choice) {
-        if (choice === "regular") {
-            $(".regular").removeClass("hide");
-            $(".playoffs").addClass("hide");
-        } else {
-            $(".playoffs").removeClass("hide");
-            $(".regular").addClass("hide");
-        }
-    }
-
-    $(document).ready(function () {
-        var selectList = $('#box-select option');
-        selectList.sort(function(a,b){
-            a = a.value;
-            b = b.value;
-
-            return a-b;
-        });
-        $('#box-select').html(selectList);
-        $('#box-select').on('change', function() {
-            $(".boxscore").addClass("hide");
-            var selection = "#g" + this.value;
-            $(selection).removeClass("hide");
-        });
-        $("#g1").removeClass("hide");
-
-        $('#type-select').on('change', function() {
-            show(this.value);
-        });
-
-        //show($('#type-select').value);
-    });*/
-</script>
 {% endblock %}

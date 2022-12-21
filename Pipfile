@@ -6,16 +6,12 @@ name = "pypi"
 [packages]
 flask = "*"
 flask-assets = "*"
-ujson = "*"
 gunicorn = "*"
-pandas = "*"
-pyairtable = "*"
 python-dotenv = "*"
 records = "*"
 psycopg2-binary = "*"
-discord = "*"
 flask-sqlalchemy = "*"
-quickle = "*"
+pandas = "*"
 
 [dev-packages]
 

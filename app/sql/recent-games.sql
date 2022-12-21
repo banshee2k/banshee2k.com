@@ -8,11 +8,11 @@ SELECT
     away_score.total AS away_score
 FROM game
 JOIN team AS home
-	ON game.home=home.id
+    ON game.home=home.id
 JOIN team AS away
-	ON game.away=away.id
+    ON game.away=away.id
 JOIN score AS home_score
-	ON game.home=home_score.team
+    ON game.home=home_score.team
 JOIN score AS away_score
-	ON game.away=away_score.team
+    ON game.away=away_score.team
 LIMIT 5;

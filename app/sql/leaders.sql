@@ -2,7 +2,7 @@ SELECT gamertag,
        player.id,
        team.abbr,
        Count(gamertag) AS gp,
-       Avg("{STAT}")   AS computed
+       Avg("{stat}")   AS computed
 FROM   stats,
        player,
        team
