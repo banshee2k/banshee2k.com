@@ -12,4 +12,4 @@ SELECT
     team.abbr
 FROM player
 JOIN team
-	ON team.id=player.team_id
+	ON team.id=player.team
