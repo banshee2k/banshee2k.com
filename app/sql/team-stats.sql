@@ -21,7 +21,7 @@ FROM
     player,
     team
 WHERE  stats.player = player.id
-    AND team.id = player.team
+    AND team.id = player.team_id
     AND team.name = '{name}'
 GROUP  BY gamertag,
         team.NAME,

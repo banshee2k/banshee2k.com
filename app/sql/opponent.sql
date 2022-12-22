@@ -18,6 +18,6 @@ FROM   stats
        JOIN game
        	 ON stats.game = game.id
        JOIN team
-         ON player.team != team.id AND (team.id = game.home OR team.id = game.away)
+         ON player.team_id != team.id AND (team.id = game.home OR team.id = game.away)
 GROUP  BY team.NAME
 ORDER  BY pts ASC;
