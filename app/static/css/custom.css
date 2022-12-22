@@ -65,13 +65,17 @@ a:focus, a:hover, .nav-link:focus, .nav-link:hover {
     height: 1rem;
 }
 
+.no-border {
+    border-bottom: none !important;
+}
+
 .inactive-link {
     pointer-events: none;
     cursor: default;
   }
 
   .hide {
-    display: none;
+    display: none !important;
   }
 
   .atom.score-card {

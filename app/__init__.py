@@ -54,6 +54,7 @@ def utility_processor():
         if player["captain"]:
             tags.append('<span class="badge text-bg-secondary">captain</span>')
 
+        has_handles = player['discord'] or player['twitch'] or player['instagram'] or player['twitter'] or player['tiktok']
         return f"""
             <div class="card-body p-2">
                 <div class="d-flex justify-content-between align-items-center">
@@ -63,11 +64,27 @@ def utility_processor():
                         <p class="text-muted mb-0">{' '.join(tags)}</p>
                     </div>
                 </div>
-                <hr class="{'hide' if not player['discord'] else ''} m-0">
-                <ul class="list-group list-group-flush rounded-3 {'hide' if not player['discord'] else ''}">
-                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                <hr class="{'hide' if not has_handles else ''} m-0">
+                <ul class="list-group list-group-flush rounded-3">
+                    <li class="no-border list-group-item d-flex justify-content-between align-items-center {'hide' if not player['discord'] else ''}">
                         <i class="fab fa-discord fa-lg" style="color: #333333;"></i>
                         <p class="mb-0 text-muted">@{player['discord']}</p>
+                    </li>
+                    <li class="no-border list-group-item d-flex justify-content-between align-items-center {'hide' if not player['twitch'] else ''}">
+                        <i class="fab fa-twitch fa-lg" style="color: #333333;"></i>
+                        <p class="mb-0 text-muted">@{player['twitch']}</p>
+                    </li>
+                    <li class="no-border list-group-item d-flex justify-content-between align-items-center {'hide' if not player['twitter'] else ''}">
+                        <i class="fab fa-twitter fa-lg" style="color: #333333;"></i>
+                        <p class="mb-0 text-muted">@{player['twitter']}</p>
+                    </li>
+                    <li class="no-border list-group-item d-flex justify-content-between align-items-center {'hide' if not player['instagram'] else ''}">
+                        <i class="fab fa-instagram fa-lg" style="color: #333333;"></i>
+                        <p class="mb-0 text-muted">@{player['instagram']}</p>
+                    </li>
+                    <li class="no-border list-group-item d-flex justify-content-between align-items-center {'hide' if not player['tiktok'] else ''}">
+                        <i class="fab fa-tiktok fa-lg" style="color: #333333;"></i>
+                        <p class="mb-0 text-muted">@{player['tiktok']}</p>
                     </li>
                 </ul>
             </div>
