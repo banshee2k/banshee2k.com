@@ -37,7 +37,7 @@ def inject_globals():
         teams=execute("teams"),
         events=execute("events"),
         profiles=profiles,
-        slugify=slugify
+        slugify=slugify,
     )
 
 
@@ -54,7 +54,14 @@ def utility_processor():
         if player["captain"]:
             tags.append('<span class="badge text-bg-secondary">captain</span>')
 
-        has_handles = player['discord'] or player['twitch'] or player['instagram'] or player['twitter'] or player['tiktok']
+        has_handles = (
+            player["discord"]
+            or player["twitch"]
+            or player["instagram"]
+            or player["twitter"]
+            or player["tiktok"]
+        )
+
         return f"""
             <div class="card-body p-2">
                 <div class="d-flex justify-content-between align-items-center">
@@ -103,19 +110,15 @@ def home():
 @app.route("/teams/<name>")
 def team(name):
     """Render the given team's page."""
-    name = name.replace('-', ' ').title()
+    name = name.replace("-", " ").title()
 
     stats = execute("team-stats", name=name)
     if not stats:
         # No games played yet ...
-        return render_template(
-            "pages/team.html", team=name, stats=[], games=[]
-        )
+        return render_template("pages/team.html", team=name, stats=[], games=[])
 
     games = execute("games-list", name=name)
-    return render_template(
-        "pages/team.html", team=name, stats=stats, games=games
-    )
+    return render_template("pages/team.html", team=name, stats=stats, games=games)
 
 
 @app.route("/games/<gid>")
