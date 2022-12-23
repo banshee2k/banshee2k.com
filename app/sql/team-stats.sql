@@ -10,11 +10,11 @@ SELECT
     Avg(stl)                                          AS stl,
     Avg(blk)                                          AS blk,
     Avg(stats.to)                                     AS tov,
-    Avg("3pm")                                        AS "3pm",
-    Avg("3pa")                                        AS "3pa",
+    Sum("3pm")                                        AS "3pm",
+    Sum("3pa")                                        AS "3pa",
     Sum("3pm") / NULLIF(Cast(Sum("3pa") AS FLOAT), 0) AS "3p%",
-    Avg("fgm")                                        AS "fgm",
-    Avg("fga")                                        AS "fga",
+    Sum("fgm")                                        AS "fgm",
+    Sum("fga")                                        AS "fga",
     Sum("fgm") / NULLIF(Cast(Sum("fga") AS FLOAT), 0) AS "fg%"
 FROM
     stats,
