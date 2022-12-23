@@ -21,7 +21,7 @@
                     <div class="px-1 py-0">
                         {% for row in wins %}
                             {% if 'Tournament' in row['name'] %}
-                                <i data-bs-toggle="tooltip" data-bs-title="{{ row['name'] }} ({{ row['2k'] }})" data-bs-placement="bottom" class="fa-solid fa-award fa-xl px-1" style="color: rgb(140, 98, 245);"></i>
+                                <i data-bs-toggle="tooltip" data-bs-title="{{ row['name'] }} Champions ({{ row['2k'] }})" data-bs-placement="bottom" class="fa-solid fa-award fa-xl px-1" style="color: rgb(140, 98, 245);"></i>
                             {% else %}
                                 <i data-bs-toggle="tooltip" data-bs-title="{{ row['name'] }} ({{ row['2k'] }})" data-bs-placement="bottom" class="fa-solid fa-trophy fa-xl" style="color: rgb(252, 217, 119);"></i>
                             {% endif %}
@@ -51,7 +51,7 @@
                   <div class="card">
                     <div class="card-body">
                       <small class="text-muted">Seasons/Events</small>
-                      <h2>0</h2>
+                      <h2>{{ seasons }}</h2>
                     </div>
                   </div>
                 </div>
@@ -59,7 +59,7 @@
                   <div class="card">
                     <div class="card-body">
                         <small class="text-muted">Win %</small>
-                        <h2>0</h2>
+                        <h2>{{ '%0.2f' |format(total) }}</h2>
                     </div>
                   </div>
                 </div>

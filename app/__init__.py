@@ -115,11 +115,31 @@ def team(name):
     stats = execute("team-stats", name=name)
     if not stats:
         # No games played yet ...
-        return render_template("pages/team.html", team=name, stats=[], games=[])
+        return render_template(
+            "pages/team.html", team=name, stats=[], games=[], seasons=0, total=0
+        )
 
     games = execute("games-list", name=name)
     wins = execute("wins", name=name)
-    return render_template("pages/team.html", team=name, stats=stats, games=games, wins=wins)
+
+    seasons = execute("seasons", name=name)[0]["event"]
+
+    results = [0, 0]
+    for row in execute("winp", name=name):
+        results[0] += 1
+        if row["won"]:
+            results[1] += 1
+
+    total = results[1] / float(results[0])
+    return render_template(
+        "pages/team.html",
+        team=name,
+        stats=stats,
+        games=games,
+        wins=wins,
+        seasons=seasons,
+        total=total,
+    )
 
 
 @app.route("/games/<gid>")
