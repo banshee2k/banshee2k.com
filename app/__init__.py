@@ -118,7 +118,8 @@ def team(name):
         return render_template("pages/team.html", team=name, stats=[], games=[])
 
     games = execute("games-list", name=name)
-    return render_template("pages/team.html", team=name, stats=stats, games=games)
+    wins = execute("wins", name=name)
+    return render_template("pages/team.html", team=name, stats=stats, games=games, wins=wins)
 
 
 @app.route("/games/<gid>")

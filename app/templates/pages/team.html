@@ -18,6 +18,15 @@
                             <!--<p class="text-secondary mb-1">VP</p> -->
                         </div>
                     </div>
+                    <div class="px-1 py-0">
+                        {% for row in wins %}
+                            {% if 'Tournament' in row['name'] %}
+                                <i data-bs-toggle="tooltip" data-bs-title="{{ row['name'] }} ({{ row['2k'] }})" data-bs-placement="bottom" class="fa-solid fa-award fa-xl px-1" style="color: rgb(140, 98, 245);"></i>
+                            {% else %}
+                                <i data-bs-toggle="tooltip" data-bs-title="{{ row['name'] }} ({{ row['2k'] }})" data-bs-placement="bottom" class="fa-solid fa-trophy fa-xl" style="color: rgb(252, 217, 119);"></i>
+                            {% endif %}
+                        {% endfor %}
+                    </div>
                     <hr class="my-4">
                     <ul class="list-group list-group-flush">
                         <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
