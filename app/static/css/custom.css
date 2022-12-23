@@ -2,6 +2,10 @@ main > .container {
     padding: 60px 15px 0;
 }
 
+.alt-bg {
+    background: #f7f7ff !important;
+}
+
 .btn-link {
     font-family: var(--bs-body-font-family);
     font-weight: 400 !important;
