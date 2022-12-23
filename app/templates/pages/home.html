@@ -27,10 +27,10 @@
                         </div>
                         <div class="rank"></div>
                         {% if row['home_score'] > row['away_score'] %}
-                            <div class="teamName"><b>{{ row['home'] }}</b></div>
+                            <div class="teamName"><b>{{ row['habbr'] }}</b></div>
                             <div class="score"><b>{{ row['home_score'] }}</b></div>
                         {% else %}
-                            <div class="teamName">{{ row['home'] }}</div>
+                            <div class="teamName">{{ row['habbr'] }}</div>
                             <div class="score">{{ row['home_score'] }}</div>
                         {% endif %}
                     </div>
@@ -40,10 +40,10 @@
                         </div>
                         <div class="rank"></div>
                         {% if row['away_score'] > row['home_score'] %}
-                            <div class="teamName"><b>{{ row['away'] }}</b></div>
+                            <div class="teamName"><b>{{ row['aabbr'] }}</b></div>
                             <div class="score"><b>{{ row['away_score'] }}</b></div>
                         {% else %}
-                            <div class="teamName">{{ row['away'] }}</div>
+                            <div class="teamName">{{ row['aabbr'] }}</div>
                             <div class="score">{{ row['away_score'] }}</div>
                         {% endif %}
                     </div>

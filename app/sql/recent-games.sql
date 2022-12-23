@@ -4,6 +4,8 @@ SELECT
     game.stream,
     home.name AS home,
     away.name AS away,
+    home.abbr AS habbr,
+    away.abbr AS aabbr,
     home_score.total AS home_score,
     away_score.total AS away_score
 FROM game
