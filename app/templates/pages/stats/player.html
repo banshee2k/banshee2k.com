@@ -4,10 +4,10 @@
 {% block content %}
 <div class="flex-xl-nowrap px-4 py-3 mx-auto">
     <h1 class="text-center">Player Stats</h1>
-    <div class="alert alert-info" role="alert">
+    <!--<div class="alert alert-info" role="alert">
         Per-category statistical minimums are assigned according the rules <a class="alert-link" href="https://www.nba.com/stats/help/statminimums/">outlined by the NBA</a>, scaled down to a
         15-game season.
-    </div>
+    </div>-->
     <select id="box-select" class="form-select" aria-label="Default select example">
         {% for row in events %}
             <option value="{{ row['id'] }}">{{ row['name'] }}</option>
