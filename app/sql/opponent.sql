@@ -10,9 +10,9 @@ SELECT team.NAME,
        Sum("fgm") / ( Count(team.NAME) / 5 )    AS "fgm",
        Sum("fga") / ( Count(team.NAME) / 5 )    AS "fga",
        Sum("fgm") / Cast(Sum("fga") AS FLOAT)   AS "fg%",
-       Avg(stats.to) / ( Count(team.NAME) / 5 ) AS tov,
-       Avg(blk) / ( Count(team.NAME) / 5 )      AS blk,
-       Avg(stl) / ( Count(team.NAME) / 5 )      AS stl
+       Sum(stats.to) / ( Count(team.NAME) / 5 ) AS tov,
+       Sum(blk) / ( Count(team.NAME) / 5 )      AS blk,
+       Sum(stl) / ( Count(team.NAME) / 5 )      AS stl
 FROM   stats
        JOIN player
          ON stats.player = player.id
