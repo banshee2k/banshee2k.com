@@ -15,4 +15,5 @@ JOIN score AS home_score
 	ON game.home=home_score.team AND game.id=home_score.game
 JOIN score AS away_score
 	ON game.away=away_score.team AND game.id=away_score.game
+ORDER BY game.date DESC
 LIMIT 5;
