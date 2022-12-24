@@ -144,7 +144,8 @@ def team(name):
         wins=wins,
         seasons=seasons,
         total=total,
-        captain=captain
+        captain=captain,
+        gp=len(games)
     )
 
 
