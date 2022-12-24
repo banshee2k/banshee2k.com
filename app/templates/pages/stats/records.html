@@ -17,9 +17,9 @@
           <tbody>
             {% for stat, row in highs.items() %}
             <tr>
-                <td>{{ stat }}</td>
-                <td><button type="button" class="btn btn-link" data-bs-toggle="popover" data-bs-content="{{ profile_card(row['pid'], profiles) }}">{{ row['gamertag'] }}</button></td>
-                <td>{{ row['computed'] }}</td>
+                <td>{{ stat|upper }}</td>
+                <td><button type="button" class="btn btn-link" data-bs-toggle="popover" data-bs-content="{{ profile_card(row['id'], profiles) }}">{{ row['gamertag'] }}</button></td>
+                <td><a href="/games/{{ row['game'] }}">{{ row[stat] }}</a></td>
             </tr>
             {% endfor %}
             </tbody>

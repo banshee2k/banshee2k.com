@@ -132,8 +132,15 @@ def team(name):
 
     captain = None
     for row in stats:
-        if row['captain']:
-            captain = row['gamertag']
+        if row["captain"]:
+            captain = row["gamertag"]
+
+    df = pd.DataFrame.from_dict(execute("team-records", name=name))
+
+    team_records = {}
+    for stat in ["pts", "reb", "ast", "stl", "blk", "3pm"]:
+        df[stat] = df[stat].astype(float)
+        team_records[stat] = df[df[stat] == df[stat].max()].to_dict("records")[0]
 
     total = results[1] / float(results[0])
     return render_template(
@@ -145,7 +152,8 @@ def team(name):
         seasons=seasons,
         total=total,
         captain=captain,
-        gp=len(games)
+        gp=len(games),
+        records=team_records,
     )
 
 
@@ -211,10 +219,14 @@ def stats(category):
             oppo=execute("opponent"),
         )
     else:
-        lookup = {}
-        for stat in ["PTS", "REB", "AST", "STL", "BLK", "3PM"]:
-            lookup[stat] = execute("records", stat=stat.lower())[0]
-        return render_template("pages/stats/records.html", highs=lookup)
+        df = pd.DataFrame.from_dict(execute("records"))
+
+        records = {}
+        for stat in ["pts", "reb", "ast", "stl", "blk", "3pm"]:
+            df[stat] = df[stat].astype(float)
+            records[stat] = df[df[stat] == df[stat].max()].to_dict("records")[0]
+
+        return render_template("pages/stats/records.html", highs=records)
 
 
 # Static assets

@@ -1,10 +1,18 @@
 SELECT
+    player.id,
 	gamertag,
-    player.id     AS pid,
-	MAX("{stat}") AS computed
+    game.id    AS game,
+	MAX(pts)   AS pts,
+	MAX(reb)   AS reb,
+    MAX(ast)   AS ast,
+	MAX(stl)   AS stl,
+	MAX(blk)   AS blk,
+	MAX("3pm") AS "3pm"
 FROM stats
 JOIN player
 	ON stats.player=player.id
-GROUP BY gamertag, player.id
-ORDER BY computed DESC
-LIMIT 1;
+JOIN team
+	ON player.team=team.id
+JOIN game
+	ON stats.game=game.id
+GROUP BY gamertag, player.id, game.id;
