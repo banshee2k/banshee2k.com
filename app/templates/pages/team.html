@@ -18,7 +18,7 @@
                             <!--<p class="text-secondary mb-1">VP</p> -->
                         </div>
                     </div>
-                    <div class="px-1 py-0">
+                    <div class="px-3 py-0">
                         {% for row in wins %}
                             {% if 'Tournament' in row['name'] %}
                                 <i data-bs-toggle="tooltip" data-bs-title="{{ row['name'] }} Champions ({{ row['2k'] }})" data-bs-placement="bottom" class="fa-solid fa-award fa-xl px-1" style="color: rgb(140, 98, 245);"></i>
@@ -30,7 +30,7 @@
                     <hr class="my-4">
                     <ul class="list-group list-group-flush">
                         <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
-                            <h6><i class="fab fa-discord fa-lg" style="color: #333333;"></i> Captain</h6>
+                            <h6><i class="fab fa-xbox fa-lg" style="color: #333333;"></i> Captain</h6>
                             <span class="text-secondary">@{{ captain }}</span>
                         </li>
                         <!--<li class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
