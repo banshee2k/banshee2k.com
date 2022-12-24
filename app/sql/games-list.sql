@@ -1,7 +1,9 @@
 SELECT DISTINCT
     game.id,
-    home.abbr AS home,
-    away.abbr AS away,
+    home.name AS home,
+    away.name AS away,
+    home.abbr AS home_short,
+    away.abbr AS away_short,
     game.date
 FROM game
     JOIN team AS home
