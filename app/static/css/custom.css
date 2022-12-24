@@ -4,7 +4,8 @@ main > .container {
 
 .btn-link {
     --bs-text-opacity: 1;
-    color: #777!important;
+    color: #777 !important;
+    cursor: help !important;
 }
 
 .alt-bg {
