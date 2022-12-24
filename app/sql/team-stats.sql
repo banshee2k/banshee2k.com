@@ -2,6 +2,8 @@ SELECT
     gamertag,
     team.NAME,
     team.id,
+    player.captain,
+    player.discord,
     player.id                                         AS pid,
     Count(gamertag)                                   AS gp,
     Avg(pts)                                          AS pts,
@@ -26,5 +28,7 @@ WHERE  stats.player = player.id
 GROUP  BY gamertag,
         team.NAME,
         team.id,
-        player.id
+        player.id,
+        player.captain,
+        player.discord
 ORDER  BY pts DESC;

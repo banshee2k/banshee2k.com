@@ -130,6 +130,11 @@ def team(name):
         if row["won"]:
             results[1] += 1
 
+    captain = None
+    for row in stats:
+        if row['captain'] and row['discord']:
+            captain = row['discord']
+
     total = results[1] / float(results[0])
     return render_template(
         "pages/team.html",
@@ -139,6 +144,7 @@ def team(name):
         wins=wins,
         seasons=seasons,
         total=total,
+        captain=captain
     )
 
 
