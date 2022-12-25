@@ -2,7 +2,7 @@ main > .container {
     padding: 60px 15px 0;
 }
 
-.btn-link {
+button.btn-link {
     --bs-text-opacity: 1;
     color: #777 !important;
     cursor: help !important;
