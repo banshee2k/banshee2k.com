@@ -116,7 +116,13 @@ def team(name):
     if not stats:
         # No games played yet ...
         return render_template(
-            "pages/team.html", team=name, stats=[], games=[], seasons=0, total=0
+            "pages/team.html",
+            team=name,
+            stats=[],
+            games=[],
+            seasons=0,
+            total=0,
+            records={},
         )
 
     games = execute("games-list", name=name)
