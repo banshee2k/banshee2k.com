@@ -1,5 +1,6 @@
 SELECT
     player.id AS pid,
+    player.name AS gamertag,
     *
 FROM stats
 JOIN player

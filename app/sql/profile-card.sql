@@ -1,6 +1,6 @@
 SELECT
 	player.id AS id,
-    player.gamertag,
+    player.name AS gamertag,
     player.discord,
     player.captain,
     player.admin,

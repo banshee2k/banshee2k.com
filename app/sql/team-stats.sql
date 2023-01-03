@@ -1,11 +1,11 @@
 SELECT
-    gamertag,
+    player.name AS gamertag,
     team.NAME,
     team.id,
     player.captain,
     player.discord,
     player.id                                         AS pid,
-    Count(gamertag)                                   AS gp,
+    Count(player.name)                                AS gp,
     Avg(pts)                                          AS pts,
     Avg(reb)                                          AS reb,
     Avg(ast)                                          AS ast,
@@ -25,7 +25,8 @@ FROM
 WHERE  stats.player = player.id
     AND team.id = player.team
     AND team.name = '{name}'
-GROUP  BY gamertag,
+GROUP  BY
+        player.name,
         team.NAME,
         team.id,
         player.id,

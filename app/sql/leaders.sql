@@ -1,7 +1,7 @@
 SELECT
-	player.gamertag,
+	player.name            AS gamertag,
     player.id              AS pid,
-    COUNT(player.gamertag) AS gp,
+    COUNT(player.name)     AS gp,
 	AVG(stats.pts)         AS pts,
     AVG(stats.reb)         AS reb,
     AVG(stats.ast)         AS ast,
@@ -11,4 +11,4 @@ SELECT
 FROM stats
 JOIN player
 	ON stats.player=player.id
-GROUP BY gamertag, player.id;
+GROUP BY player.name, player.id;
