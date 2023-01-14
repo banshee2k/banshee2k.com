@@ -213,9 +213,10 @@ def stats(category):
         df = pd.DataFrame.from_dict(execute("leaders"))
 
         lookup = {}
-        for stat in ["pts", "reb", "ast", "stl", "blk", "3pm"]:
-            df[stat] = df[stat].astype(float)
-            lookup[stat] = df.nlargest(10, stat).to_dict("records")
+        if not df.empty:
+            for stat in ["pts", "reb", "ast", "stl", "blk", "3pm"]:
+                df[stat] = df[stat].astype(float)
+                lookup[stat] = df.nlargest(10, stat).to_dict("records")
 
         return render_template(f"pages/stats/player.html", stats=lookup)
     elif category == "team":
@@ -228,9 +229,10 @@ def stats(category):
         df = pd.DataFrame.from_dict(execute("records"))
 
         records = {}
-        for stat in ["pts", "reb", "ast", "stl", "blk", "3pm"]:
-            df[stat] = df[stat].astype(float)
-            records[stat] = df[df[stat] == df[stat].max()].to_dict("records")[0]
+        if not df.empty:
+            for stat in ["pts", "reb", "ast", "stl", "blk", "3pm"]:
+                df[stat] = df[stat].astype(float)
+                records[stat] = df[df[stat] == df[stat].max()].to_dict("records")[0]
 
         return render_template("pages/stats/records.html", highs=records)
 
