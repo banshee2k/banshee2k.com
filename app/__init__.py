@@ -1,5 +1,6 @@
 import pathlib
 import os
+import csv
 
 import pandas as pd
 
@@ -13,6 +14,15 @@ db = SQLAlchemy()
 app = Flask(__name__)
 app.config["SQLALCHEMY_DATABASE_URI"] = os.environ["DATABASE_URL"]
 db.init_app(app)
+
+
+def read_csv(path):
+    """Read and return the given CSV file."""
+    data = []
+    with open(os.path.join("app", "data", path)) as f:
+        for line in csv.DictReader(f):
+            data.append(line)
+    return data
 
 
 def to_percent(n, percents=[10, 20, 30, 40, 50, 60, 70, 80, 90, 100]):
@@ -235,6 +245,50 @@ def stats(category):
                 records[stat] = df[df[stat] == df[stat].max()].to_dict("records")[0]
 
         return render_template("pages/stats/records.html", highs=records)
+
+
+@app.route("/s1/schedule")
+def schedule():
+    """Render the league's current schdule."""
+    schedule = read_csv("s1/schedule.csv")
+    reported = []
+
+    seen = []
+    for game in schedule:
+        teams = game["game"].split(" vs. ")
+
+        found = False
+        for played in execute("played"):
+            title = f"{played['away']} @ {played['home']}"
+            # If the game has been played, we have a result to report.
+            if title not in seen and not found:
+                if all(team in title for team in teams):
+                    seen.append(title)
+                    found = True
+                    reported.append(
+                        {
+                            "away": played['away'],
+                            "home": played['home'],
+                            "hscore": played['home_score'],
+                            "ascore": played['away_score'],
+                            "status": "played",
+                            "id": played["game"]
+                        }
+                    )
+                    break
+
+        if not found:
+            reported.append(
+                {
+                    "away": teams[0],
+                    "home": teams[1],
+                    "hscore": 0,
+                    "ascore": 0,
+                    "status": "TBD",
+                }
+            )
+
+    return render_template("pages/schedule.html", games=reported)
 
 
 # Static assets
