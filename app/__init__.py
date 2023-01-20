@@ -128,7 +128,7 @@ def team(name):
     games = execute("games-list", name=name)
     wins = execute("wins", name=name)
 
-    seasons = execute("seasons", name=name)[0]["event"]
+    seasons = execute("seasons", name=name)
 
     results = [0, 0]
     for row in execute("winp", name=name):
