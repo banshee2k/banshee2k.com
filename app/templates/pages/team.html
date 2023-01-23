@@ -135,7 +135,7 @@
                 <div class="tab-pane fade" id="nav-opp" role="tabpanel" aria-labelledby="nav-opp-tab">
                     <div class="row">
                         <div class="col-sm-12">
-                            <ul class="list-group list d-none d-lg-block">
+                            <ul class="list-group list">
                                 {% for game in schedule %}
                                     {% if game["status"] == "played" %}
                                         {% if game["hscore"] > game["ascore"] %}
