@@ -77,7 +77,7 @@
                     <a class="nav-link active" id="nav-team-tab" data-bs-toggle="tab" data-bs-target="#nav-team" type="button" role="tab" aria-controls="nav-team" aria-selected="true">Statistics</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" id="nav-opp-tab" data-bs-toggle="tab" data-bs-target="#nav-opp" type="button" role="tab" aria-controls="nav-opp" aria-selected="false">Game Log</a>
+                    <a class="nav-link" id="nav-opp-tab" data-bs-toggle="tab" data-bs-target="#nav-opp" type="button" role="tab" aria-controls="nav-opp" aria-selected="false">Schedule</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" id="nav-rec-tab" data-bs-toggle="tab" data-bs-target="#nav-rec" type="button" role="tab" aria-controls="nav-rec" aria-selected="false">Records</a>
@@ -135,16 +135,34 @@
                 <div class="tab-pane fade" id="nav-opp" role="tabpanel" aria-labelledby="nav-opp-tab">
                     <div class="row">
                         <div class="col-sm-12">
-                            <div class="list-group">
-                                {% for row in games %}
-                                    <div class="d-none d-md-block">
-                                        <a href="/games/{{ row['id'] }}" class="list-group-item list-group-item-action d-flex w-100 justify-content-between">{{ row['home'] }} vs. {{ row['away']}} <small class="muted">{{ row['date'] }}</small></a>
-                                    </div>
-                                    <div class="d-sm-block d-md-none">
-                                        <a href="/games/{{ row['id'] }}" class="list-group-item list-group-item-action d-flex w-100 justify-content-between">{{ row['home_short'] }} vs. {{ row['away_short']}} <small class="muted">{{ row['date'] }}</small></a>
-                                    </div>
+                            <ul class="list-group list d-none d-lg-block">
+                                {% for game in schedule %}
+                                    {% if game["status"] == "played" %}
+                                        {% if game["hscore"] > game["ascore"] %}
+                                            <a href="/games/{{ game['id'] }}" class="list-group-item d-flex justify-content-between align-items-center">
+                                                <span class="name">
+                                                <img src="/static/img/logos/{{ game['away'] }}.png" height="25px" class="rounded"/> <span class="text-muted"> {{ game['away'] }}</span> <span class="small text-muted">@</span> <img src="/static/img/logos/{{ game['home'] }}.png" height="25px" class="rounded"/> {{ game['home'] }}
+                                                </span>
+                                                <span class="badge bg-danger opacity-75 rounded-pill">{{ game['ascore'] }} - {{ game['hscore'] }} (Final)</span>
+                                            </a>
+                                        {% else %}
+                                            <a href="/games/{{ game['id'] }}" class="list-group-item d-flex justify-content-between align-items-center">
+                                                <span class="name">
+                                                <img src="/static/img/logos/{{ game['away'] }}.png" height="25px" class="rounded"/> {{ game['away'] }} <span class="small text-muted">@</span> <img src="/static/img/logos/{{ game['home'] }}.png" height="25px" class="rounded"/> <span class="text-muted">{{ game['home'] }}</span>
+                                                </span>
+                                                <span class="badge bg-danger opacity-75 rounded-pill">{{ game['ascore'] }} - {{ game['hscore'] }} (Final)</span>
+                                            </a>
+                                        {% endif %}
+                                    {% else %}
+                                        <li class="list-group-item d-flex justify-content-between align-items-center list-group-item-secondary">
+                                            <span class="name">
+                                            <img src="/static/img/logos/{{ game['away'] }}.png" height="25px" class="rounded"/> {{ game['away'] }} vs. <img src="/static/img/logos/{{ game['home'] }}.png" height="25px" class="rounded"/> {{ game['home'] }}
+                                            </span>
+                                            <span class="badge bg-secondary rounded-pill">TBD</span>
+                                        </li>
+                                    {% endif %}
                                 {% endfor %}
-                            </div>
+                            </ul>
                         </div>
                     </div>
                 </div>

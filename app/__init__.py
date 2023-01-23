@@ -110,6 +110,50 @@ def utility_processor():
     return dict(profile_card=profile_card)
 
 
+def get_schedule(by_team=None):
+    schedule = read_csv("s1/schedule.csv")
+    reported = []
+
+    seen = []
+    for game in schedule:
+        teams = game["game"].split(" vs. ")
+        if by_team and by_team not in teams:
+            continue
+
+        found = False
+        for played in execute("played"):
+            title = f"{played['away']} @ {played['home']}"
+            # If the game has been played, we have a result to report.
+            if title not in seen and not found:
+                if all(team in title for team in teams):
+                    seen.append(title)
+                    found = True
+                    reported.append(
+                        {
+                            "away": played['away'],
+                            "home": played['home'],
+                            "hscore": played['home_score'],
+                            "ascore": played['away_score'],
+                            "status": "played",
+                            "id": played["game"]
+                        }
+                    )
+                    break
+
+        if not found:
+            reported.append(
+                {
+                    "away": teams[0],
+                    "home": teams[1],
+                    "hscore": 0,
+                    "ascore": 0,
+                    "status": "TBD",
+                }
+            )
+
+    return reported
+
+
 @app.route("/")
 def home():
     """Render the home page."""
@@ -164,6 +208,7 @@ def team(name):
         team=name,
         stats=stats,
         games=games,
+        schedule=get_schedule(by_team=name),
         wins=wins,
         seasons=len(seasons),
         total=total,
@@ -250,44 +295,7 @@ def stats(category):
 @app.route("/s1/schedule")
 def schedule():
     """Render the league's current schdule."""
-    schedule = read_csv("s1/schedule.csv")
-    reported = []
-
-    seen = []
-    for game in schedule:
-        teams = game["game"].split(" vs. ")
-
-        found = False
-        for played in execute("played"):
-            title = f"{played['away']} @ {played['home']}"
-            # If the game has been played, we have a result to report.
-            if title not in seen and not found:
-                if all(team in title for team in teams):
-                    seen.append(title)
-                    found = True
-                    reported.append(
-                        {
-                            "away": played['away'],
-                            "home": played['home'],
-                            "hscore": played['home_score'],
-                            "ascore": played['away_score'],
-                            "status": "played",
-                            "id": played["game"]
-                        }
-                    )
-                    break
-
-        if not found:
-            reported.append(
-                {
-                    "away": teams[0],
-                    "home": teams[1],
-                    "hscore": 0,
-                    "ascore": 0,
-                    "status": "TBD",
-                }
-            )
-
+    reported = get_schedule()
     return render_template("pages/schedule.html", games=reported)
 
 
