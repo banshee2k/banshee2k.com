@@ -56,19 +56,30 @@
             <div class="row">
                 <ul class="list-group">
                     {% for row in power %}
-                    <a href="/teams/{{ slugify(row['team']) }}" class="list-group-item list-group-item-action"> <!-- {{ 'list-group-item-danger' if (loop.index - row['last']) >= 0 else 'list-group-item-danger' }} -->
-                        <div class="d-flex w-100 justify-content-between">
-                            <h5 class="mb-1">{{ loop.index }}. {{ row['team'] }}</h5>
-                            {% if row['last'] == 0 %}
-                                <small>change: N/A</small>
-                            {% elif (loop.index - row['last']) >= 0 %}
-                                <small>change: +{{ loop.index - row['last'] }}</small>
-                            {% else %}
-                                <small>change: {{ loop.index - row['last'] }}</small>
-                            {% endif %}
-                          </div>
-                          <p class="mb-1 small">{{ row['info'] }}</p>
-                    </a>
+                        {% if row['last'] == 0 %}
+                            <a href="/teams/{{ slugify(row['team']) }}" class="list-group-item list-group-item-action">
+                                <div class="d-flex w-100 justify-content-between">
+                                    <h5 class="mb-1">{{ loop.index }}. {{ row['team'] }}</h5>
+                                    <small>change: N/A</small>
+                                </div>
+                                <p class="mb-1 small">{{ row['info'] }}</p>
+                            </a>
+                        {% elif (loop.index - row['last']) >= 0 %}
+                            <a href="/teams/{{ slugify(row['team']) }}" class="list-group-item list-group-item-action list-group-item-success">
+                                <div class="d-flex w-100 justify-content-between">
+                                    <h5 class="mb-1">{{ loop.index }}. {{ row['team'] }}</h5>
+                                    <small>change: +{{ loop.index - row['last'] }}</small>
+                                </div>
+                                <p class="mb-1 small">{{ row['info'] }}</p>
+                            </a>
+                        {% else %}
+                            <a href="/teams/{{ slugify(row['team']) }}" class="list-group-item list-group-item-action list-group-item-danger">
+                                    <h5 class="mb-1">{{ loop.index }}. {{ row['team'] }}</h5>
+                                    <small>change: {{ loop.index - row['last'] }}</small>
+                                </div>
+                                <p class="mb-1 small">{{ row['info'] }}</p>
+                            </a>
+                        {% endif %}
                     {% endfor %}
                   </ul>
             </div>
