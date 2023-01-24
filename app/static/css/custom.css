@@ -2,6 +2,26 @@ main > .container {
     padding: 60px 15px 0;
 }
 
+.table-danger {
+    --bs-table-color: #000;
+    --bs-table-bg: #f8d7da;
+    --bs-table-border-color: #dfc2c4;
+    --bs-table-striped-bg: #eccccf;
+    --bs-table-striped-color: #000;
+    --bs-table-active-bg: #dfc2c4;
+    --bs-table-active-color: #000;
+    --bs-table-hover-bg: #e5c7ca;
+    --bs-table-hover-color: #000;
+    color: var(--bs-table-color);
+    border-color: var(--bs-table-border-color);
+}
+
+.list-group-item-danger {
+    color: #b02a37;
+    background-color: #f8d7da;
+    border-color: #f1aeb5;
+}
+
 button.btn-link {
     --bs-text-opacity: 1;
     color: #777 !important;

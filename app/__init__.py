@@ -1,6 +1,7 @@
 import pathlib
 import os
 import csv
+import json
 
 import pandas as pd
 
@@ -23,6 +24,12 @@ def read_csv(path):
         for line in csv.DictReader(f):
             data.append(line)
     return data
+
+
+def read_json(path):
+    """Read and return the given JSON file."""
+    with open(os.path.join("app", "data", path)) as f:
+        return json.load(f)
 
 
 def to_percent(n, percents=[10, 20, 30, 40, 50, 60, 70, 80, 90, 100]):
@@ -135,7 +142,8 @@ def get_schedule(by_team=None):
                             "hscore": played['home_score'],
                             "ascore": played['away_score'],
                             "status": "played",
-                            "id": played["game"]
+                            "id": played["game"],
+                            "week": game["week"]
                         }
                     )
                     break
@@ -148,6 +156,7 @@ def get_schedule(by_team=None):
                     "hscore": 0,
                     "ascore": 0,
                     "status": "TBD",
+                    "week": game["week"]
                 }
             )
 
@@ -158,7 +167,39 @@ def get_schedule(by_team=None):
 def home():
     """Render the home page."""
     recent_games = execute("recent-games")
-    return render_template("pages/home.html", scores=recent_games)
+
+    reported = get_schedule()
+    df = pd.DataFrame.from_dict(reported)
+    week = max(df["week"])
+    df = df[df["week"] == week]
+
+    standings = execute("standings")
+
+    computed = {}
+    for row in standings:
+        team = row['name']
+        if team not in computed:
+            computed[team] = {"W": 0, "T": 0}
+
+        computed[team]["T"] += 1
+        if row['won']:
+            computed[team]["W"] += 1
+
+    final = []
+    for team, v in computed.items():
+        w = v["W"]
+        l = v["T"] - v["W"]
+        final.append({"team": team, "W": w, "L": l, "PCT": w / v["T"]})
+
+    sdf = pd.DataFrame.from_dict(final)
+    sdf = sdf.sort_values(by=['PCT'], ascending=False)
+
+    return render_template(
+        "pages/home.html",
+        scores=recent_games,
+        games=df.to_dict("records"),
+        standings=sdf.to_dict("records"),
+        week=week)
 
 
 @app.route("/teams/<name>")
@@ -297,6 +338,59 @@ def schedule():
     """Render the league's current schdule."""
     reported = get_schedule()
     return render_template("pages/schedule.html", games=reported)
+
+
+@app.route("/s1/standings")
+def standings():
+    """Render the league's current schdule."""
+    standings = execute("standings")
+
+    computed = {}
+    for row in standings:
+        team = row['name']
+        if team not in computed:
+            computed[team] = {"W": 0, "T": 0, "HW": 0, "HL": 0, "AW": 0, "AL": 0}
+
+        computed[team]["T"] += 1
+        if row['won']:
+            computed[team]["W"] += 1
+            if row['team'] == row['home']:
+                computed[team]["HW"] += 1
+            else:
+                computed[team]["AW"] += 1
+        else:
+            if row['team'] == row['home']:
+                computed[team]["HL"] += 1
+            else:
+                computed[team]["AL"] += 1
+
+    team_stats = execute("team")
+    oppo_stats = execute("opponent")
+
+    final = []
+    for team, v in computed.items():
+        ts = [t for t in team_stats if t['name'] == team][0]
+        os = [t for t in oppo_stats if t['name'] == team][0]
+
+        w = v["W"]
+        l = v["T"] - v["W"]
+
+        final.append({
+            "team": team,
+            "W": w,
+            "L": l,
+            "PCT": w / v["T"],
+            "HOME": f"{v['HW']}-{v['HL']}",
+            "AWAY": f"{v['AW']}-{v['AL']}",
+            "DIFF": ts["pts"] - os["pts"],
+        })
+
+    sdf = pd.DataFrame.from_dict(final)
+    sdf = sdf.sort_values(by=['PCT', 'DIFF'], ascending=False)
+
+    return render_template("pages/standings.html",
+        standings=sdf.to_dict("records"),
+        power=read_json("s1/power.json")["1"])
 
 
 # Static assets
