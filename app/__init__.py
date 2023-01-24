@@ -163,12 +163,15 @@ def get_schedule(by_team=None):
     return reported
 
 
+SCHEDULE = get_schedule()
+
+
 @app.route("/")
 def home():
     """Render the home page."""
     recent_games = execute("recent-games")
 
-    reported = get_schedule()
+    reported = SCHEDULE
     df = pd.DataFrame.from_dict(reported)
     week = max(df["week"])
     df = df[df["week"] == week]
@@ -315,7 +318,7 @@ def stats(category):
 @app.route("/s1/schedule")
 def schedule():
     """Render the league's current schdule."""
-    reported = get_schedule()
+    reported = SCHEDULE
     return render_template("pages/schedule.html", games=reported)
 
 
