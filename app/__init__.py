@@ -50,9 +50,17 @@ def inject_globals():
     for row in execute("profile-card"):
         profiles[row["id"]] = row
 
+    reported = get_schedule()
+    df = pd.DataFrame.from_dict(reported)
+    week = max(df["week"])
+    df = df[df["week"] == week]
+
     return dict(
         teams=execute("teams"),
         events=execute("events"),
+        schedule=reported,
+        week=week,
+        by_week=df.to_dict("records"),
         profiles=profiles,
         slugify=slugify,
     )
@@ -163,24 +171,13 @@ def get_schedule(by_team=None):
     return reported
 
 
-SCHEDULE = get_schedule()
-
-
 @app.route("/")
 def home():
     """Render the home page."""
     recent_games = execute("recent-games")
-
-    reported = SCHEDULE
-    df = pd.DataFrame.from_dict(reported)
-    week = max(df["week"])
-    df = df[df["week"] == week]
-
     return render_template(
         "pages/home.html",
-        scores=recent_games,
-        games=df.to_dict("records"),
-        week=week,
+        scores=recent_games
     )
 
 
@@ -318,8 +315,7 @@ def stats(category):
 @app.route("/s1/schedule")
 def schedule():
     """Render the league's current schdule."""
-    reported = SCHEDULE
-    return render_template("pages/schedule.html", games=reported)
+    return render_template("pages/schedule.html")
 
 
 @app.route("/s1/standings")

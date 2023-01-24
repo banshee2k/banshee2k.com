@@ -106,7 +106,7 @@
         <div class="col">
             <h2 class="text-center">Schedule: Week {{ week }}</h2>
             <ul class="list-group list">
-                {% for game in games %}
+                {% for game in by_week %}
                     {% if game["status"] == "played" %}
                         {% if game["hscore"] > game["ascore"] %}
                             <a href="/games/{{ game['id'] }}" class="list-group-item d-flex justify-content-between align-items-center">
