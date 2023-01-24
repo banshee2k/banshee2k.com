@@ -103,7 +103,7 @@
 <section class="section pt-2">
     <div class="container-fluid">
       <div class="row">
-        <div class="col-md-6">
+        <div class="col">
             <h2 class="text-center">Schedule: Week {{ week }}</h2>
             <ul class="list-group list">
                 {% for game in games %}
@@ -133,29 +133,6 @@
                     {% endif %}
                 {% endfor %}
             </ul>
-        </div>
-        <div class="col-md-6">
-            <h2 class="text-center">Standings</h2>
-            <table class="table table-bordered">
-                <thead>
-                  <tr>
-                    <th scope="col">Team</th>
-                    <th scope="col">W</th>
-                    <th scope="col">L</th>
-                    <th scope="col">PCT</th>
-                  </tr>
-                </thead>
-                <tbody>
-                {% for team in standings %}
-                  <tr>
-                    <td><a href="/teams/{{ slugify(team['team']) }}">{{ team['team'] }}</a></td>
-                    <td>{{ team['W'] }}</td>
-                    <td>{{ team['L'] }}</td>
-                    <td>{{ '%0.2f' | format(team['PCT']) }}</td>
-                  </tr>
-                {% endfor %}
-                </tbody>
-              </table>
         </div>
     </div>
 </section>
