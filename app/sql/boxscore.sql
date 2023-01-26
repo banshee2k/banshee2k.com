@@ -7,4 +7,5 @@ JOIN player
     ON stats.player=player.id
 JOIN team
     ON player.team=team.id
-WHERE stats.game='{gid}';
+WHERE stats.game='{gid}'
+ORDER BY stats.id;
