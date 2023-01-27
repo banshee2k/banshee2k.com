@@ -1,8 +1,9 @@
 SELECT
-	player.name                                                   AS gamertag,
+    player.name                                                   AS gamertag,
     player.id                                                     AS pid,
+    player.team                                                   AS team,
     COUNT(player.name)                                            AS gp,
-	AVG(stats.pts)                                                AS pts,
+    AVG(stats.pts)                                                AS pts,
     AVG(stats.reb)                                                AS reb,
     AVG(stats.ast)                                                AS ast,
     AVG(stats.stl)                                                AS stl,
@@ -14,6 +15,5 @@ SELECT
     CAST(SUM(stats."fgm") AS float) / NULLIF(SUM(stats."fga"), 0) AS "fg%"
 FROM stats
 JOIN player
-	ON stats.player=player.id
+    ON stats.player=player.id
 GROUP BY player.name, player.id;
-
