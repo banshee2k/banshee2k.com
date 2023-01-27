@@ -8,6 +8,11 @@
 {% block content %}
 <div class="flex-xl-nowrap px-4 py-3 mx-auto">
     <h1 class="text-center">Team Stats</h1>
+    <div class="alert alert-info" role="alert">
+        The <i>Team</i> tab summarizes how a given team performs against other teams,
+        while the <i>Opponent</i> tab summarizes how other teams perform against the
+        given team.
+    </div>
     <select id="box-select" class="form-select mb-3" aria-label="Default select example">
         {% for row in events %}
             <option value="{{ row['id'] }}">{{ row['name'] }}</option>
@@ -22,11 +27,6 @@
     </li>
     </ul>
     <div class="tab-content" id="nav-tabContent">
-        <div class="alert alert-info" role="alert">
-            The <i>Team</i> tab summarizes how a given team performs against other teams,
-                    while the <i>Opponent</i> tab summarizes how other teams perform against the
-                    given team.
-        </div>
         <div class="tab-pane fade show active" id="nav-team" role="tabpanel" aria-labelledby="nav-team-tab">
             <div class="table-responsive regular">
                 <table class="table mt-0" data-toggle="table" data-sortable="true">

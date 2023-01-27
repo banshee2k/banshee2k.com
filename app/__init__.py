@@ -5,7 +5,7 @@ import json
 
 import pandas as pd
 
-from flask import Flask, render_template, request, jsonify
+from flask import Flask, render_template, request, jsonify, g
 from flask_assets import Environment, Bundle
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy.sql import text as textual
@@ -284,8 +284,16 @@ def stats(category):
     if category == "player":
         df = pd.DataFrame.from_dict(execute("leaders"))
 
+        reported = get_schedule()
+        sche_df = pd.DataFrame.from_dict(reported)
+        week = int(max(sche_df["week"]))
+
+        total_g = (week - 1) * 2
+        games_req = total_g * 0.7
+
         lookup = {}
         if not df.empty:
+            df = df[df["gp"] >= games_req]
             for stat in [
                 "pts",
                 "reb",
@@ -299,7 +307,16 @@ def stats(category):
                 "tov",
             ]:
                 df[stat] = df[stat].astype(float)
-                lookup[stat] = df.nlargest(10, stat).to_dict("records")
+
+                s_df = df
+                if stat == "fg%":
+                    req = 51.22 * (week / 14)
+                    s_df = df[df["fgt"] >= req]
+                elif stat == "3p%":
+                    req = 14.00 * (week / 14)
+                    s_df = df[df["3pt"] >= req]
+
+                lookup[stat] = s_df.nlargest(10, stat).to_dict("records")
 
         return render_template(f"pages/stats/player.html", stats=lookup)
     elif category == "team":

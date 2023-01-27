@@ -13,4 +13,4 @@ FROM game
         ON game.home = away.id
             OR game.away = away.id
 WHERE  home.name = '{name}'
-    AND home.id != away.id
+    AND home.id != away.id;
