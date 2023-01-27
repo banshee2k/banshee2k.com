@@ -98,44 +98,7 @@
     </div>
 </section>
 
-<hr class="pt-0 mt-0">
-
-<section class="section pt-2">
-    <div class="container-fluid">
-      <div class="row">
-        <div class="col">
-            <h2 class="text-center">Schedule: Week {{ week }}</h2>
-            <ul class="list-group list">
-                {% for game in by_week %}
-                    {% if game["status"] == "played" %}
-                        {% if game["hscore"] > game["ascore"] %}
-                            <a href="/games/{{ game['id'] | int}}" class="list-group-item d-flex justify-content-between align-items-center">
-                                <span class="name">
-                                <img src="/static/img/logos/{{ game['away'] }}.png" height="25px" class="rounded"/> <span class="text-muted"> {{ game['away'] }}</span> <span class="small text-muted">@</span> <img src="/static/img/logos/{{ game['home'] }}.png" height="25px" class="rounded"/> {{ game['home'] }}
-                                </span>
-                                <span class="badge bg-danger opacity-75 rounded-pill">{{ game['ascore'] }} - {{ game['hscore'] }} (Final)</span>
-                            </a>
-                        {% else %}
-                            <a href="/games/{{ game['id'] | int}}" class="list-group-item d-flex justify-content-between align-items-center">
-                                <span class="name">
-                                <img src="/static/img/logos/{{ game['away'] }}.png" height="25px" class="rounded"/> {{ game['away'] }} <span class="small text-muted">@</span> <img src="/static/img/logos/{{ game['home'] }}.png" height="25px" class="rounded"/> <span class="text-muted">{{ game['home'] }}</span>
-                                </span>
-                                <span class="badge bg-danger opacity-75 rounded-pill">{{ game['ascore'] }} - {{ game['hscore'] }} (Final)</span>
-                            </a>
-                        {% endif %}
-                    {% else %}
-                        <li class="list-group-item d-flex justify-content-between align-items-center list-group-item-secondary">
-                            <span class="name">
-                            <img src="/static/img/logos/{{ game['away'] }}.png" height="25px" class="rounded"/> {{ game['away'] }} vs. <img src="/static/img/logos/{{ game['home'] }}.png" height="25px" class="rounded"/> {{ game['home'] }}
-                            </span>
-                            <span class="badge bg-secondary rounded-pill">TBD</span>
-                        </li>
-                    {% endif %}
-                {% endfor %}
-            </ul>
-        </div>
-    </div>
-</section>
+<!--<hr class="pt-0 mt-0">-->
 
 {% endblock %}
 

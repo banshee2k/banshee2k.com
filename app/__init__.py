@@ -5,7 +5,7 @@ import json
 
 import pandas as pd
 
-from flask import Flask, render_template, request, jsonify, g
+from flask import Flask, render_template, request, jsonify
 from flask_assets import Environment, Bundle
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy.sql import text as textual
@@ -15,6 +15,8 @@ db = SQLAlchemy()
 app = Flask(__name__)
 app.config["SQLALCHEMY_DATABASE_URI"] = os.environ["DATABASE_URL"]
 db.init_app(app)
+
+CURRENT_WEEK = 2
 
 
 def read_csv(path):
@@ -41,28 +43,21 @@ def execute(q, **params):
     """Run the given database query and return its result."""
     text = (pathlib.Path("app/sql") / f"{q}.sql").read_text().format(**params)
     rows = db.session.execute(textual(text)).fetchall()
-    return [dict(r) for r in rows]
+    return [r._mapping for r in rows]
 
 
 @app.context_processor
 def inject_globals():
+    """
+    """
     profiles = {}
     for row in execute("profile-card"):
         profiles[row["id"]] = row
 
-    reported = get_schedule()
-    df = pd.DataFrame.from_dict(reported)
-    week = max(df["week"])
-    df = df[df["week"] == week]
-
     return dict(
         teams=execute("teams"),
-        events=execute("events"),
-        schedule=reported,
-        week=week,
-        by_week=df.to_dict("records"),
-        profiles=profiles,
         slugify=slugify,
+        profiles=profiles,
     )
 
 
@@ -129,6 +124,8 @@ def get_schedule(by_team=None):
     schedule = read_csv("s1/schedule.csv")
     reported = []
 
+    history = execute("played")
+
     seen = []
     for game in schedule:
         teams = game["game"].split(" vs. ")
@@ -136,7 +133,7 @@ def get_schedule(by_team=None):
             continue
 
         found = False
-        for played in execute("played"):
+        for played in history:
             title = f"{played['away']} @ {played['home']}"
             # If the game has been played, we have a result to report.
             if title not in seen and not found:
@@ -238,7 +235,7 @@ def team(name):
 @app.route("/games/<gid>")
 def games(gid):
     """Render the league's current standings."""
-    game = execute("game", gid=gid)[0]
+    game = dict(execute("game", gid=gid)[0])
 
     if not game["stream"]:
         game["stream"] = ""
@@ -281,6 +278,7 @@ def games(gid):
 @app.route("/stats/<category>")
 def stats(category):
     """Render the given stat category."""
+    events = execute("events")
     if category == "player":
         df = pd.DataFrame.from_dict(execute("leaders"))
 
@@ -318,12 +316,13 @@ def stats(category):
 
                 lookup[stat] = s_df.nlargest(10, stat).to_dict("records")
 
-        return render_template(f"pages/stats/player.html", stats=lookup)
+        return render_template(f"pages/stats/player.html", stats=lookup, events=events)
     elif category == "team":
         return render_template(
             "pages/stats/team.html",
             team=execute("team"),
             oppo=execute("opponent"),
+            events=events
         )
     else:
         df = pd.DataFrame.from_dict(execute("records"))
@@ -340,7 +339,8 @@ def stats(category):
 @app.route("/s1/schedule")
 def schedule():
     """Render the league's current schdule."""
-    return render_template("pages/schedule.html")
+    reported = get_schedule()
+    return render_template("pages/schedule.html", schedule=reported)
 
 
 @app.route("/s1/standings")
