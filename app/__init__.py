@@ -175,10 +175,7 @@ def get_schedule(by_team=None):
 def home():
     """Render the home page."""
     recent_games = execute("recent-games")
-    return render_template(
-        "pages/home.html",
-        scores=recent_games
-    )
+    return render_template("pages/home.html", scores=recent_games)
 
 
 @app.route("/teams/<name>")
@@ -289,7 +286,18 @@ def stats(category):
 
         lookup = {}
         if not df.empty:
-            for stat in ["pts", "reb", "ast", "stl", "blk", "3pm"]:
+            for stat in [
+                "pts",
+                "reb",
+                "ast",
+                "stl",
+                "blk",
+                "3pm",
+                "fg%",
+                "3p%",
+                "fls",
+                "tov",
+            ]:
                 df[stat] = df[stat].astype(float)
                 lookup[stat] = df.nlargest(10, stat).to_dict("records")
 
