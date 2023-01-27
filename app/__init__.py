@@ -361,12 +361,13 @@ def standings():
                 "PCT": w / v["T"],
                 "HOME": f"{v['HW']}-{v['HL']}",
                 "AWAY": f"{v['AW']}-{v['AL']}",
+                "GP": w + l,
                 "DIFF": ts["pts"] - os["pts"],
             }
         )
 
     sdf = pd.DataFrame.from_dict(final)
-    sdf = sdf.sort_values(by=["PCT", "DIFF"], ascending=False)
+    sdf = sdf.sort_values(by=["PCT", "GP", "DIFF"], ascending=False)
 
     return render_template(
         "pages/standings.html",
