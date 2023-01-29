@@ -48,8 +48,7 @@ def execute(q, **params):
 
 @app.context_processor
 def inject_globals():
-    """
-    """
+    """ """
     profiles = {}
     for row in execute("profile-card"):
         profiles[row["id"]] = row
@@ -122,6 +121,7 @@ def utility_processor():
 
 def get_schedule(by_team=None):
     schedule = read_csv("s1/schedule.csv")
+    voids = read_json("s1/void.json")
     reported = []
 
     history = execute("played")
@@ -129,7 +129,22 @@ def get_schedule(by_team=None):
     seen = []
     for game in schedule:
         teams = game["game"].split(" vs. ")
+
+        voided = voids.get(game["game"])
         if by_team and by_team not in teams:
+            continue
+        elif voided:
+            reported.append(
+                {
+                    "away": voided["L"],
+                    "home": voided["W"],
+                    "hscore": 0,
+                    "ascore": 0,
+                    "status": "forfeit",
+                    "id": None,
+                    "week": game["week"],
+                }
+            )
             continue
 
         found = False
@@ -322,7 +337,7 @@ def stats(category):
             "pages/stats/team.html",
             team=execute("team"),
             oppo=execute("opponent"),
-            events=events
+            events=events,
         )
     else:
         df = pd.DataFrame.from_dict(execute("records"))
@@ -348,11 +363,22 @@ def standings():
     """Render the league's current schdule."""
     standings = execute("standings")
 
+    voids = read_json("s1/void.json")
+
     computed = {}
     for row in standings:
         team = row["name"]
         if team not in computed:
-            computed[team] = {"W": 0, "T": 0, "HW": 0, "HL": 0, "AW": 0, "AL": 0}
+            computed[team] = {
+                "W": 0,
+                "T": 0,
+                "HW": 0,
+                "HL": 0,
+                "AW": 0,
+                "AL": 0,
+                "FW": 0,
+                "FL": 0,
+            }
 
         computed[team]["T"] += 1
         if row["won"]:
@@ -366,6 +392,13 @@ def standings():
                 computed[team]["HL"] += 1
             else:
                 computed[team]["AL"] += 1
+
+    for _, v in voids.items():
+        computed[v["W"]]["FW"] += 1
+        computed[v["W"]]["W"] += 1
+        computed[v["W"]]["T"] += 1
+        computed[v["L"]]["FL"] += 1
+        computed[v["L"]]["T"] += 1
 
     team_stats = execute("team")
     oppo_stats = execute("opponent")
@@ -386,6 +419,7 @@ def standings():
                 "PCT": w / v["T"],
                 "HOME": f"{v['HW']}-{v['HL']}",
                 "AWAY": f"{v['AW']}-{v['AL']}",
+                "F": f"{v['FW']}-{v['FL']}",
                 "GP": w + l,
                 "DIFF": ts["pts"] - os["pts"],
             }

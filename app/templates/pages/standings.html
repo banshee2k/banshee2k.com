@@ -29,6 +29,7 @@
                         <th scope="col">PCT</th>
                         <th scope="col">HOME</th>
                         <th scope="col">AWAY</th>
+                        <th scope="col">FORFEITS</th>
                         <th scope="col">DIFF</th>
                     </tr>
                     </thead>
@@ -41,6 +42,7 @@
                         <td>{{ '%0.2f' | format(row['PCT']) }}</td>
                         <td>{{ row['HOME'] }}</td>
                         <td>{{ row['AWAY'] }}</td>
+                        <td>{{ row['F'] }}</td>
                         {% if row['DIFF'] > 0 %}
                             <td class="table-success">+{{ '%0.2f' | format(row['DIFF']) }}</td>
                         {% else %}
