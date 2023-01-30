@@ -394,6 +394,28 @@ def standings():
                 computed[team]["AL"] += 1
 
     for _, v in voids.items():
+        if v["W"] not in computed:
+            computed[v["W"]] = {
+                "W": 0,
+                "T": 0,
+                "HW": 0,
+                "HL": 0,
+                "AW": 0,
+                "AL": 0,
+                "FW": 0,
+                "FL": 0,
+            }
+        elif v["L"] not in computed:
+            computed[v["L"]] = {
+                "W": 0,
+                "T": 0,
+                "HW": 0,
+                "HL": 0,
+                "AW": 0,
+                "AL": 0,
+                "FW": 0,
+                "FL": 0,
+            }
         computed[v["W"]]["FW"] += 1
         computed[v["W"]]["W"] += 1
         computed[v["W"]]["T"] += 1
@@ -405,8 +427,13 @@ def standings():
 
     final = []
     for team, v in computed.items():
-        ts = [t for t in team_stats if t["name"] == team][0]
-        os = [t for t in oppo_stats if t["name"] == team][0]
+        ts = [t for t in team_stats if t["name"] == team]
+        os = [t for t in oppo_stats if t["name"] == team]
+        if not (ts and os):
+            ts, os = {"pts": 0}, {"pts": 0}
+        else:
+            ts = ts[0]
+            os = os[0]
 
         w = v["W"]
         l = v["T"] - v["W"]
