@@ -35,5 +35,42 @@
             "info": "Sheep Dogs begin the season with an 0-2 record. And let’s face it, neither game was pretty. However, they faced 2 very tough opponents in Generation of Miracles and Snack Time. This young team has new faces on it and are figuring out their game, so don’t count them out! They recently signed PG, SnoopDeeDoo who hopes to help bring this organization to the next level. ASaintsChaos posted an impressive 22 points and went 6/10 on 3 point attempts in the 1 game he played.",
             "last": 0
         }
+    ],
+    "2": [
+        {
+            "team": "Generation M",
+            "info": "Generation M holds the #1 spot in the power rankings and stay undefeated. They only played 1 game this past week as they won via forfeit in their 2nd game versus Purple Haze. Although undefeated, they came back down to earth in week 2 in a very wire to wire matchup versus Snack time where they won 59-56 in the final seconds. They still hold the #1 spot in offensive rankings with an average of 76 PPG. The dynamic scoring duo of slasher Aromaticcomet (23 points, 6 assists) and 3 point threat TTM DONDADA (17 points, 5/5 from 3) lead the way for Generation M in this week’s victory.",
+            "last": 1
+        },
+        {
+            "team": "Seattle Buckets",
+            "info": "The Buckets move from #4 to #2 in this week’s power rankings as their record moves to 3-1.  They had a dominating win vs Fiji Kings (82-34) and another solid win vs White Walkers (62-44), holding their opponents to an average of 39 points this week as they slide into the #1 spot in defensive rankings.  Center, Raider768083 leads the league in rebounds per game with an insane 21.75 rpg average. He’s the clear favorite for the Board Man award early on. He’s also 2nd in blocks per game averaging 2 bpg and 5th in points with 17.50 ppg.",
+            "last": 4
+        },
+        {
+            "team": "Snack Time",
+            "info": "Snack time goes 1-1 again this week with a forced win vs Gaming Dragons (RIP ) and a 59-56 loss to Generation M. PG, Sergio Dipp is now tied in 1st for assists per game (along with TTM Trixz) with 11 assists per game. PF D4NGERPOWER5 now holds the record for steals per game with 7 steals against Generation M and is tied for 2nd place in steals per game, averaging 3.33 per contest.",
+            "last": 3
+        },
+        {
+            "team": "White Walkers",
+            "info": " White Walkers jump up a spot in power rankings with a dominant 58-37 win vs Purple Haze. They lost 62-44 vs Seattle Buckets in their 2nd game. SF, The57thPick has been shooting lights out from downtown, averaging 67% from 3. PG, TicTacTy3204 is averaging 16 PPG & 7.75 APG.",
+            "last": 5
+        },
+        {
+            "team": "Purple Haze",
+            "info": "It was a tough week for Purple Haze, going 0-2 in a 58-37 loss to White Walkers & a forced loss to Generation M. They look to bounce back next week. SG, Phat Chub is 2nd in 3P% averaging 83% from downtown! Center, Ruth x VG is #1 in blocks per game averaging 2.67 per contest.",
+            "last": 2
+        },
+        {
+            "team": "Sheep Dogs",
+            "info": "Sheep Dogs: Sheep Dogs didn’t play either game this week, forfeiting to FIJI Kings & getting a forced win versus the pathetic mess of an organization, Powered Gaming Dragons.",
+            "last": 7
+        },
+        {
+            "team": "Fiji Kings",
+            "info": "FIJI Kings start 1-1 with a forced win vs Sheep Dogs & a tough 82-34 loss vs Seattle Buckets.",
+            "last": 0
+        }
     ]
 }

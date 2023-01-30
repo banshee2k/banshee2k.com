@@ -58,7 +58,7 @@
             <div class="row">
                 <ul class="list-group">
                     {% for row in power %}
-                        {% if row['last'] == 0 %}
+                        {% if row['last'] == 0 or (row['last'] - loop.index) == 0 %}
                             <a href="/teams/{{ slugify(row['team']) }}" class="list-group-item list-group-item-action">
                                 <div class="d-flex w-100 justify-content-between">
                                     <h5 class="mb-1">{{ loop.index }}. {{ row['team'] }}</h5>
@@ -66,18 +66,19 @@
                                 </div>
                                 <p class="mb-1 small">{{ row['info'] }}</p>
                             </a>
-                        {% elif (loop.index - row['last']) >= 0 %}
+                        {% elif (row['last'] - loop.index) >= 0 %}
                             <a href="/teams/{{ slugify(row['team']) }}" class="list-group-item list-group-item-action list-group-item-success">
                                 <div class="d-flex w-100 justify-content-between">
                                     <h5 class="mb-1">{{ loop.index }}. {{ row['team'] }}</h5>
-                                    <small>change: +{{ loop.index - row['last'] }}</small>
+                                    <small>change: +{{ row['last'] - loop.index }}</small>
                                 </div>
                                 <p class="mb-1 small">{{ row['info'] }}</p>
                             </a>
                         {% else %}
                             <a href="/teams/{{ slugify(row['team']) }}" class="list-group-item list-group-item-action list-group-item-danger">
+                                <div class="d-flex w-100 justify-content-between">
                                     <h5 class="mb-1">{{ loop.index }}. {{ row['team'] }}</h5>
-                                    <small>change: {{ loop.index - row['last'] }}</small>
+                                    <small>change: {{ row['last'] - loop.index }}</small>
                                 </div>
                                 <p class="mb-1 small">{{ row['info'] }}</p>
                             </a>

@@ -16,7 +16,7 @@ app = Flask(__name__)
 app.config["SQLALCHEMY_DATABASE_URI"] = os.environ["DATABASE_URL"]
 db.init_app(app)
 
-CURRENT_WEEK = 2
+CURRENT_WEEK = 3
 
 
 def read_csv(path):
@@ -340,7 +340,9 @@ def stats(category):
 
                 lookup[stat] = s_df.nlargest(10, stat).to_dict("records")
 
-        return render_template(f"pages/stats/player.html", stats=lookup, events=events)
+        return render_template(
+            f"pages/stats/player.html", stats=lookup, events=events, req=games_req
+        )
     elif category == "team":
         return render_template(
             "pages/stats/team.html",
@@ -467,7 +469,7 @@ def standings():
     return render_template(
         "pages/standings.html",
         standings=sdf.to_dict("records"),
-        power=read_json("s1/power.json")["1"],
+        power=read_json("s1/power.json")[(str(CURRENT_WEEK - 1))],
     )
 
 
