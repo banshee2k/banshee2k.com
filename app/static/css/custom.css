@@ -1,4 +1,4 @@
-main > .container {
+main>.container {
     padding: 60px 15px 0;
 }
 
@@ -39,7 +39,7 @@ button.btn-link {
 
 .masthead-notice {
     background-color: var(--bs-info);
-    box-shadow: inset 0 -1px 1px rgba(var(--bs-body-color-rgb), 0.15),0 0.25rem 1.5rem rgba(var(--bs-body-bg-rgb), 0.75);
+    box-shadow: inset 0 -1px 1px rgba(var(--bs-body-color-rgb), 0.15), 0 0.25rem 1.5rem rgba(var(--bs-body-bg-rgb), 0.75);
 }
 
 .glossary {
@@ -54,7 +54,7 @@ button.btn-link {
 .glossary__item {
     -ms-flex-preferred-size: 25%;
     flex-basis: 25%;
-    font-family: Montserrat,sans-serif;
+    font-family: Montserrat, sans-serif;
     line-height: 1.2em;
     padding: 8px 0;
     font-size: 11px;
@@ -102,8 +102,12 @@ a:focus, a:hover, .nav-link:focus, .nav-link:hover {
 .inactive-link {
     pointer-events: none;
     cursor: default;
-  }
+}
 
 .hide {
     display: none !important;
+}
+
+.social-icon {
+    padding-right: min(50px, 5%);
 }

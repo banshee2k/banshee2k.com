@@ -60,6 +60,15 @@ def inject_globals():
     )
 
 
+def format_handle(handle):
+    """ """
+    if not handle:
+        return handle
+    if handle.endswith("/"):
+        handle = handle.strip("/")
+    return handle.split("/")[-1]
+
+
 @app.context_processor
 def utility_processor():
     def profile_card(pid, players):
@@ -93,24 +102,24 @@ def utility_processor():
                 <hr class="{'hide' if not has_handles else ''} m-0">
                 <ul class="list-group list-group-flush rounded-3">
                     <li class="no-border list-group-item d-flex justify-content-between align-items-center {'hide' if not player['discord'] else ''}">
-                        <i class="fab fa-discord fa-lg" style="color: #333333;"></i>
-                        <p class="mb-0 text-muted">@{player['discord']}</p>
+                        <span class="social-icon"><i class="fab fa-discord fa-lg" style="color: #333333;"></i></span>
+                        <p class="mb-0 text-muted">@{format_handle(player['discord'])}</p>
                     </li>
                     <li class="no-border list-group-item d-flex justify-content-between align-items-center {'hide' if not player['twitch'] else ''}">
-                        <i class="fab fa-twitch fa-lg" style="color: #333333;"></i>
-                        <p class="mb-0 text-muted">@{player['twitch']}</p>
+                        <span class="social-icon"><i class="fab fa-twitch fa-lg" style="color: #333333;"></i></span>
+                        <p class="mb-0 text-muted">@{format_handle(player['twitch'])}</p>
                     </li>
                     <li class="no-border list-group-item d-flex justify-content-between align-items-center {'hide' if not player['twitter'] else ''}">
-                        <i class="fab fa-twitter fa-lg" style="color: #333333;"></i>
-                        <p class="mb-0 text-muted">@{player['twitter']}</p>
+                        <span class="social-icon"><i class="fab fa-twitter fa-lg" style="color: #333333;"></i></span>
+                        <p class="mb-0 text-muted">@{format_handle(player['twitter'])}</p>
                     </li>
                     <li class="no-border list-group-item d-flex justify-content-between align-items-center {'hide' if not player['instagram'] else ''}">
-                        <i class="fab fa-instagram fa-lg" style="color: #333333;"></i>
-                        <p class="mb-0 text-muted">@{player['instagram']}</p>
+                        <span class="social-icon"><i class="fab fa-instagram fa-lg" style="color: #333333;"></i></span>
+                        <p class="mb-0 text-muted">@{format_handle(player['instagram'])}</p>
                     </li>
                     <li class="no-border list-group-item d-flex justify-content-between align-items-center {'hide' if not player['tiktok'] else ''}">
-                        <i class="fab fa-tiktok fa-lg" style="color: #333333;"></i>
-                        <p class="mb-0 text-muted">@{player['tiktok']}</p>
+                        <span class="social-icon"><i class="fab fa-tiktok fa-lg" style="color: #333333;"></i></span>
+                        <p class="mb-0 text-muted">@{format_handle(player['tiktok'])}</p>
                     </li>
                 </ul>
             </div>
