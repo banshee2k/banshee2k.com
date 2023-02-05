@@ -296,7 +296,6 @@ def games(gid):
             game[game["loser"] + f"o{stat}"] = progress[0][stat]
 
     boxscore = execute("boxscore", gid=gid)
-    print(boxscore)
     return render_template("pages/game.html", game=game, boxscore=boxscore)
 
 
