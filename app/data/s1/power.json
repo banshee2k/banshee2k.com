@@ -72,5 +72,42 @@
             "info": "FIJI Kings start 1-1 with a forced win vs Sheep Dogs & a tough 82-34 loss vs Seattle Buckets.",
             "last": 0
         }
+    ],
+    "3": [
+        {
+            "team": "Generation M",
+            "info": "Generation stays atop the power rankings with a 6-0 record. They dominated the Fiji kings and had a tight battle with Seattle Buckets. A 29-8 2nd quarter vs Buckets ultimately got them the 74-64 win. So far through this season, TTM Dondada & AromaticComet are looking like the best duo in the league as they are 1st & 2nd in PPG averaging 25.2 and 23 points respectively. TTM Dondada also leads the league in steals & 3P%, averaging 4.2 steals and shooting an insane 86% from the three point territory. TTMTrix is 2nd in assists averaging 11.4 per game.",
+            "last": 1
+        },
+        {
+            "team": "Snack Time",
+            "info": "Snack time goes 1-1 this week with a win versus White Walkers and a forfeited loss to the Buckets. SergioDipp7124 leads the league in assists, averaging 12 per game. MMH Loaded is having himself a nice season as well averaging 21 points and 8 rebounds per game. Heisenberg24597 is averaging 18.5 points and 3.5 steals (2nd overall) per game.",
+            "last": 3
+        },
+        {
+            "team": "Purple Haze",
+            "info": "Purple haze had a nice 2-0 record in week 3 versus the winless Sheep Dogs & Fiji Kings, to bring their overall record to 4-2. Phat Chub is 2nd in 3P%, shooting 83% from downtown. As a team, they are 1st in points allowed per game, opponents averaging 50 points against them. And 3rd in points per game offensively, averaging 63.",
+            "last": 5
+        },
+        {
+            "team": "Seattle Buckets",
+            "info": "Seattle Buckets: Seattle Buckets go 1-1 this week with a forced win versus Snack Time & a tight loss versus Generation M. Raider768083 still leads the league in rebounds, averaging 20 per game.  They are 2nd in defensive rankings per game with teams averaging 51 ppg against them.",
+            "last": 2
+        },
+        {
+            "team": "White Walkers",
+            "info": "White Walkers remain at .500 with a win versus Sheep Dogs and a loss to Snack Time. PG, TicTacTy3204 is averaging 18 points & 8.7 assists per game. And PF, The57thPick is averaging 17 points & 7 rebounds per game, while shooting 67% from downtown.",
+            "last": 4
+        },
+        {
+            "team": "Sheep Dogs",
+            "info": "Sheep Dogs go 0-2 this week in tough losses versus White Walkers and Purple Haze.",
+            "last": 7
+        },
+        {
+            "team": "Fiji Kings",
+            "info": "Fiji Kings go 0-2 this week in tough losses to Generation M & Purple Haze. There’s a long way to go in this season for the bottom 2 teams to turn things around.",
+            "last": 8
+        }
     ]
 }
