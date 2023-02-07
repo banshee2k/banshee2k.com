@@ -311,7 +311,7 @@ def stats(category):
         week = int(max(sche_df["week"]))
 
         total_g = (week - 1) * 2
-        games_req = total_g * 0.7
+        games_req = int(total_g * 0.58)
 
         lookup = {}
         if not df.empty:
@@ -332,10 +332,10 @@ def stats(category):
 
                 s_df = df
                 if stat == "fg%":
-                    req = 51.22 * (week / 14)
+                    req = 43.9 * (week / 14)
                     s_df = df[df["fgt"] >= req]
                 elif stat == "3p%":
-                    req = 14.00 * (week / 14)
+                    req = 12.00 * (week / 14)
                     s_df = df[df["3pt"] >= req]
 
                 lookup[stat] = s_df.nlargest(10, stat).to_dict("records")
