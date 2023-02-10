@@ -18,8 +18,22 @@
             {% for stat, row in highs.items() %}
             <tr>
                 <td>{{ stat|upper }}</td>
-                <td><button type="button" class="btn btn-link" data-bs-toggle="popover" data-bs-content="{{ profile_card(row['id'], profiles) }}">{{ row['gamertag'] }}</button></td>
-                <td><a href="/games/{{ row['game'] }}">{{ row[stat] }}</a></td>
+                <td>
+                {% for player in row %}
+                    <button type="button" class="btn btn-link p-0" data-bs-toggle="popover" data-bs-content="{{ profile_card(player['id'], profiles) }}">{{ player['gamertag'] }}</button>
+                    {%- if not loop.last -%}
+                    ,
+                    {%- endif -%}
+                {% endfor %}
+                </td>
+                <td>
+                {% for player in row %}
+                    <a href="/games/{{ player['game'] }}" class="p-0">{{ player[stat] }}</a>
+                    {%- if not loop.last -%}
+                    ,
+                    {%- endif -%}
+                {% endfor %}
+                </td>
             </tr>
             {% endfor %}
             </tbody>

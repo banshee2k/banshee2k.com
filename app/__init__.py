@@ -358,7 +358,7 @@ def stats(category):
         if not df.empty:
             for stat in ["pts", "reb", "ast", "stl", "blk", "3pm"]:
                 df[stat] = df[stat].astype(float)
-                records[stat] = df[df[stat] == df[stat].max()].to_dict("records")[0]
+                records[stat] = df[df[stat] == df[stat].max()].to_dict("records")
 
         return render_template("pages/stats/records.html", highs=records)
 
