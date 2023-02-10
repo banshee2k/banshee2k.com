@@ -159,10 +159,11 @@ def get_schedule(by_team=None):
         found = False
         for played in history:
             title = f"{played['away']} @ {played['home']}"
+            key = f"{title}-{played['game']}"
             # If the game has been played, we have a result to report.
-            if title not in seen and not found:
+            if key not in seen and not found:
                 if all(team in title for team in teams):
-                    seen.append(title)
+                    seen.append(key)
                     found = True
                     reported.append(
                         {
