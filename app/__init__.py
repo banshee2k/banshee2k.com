@@ -139,7 +139,7 @@ def get_schedule(by_team=None):
     for game in schedule:
         teams = game["game"].split(" vs. ")
 
-        voided = voids.get(game["game"])
+        voided = voids.get(f"{game['game']} - {game['week']}")
         if by_team and by_team not in teams:
             continue
         elif voided:
