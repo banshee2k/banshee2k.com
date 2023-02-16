@@ -109,5 +109,42 @@
             "info": "Fiji Kings go 0-2 this week in tough losses to Generation M & Purple Haze. There’s a long way to go in this season for the bottom 2 teams to turn things around.",
             "last": 7
         }
+    ],
+    "4": [
+        {
+            "team": "Generation M",
+            "info": "No surprise here. Generation M is now 8-0. They dominated Sheep Dogs this week in a 100-51 victory. They nearly lost to White Walkers this past week. They were down as much as 10 points in the 3rd quarter, but aromaticcomet76 caught fire in the 4th, and they ended up pulling out the 66-63 victory to remain undefeated.",
+            "last": 1
+        },
+        {
+            "team": "Snack Time",
+            "info": "Snack Time went 2-0 this past week, beating both Purple Haze and Fiji Kings, and are now 5-3 on the season. Rookie point guard, ITryHardQI, has a great start to his blossoming career, averaging 21.5 points & 11 assists in his first 2 starts in red and white.",
+            "last": 2
+        },
+        {
+            "team": "Purple Haze",
+            "info": "Purple Haze lost 75-72 to Snack Time in their first game this past week. But, bounced back versus Seattle Buckets in a dominating 85-44 victory. PurpNowitzki set a new scoring record in that game with 42 points. Dcouch10 also set a new steal record as well, snagging 9 steals in the blowout.",
+            "last": 3
+        },
+        {
+            "team": "White Walkers",
+            "info": "White Walkers lost in a tight 66-63 game vs #1 ranked, Generation of Miracles, showing they can compete with the best. They smoked Fiji Kings, 88-52 in their 2nd game.  PG, TicTacTy3204 is averaging 21 points & 9.6 assists per game.",
+            "last": 5
+        },
+        {
+            "team": "Seattle Buckets",
+            "info": "The Buckets took care of business in their 1st game vs Sheep Dogs, winning 71-55, but had a tough 85-44 to Purple Haze. Center, Raider(insert many digits) is averaging an impressive 17 points & 16.9 rebounds per game.",
+            "last": 4
+        },
+        {
+            "team": "Sheep Dogs",
+            "info": "Sheep Dogs go 0-2 this past week.",
+            "last": 6
+        },
+        {
+            "team": "Fiji Kings",
+            "info": "Fiji Kings go 0-2 this past week.",
+            "last": 7
+        }
     ]
 }
