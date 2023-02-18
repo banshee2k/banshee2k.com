@@ -86,7 +86,7 @@ a:focus, a:hover, .nav-link:focus, .nav-link:hover {
 
 .header-bar {
     border-top: 4px solid;
-    border-image-source: linear-gradient(90deg, #FFEB54, #8ed6fb 50%, #d32e9d);
+    border-image-source: linear-gradient(90deg, #FFEB54, #8ed6fb 50%, #e56b6f);
     border-image-slice: 1;
 }
 

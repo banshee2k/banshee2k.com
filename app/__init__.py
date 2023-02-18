@@ -4,6 +4,7 @@ import csv
 import json
 
 import pandas as pd
+import numpy as np
 
 from flask import Flask, render_template, request, jsonify
 from flask_assets import Environment, Bundle
@@ -17,6 +18,28 @@ app.config["SQLALCHEMY_DATABASE_URI"] = os.environ["DATABASE_URL"]
 db.init_app(app)
 
 CURRENT_WEEK = 5
+INDEX_TO_POS = ["PG", "SG", "SF", "PF", "C"]
+
+
+def make_ordinal(n):
+    """
+    Convert an integer into its ordinal representation::
+
+        make_ordinal(0)   => '0th'
+        make_ordinal(3)   => '3rd'
+        make_ordinal(122) => '122nd'
+        make_ordinal(213) => '213th'
+    """
+    n = int(n)
+    if n == 0:
+        return "N/A"
+
+    if 11 <= (n % 100) <= 13:
+        suffix = "th"
+    else:
+        suffix = ["th", "st", "nd", "rd", "th"][min(n % 10, 4)]
+
+    return str(n) + suffix
 
 
 def read_csv(path):
@@ -56,6 +79,8 @@ def inject_globals():
     return dict(
         teams=execute("teams"),
         slugify=slugify,
+        to_ord=make_ordinal,
+        social_handle=format_handle,
         profiles=profiles,
     )
 
@@ -200,6 +225,98 @@ def home():
     return render_template("pages/home.html", scores=recent_games)
 
 
+@app.route("/players/<code>")
+def player(code):
+    """Render the given player's profile."""
+    player = execute("profile", id=code)[0]
+
+    df = pd.DataFrame.from_dict(execute("leaders"))
+
+    total_g = (CURRENT_WEEK - 1) * 2
+    games_req = int(total_g * 0.58)
+
+    stats = {}
+    for stat in ["pts", "reb", "ast", "stl", "blk", "3pm", "2pm", "ato", "sro", "bro"]:
+        df[stat] = df[stat].astype(float)
+
+        n = float(len(df[stat]))
+
+        tmp = df.sort_values(by=[stat], ascending=False, ignore_index=True)
+        q = tmp[tmp["gp"] >= games_req]
+
+        row = q.loc[tmp["pid"] == int(code)]
+        if row.empty:
+            row = tmp.loc[tmp["pid"] == int(code)]
+            stats[stat] = [-1, row[stat], 0]
+        else:
+            rank = np.where(q["pid"] == int(code))[0]
+            stats[stat] = [rank, row[stat], 100 - (rank / n) * 100]
+
+    positions = set()
+    teams = set()
+    events = set()
+    won = 0
+
+    highs = {"3pm": 0, "reb": 0, "ast": 0, "blk": 0, "stl": 0, "pts": 0}
+    shot_dist = {"ft": 0, "2": 0, "3": 0}
+
+    games = execute("games", gid=code)
+    for game in games:
+        boxscore = execute("boxscore", gid=game["game"])
+
+        teams = []
+        for idx, row in enumerate(boxscore):
+            if idx >= 4:
+                teams = []
+            idx = idx - 5 if idx > 4 else idx
+
+            teams.append(row["team_name"])
+            if row["pid"] == int(code):
+                fgm = row["fgm"] - row["3pm"]
+                shot_dist["2"] += fgm
+                shot_dist["3"] += row["3pm"]
+                shot_dist["ft"] += row["pts"] - (3 * row["3pm"] + 2 * fgm)
+                for k in highs.keys():
+                    if row[k] > highs[k]:
+                        highs[k] = row[k]
+                positions.add(INDEX_TO_POS[idx])
+
+                for team in set(teams):
+                    result = execute("wins_by_players", gid=game["game"], team=team)
+                    if result:
+                        events.add(result[0]["event"])
+                        break
+
+                if result and result[0]["won"]:
+                    won += 1
+
+    positions = list(positions)
+    positions.sort(key=lambda i: INDEX_TO_POS.index(i))
+
+    percentiles = {
+        "pts": stats["2pm"][2],
+        "3pm": stats["3pm"][2],
+        "reb": stats["reb"][2],
+        "ast": (stats["ast"][2] + stats["ato"][2]) / 2,
+        "def": (stats["blk"][2] + stats["stl"][2]) / 2,
+    }
+
+    by_event = execute("stats_by_event", pid=code)
+    return render_template(
+        "pages/player.html",
+        player=player,
+        stats=stats,
+        positions="/".join(positions),
+        games=len(games),
+        wins=won / len(games),
+        events=len(events),
+        by_event=by_event,
+        highs=highs,
+        shot_dist=shot_dist,
+        percentiles=percentiles,
+    )
+
+
 @app.route("/teams/<name>")
 def team(name):
     """Render the given team's page."""
@@ -339,7 +456,7 @@ def stats(category):
                     req = 12.00 * (week / 12)
                     s_df = df[df["3pt"] >= req]
 
-                lookup[stat] = s_df.nlargest(10, stat).to_dict("records")
+                lookup[stat] = s_df.nlargest(10, [stat]).to_dict("records")
 
         return render_template(
             f"pages/stats/player.html", stats=lookup, events=events, req=games_req

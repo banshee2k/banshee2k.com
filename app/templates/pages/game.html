@@ -195,15 +195,15 @@
                             <th>BLK</th>
                             <th>FLS</th>
                             <th>TOV</th>
-                            <th>FGA/FGM</th>
-                            <th>3PA/3PM</th>
+                            <th>FGM/FGA</th>
+                            <th>3PM/3PA</th>
                           </tr>
                         </thead>
                         <tbody>
                             {% for row in boxscore %}
                             {% if loop.index <= 5 %}
                           <tr>
-                            <td><button type="button" class="btn btn-link" data-bs-toggle="popover" data-bs-content="{{ profile_card(row['pid'], profiles) }}">{{ row['gamertag'] }}</button></td>
+                            <td><a href="/players/{{ row['pid'] }}" class="btn btn-link" data-bs-toggle="popover" data-bs-content="{{ profile_card(row['pid'], profiles) }}">{{ row['gamertag'] }}</a></td>
                             <td>{{ row['pts'] }}</td>
                             <td>{{ row['reb'] }}</td>
                             <td>{{ row['ast'] }}</td>
@@ -231,15 +231,15 @@
                             <th>BLK</th>
                             <th>FLS</th>
                             <th>TOV</th>
-                            <th>FGA/FGM</th>
-                            <th>3PA/3PM</th>
+                            <th>FGM/FGA</th>
+                            <th>3PM/3PA</th>
                           </tr>
                         </thead>
                         <tbody>
                             {% for row in boxscore %}
                             {% if loop.index > 5 %}
                           <tr>
-                            <td><button type="button" class="btn btn-link" data-bs-toggle="popover" data-bs-content="{{ profile_card(row['pid'], profiles) }}">{{ row['gamertag'] }}</button></td>
+                            <td><a href="/players/{{ row['pid'] }}" class="btn btn-link" data-bs-toggle="popover" data-bs-content="{{ profile_card(row['pid'], profiles) }}">{{ row['gamertag'] }}</a></td>
                             <td>{{ row['pts'] }}</td>
                             <td>{{ row['reb'] }}</td>
                             <td>{{ row['ast'] }}</td>

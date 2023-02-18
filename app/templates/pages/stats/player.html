@@ -28,7 +28,7 @@
                 <tbody>
                 {% for row in rows %}
                 <tr>
-                    <td><button type="button" class="btn btn-link" data-bs-toggle="popover" data-bs-content="{{ profile_card(row['pid'], profiles) }}">{{ row['gamertag'] }}</button></td>
+                    <td><a href="/players/{{ row['pid'] }}" class="btn btn-link" data-bs-toggle="popover" data-bs-content="{{ profile_card(row['pid'], profiles) }}">{{ row['gamertag'] }}</a></td>
                     <td>{{ row['gp'] }}</td>
                     <td>{{ '%0.2f' | format(row[stat]) }}</td>
                 </tr>
@@ -53,9 +53,9 @@
         }
     }
 
-    $('#box-select').on('change', function() {
+    /*$('#box-select').on('change', function() {
         show(this.value);
-    });
+    });*/
 
     //show($('#box-select').value);
 </script>

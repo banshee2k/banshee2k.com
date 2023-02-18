@@ -106,13 +106,14 @@
                                 <th scope="col" data-sortable="true" data-field="STL">STL</th>
                                 <th scope="col" data-sortable="true" data-field="BLK">BLK</th>
                                 <th scope="col" data-sortable="true" data-field="TOV">TOV</th>
+                                <th scope="col" data-sortable="true" data-field="TOV">FLS</th>
                                 <th scope="col" data-sortable="true" data-field="PTS">PTS</th>
                             </tr>
                             </thead>
                             <tbody>
                             {% for row in stats %}
                             <tr>
-                                <td><button type="button" class="btn btn-link" data-bs-toggle="popover" data-bs-content="{{ profile_card(row['pid'], profiles) }}">{{ row['gamertag'] }}</button></td>
+                                <td><a href="/players/{{ row['pid'] }}" class="btn btn-link" data-bs-toggle="popover" data-bs-content="{{ profile_card(row['pid'], profiles) }}">{{ row['gamertag'] }}</a></td>
                                 <td>{{ row['gp'] }}</td>
                                 <td>{{ '%0.0f' | format(row['fgm']) }}</td>
                                 <td>{{ '%0.0f' | format(row['fga']) }}</td>
@@ -125,6 +126,7 @@
                                 <td>{{ '%0.2f' | format(row['stl']) }}</td>
                                 <td>{{ '%0.2f' | format(row['blk']) }}</td>
                                 <td>{{ '%0.2f' | format(row['tov']) }}</td>
+                                <td>{{ '%0.2f' | format(row['fls']) }}</td>
                                 <td>{{ '%0.2f' | format(row['pts']) }}</td>
                             </tr>
                             {% endfor %}

@@ -1,0 +1,298 @@
+{% extends 'layouts/main.html' %}
+{% block title %}{{ gamertag }}{% endblock %}
+
+{% block css %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/profile.css') }}">
+{% endblock %}
+
+{% block content %}
+<div class="main-body px-4 py-3">
+    <div class="card">
+        <!-- Cover image -->
+        <div class="h-75px rounded-top bg-secondary"
+            style="background-position: center; background-size: cover; background-repeat: no-repeat;">
+            <button type="button" class="btn btn-primary btn-sm float-end" disabled>Compare <i
+                    class="fa-solid fa-chart-line"></i></button>
+        </div>
+        <!-- Card body START -->
+        <div class="card-body py-0">
+            <div class="d-sm-flex align-items-start text-center text-sm-start">
+                <div>
+                    <!-- Avatar -->
+                    <div class="avatar avatar-xxl mt-n5 mb-3">
+                        <img class="avatar-img rounded-circle border border-white border-3"
+                            src="/static/img/placeholder.png" alt="">
+                    </div>
+                </div>
+                <div class="ms-sm-4 mt-sm-3">
+                    <!-- Info -->
+                    <h1 class="mb-0 h5">{{ player['gamertag'] }} <i
+                            class="bi bi-patch-check-fill text-success small"></i></h1>
+                    <small class="text-muted">{{ player['team_name'] }} | {{ positions }}</small>
+                </div>
+                <!-- Button -->
+                <div class="d-flex mt-3 justify-content-center ms-sm-auto">
+                    <div class="card text-bg-light text-center">
+                        <div class="card-header p-0">Season Stats</div>
+                        <div class="card-body">
+                            <ul class="list-inline mb-0">
+                                {% for stat, row in stats.items() %}
+                                {% if stat not in ['3pm', '2pm', "ato", "fls", "sro", "bro"] %}
+                                <li class="list-inline-item px-2">
+                                    <div class="StatBlockInner">
+                                        <div class="clr-gray-04 n9">{{ stat|upper }}</div>
+                                        <div class="fw-medium n4 clr-gray-02">{{ '%0.2f' | format(row[1]) }}</div>
+                                        <div class="clr-gray-04 n9" aria-label="Rank">{{ to_ord(row[0]|int + 1)}}</div>
+                                    </div>
+                                </li>
+                                {% endif %}
+                                {% endfor %}
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- List profile -->
+            <ul class="list-inline mb-0 text-center text-sm-start mt-3 mt-sm-0">
+                {% if player["twitter"] %}
+                <li class="list-inline-item"><a href="https://twitter.com/{{ social_handle(player['twitter']) }}"
+                        target="_blank"><i class="fa-brands fa-twitter fa-lg" style="color: Dodgerblue;"></i></a></li>
+                {% endif %}
+                {% if player["instagram"] %}
+                <li class="list-inline-item"><a
+                        href="https://www.instagram.com/{{ social_handle(player['instagram']) }}" target="_blank"><i
+                            class="fa-brands fa-instagram fa-lg" style="color: #C53978;"></i></a></li>
+                {% endif %}
+                {% if player["tiktok"] %}
+                <li class="list-inline-item"><a href="https://www.tiktok.com/@{{ social_handle(player['tiktok']) }}"
+                        target="_blank"><i class="fa-brands fa-tiktok fa-lg" style="color: #000000;"></i></a></li>
+                {% endif %}
+                {% if player["twitch"] %}
+                <li class="list-inline-item"><a href="https://www.twitch.tv/{{ social_handle(player['twitch']) }}"
+                        target="_blank"><i class="fa-brands fa-twitch fa-lg" style="color: #6441a5;"></i></a></li>
+                {% endif %}
+            </ul>
+        </div>
+        <!-- Card body END -->
+        <div class="card-footer mt-3 pt-2 pb-0">
+            <ul
+                class="nav nav-bottom-line align-items-center justify-content-center justify-content-md-start mb-0 border-0">
+                <li class="nav-item"><a class="nav-link active px-2" id="nav-bio-tab" data-bs-toggle="tab"
+                        data-bs-target="#nav-bio" type="button" role="tab" aria-controls="nav-bio"
+                        aria-selected="true">Bio</a></li>
+                <li class="nav-item"><a class="nav-link px-2" id="nav-stat-tab" data-bs-toggle="tab"
+                        data-bs-target="#nav-stats" type="button" role="tab" aria-controls="nav-stats"
+                        aria-selected="false">Stats</a></li>
+                <li class="nav-item"><a class="nav-link px-2" id="nav-metric-tab" data-bs-toggle="tab"
+                        data-bs-target="#nav-metrics" type="button" role="tab" aria-controls="nav-metrics"
+                        aria-selected="false">Metrics</a></li>
+            </ul>
+        </div>
+    </div>
+    <div class="tab-content" id="nav-tabContent">
+        <div class="tab-pane fade show active" id="nav-bio" role="tabpanel" aria-labelledby="nav-stats-tab">
+            <div class="row">
+                <div class="col-sm-4 mt-4">
+                    <div class="card">
+                        <div class="card-body">
+                            <small class="text-muted">Seasons/Events</small>
+                            <h2>{{ events }}</h2>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-4 mt-4">
+                    <div class="card">
+                        <div class="card-body">
+                            <small class="text-muted">Games</small>
+                            <h2>{{ games }}</h2>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-4 mt-4">
+                    <div class="card">
+                        <div class="card-body">
+                            <small class="text-muted">Win %</small>
+                            <h2>{{ '%0.2f' |format(wins) }}</h2>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="card mt-4">
+                <div class="card-body">
+                    <h5 class="card-title">Awards</h5>
+                </div>
+            </div>
+        </div>
+        <div class="tab-pane fade" id="nav-stats" role="tabpanel" aria-labelledby="nav-stats-tab">
+            <div class="table-responsive mt-4">
+                <table class="table table-white table-bordered caption-top m-0">
+                    <caption>Career Highs</caption>
+                    <thead>
+                        <tr>
+                            <th scope="col">3PM</th>
+                            <th scope="col">REB</th>
+                            <th scope="col">AST</th>
+                            <th scope="col">BLK</th>
+                            <th scope="col">STL</th>
+                            <th scope="col">PTS</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            {% for k, v in highs.items() %}
+                            <td>{{ '%0.0f' | format(v) }}</td>
+                            {% endfor %}
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="table-responsive mt-4">
+                <table class="table table-white table-bordered caption-top m-0">
+                    <caption>Season Averages</caption>
+                    <thead>
+                        <tr>
+                            <th scope="col">Season</th>
+                            <th scope="col">GP</th>
+                            <th scope="col">FGM</th>
+                            <th scope="col">FGA</th>
+                            <th scope="col">FG%</th>
+                            <th scope="col">3PM</th>
+                            <th scope="col">3PA</th>
+                            <th scope="col">3P%</th>
+                            <th scope="col">REB</th>
+                            <th scope="col">AST</th>
+                            <th scope="col">BLK</th>
+                            <th scope="col">STL</th>
+                            <th scope="col">TOV</th>
+                            <th scope="col">PTS</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for row in by_event %}
+                        <tr>
+                            <td>{{ row['name'] }}</td>
+                            <td>{{ row['gp'] }}</td>
+                            <td>{{ '%0.0f' | format(row['fgm']) }}</td>
+                            <td>{{ '%0.0f' | format(row['fga']) }}</td>
+                            <td>{{ '%0.2f' | format(row['fg%'] or 0) }}</td>
+                            <td>{{ '%0.0f' | format(row['3pm']) }}</td>
+                            <td>{{ '%0.0f' | format(row['3pa']) }}</td>
+                            <td>{{ '%0.2f' | format(row['3p%'] or 0) }}</td>
+                            <td>{{ '%0.2f' | format(row['reb']) }}</td>
+                            <td>{{ '%0.2f' | format(row['ast']) }}</td>
+                            <td>{{ '%0.2f' | format(row['stl']) }}</td>
+                            <td>{{ '%0.2f' | format(row['blk']) }}</td>
+                            <td>{{ '%0.2f' | format(row['tov']) }}</td>
+                            <td>{{ '%0.2f' | format(row['pts']) }}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="tab-pane fade" id="nav-metrics" role="tabpanel" aria-labelledby="nav-metric-tab">
+            <div class="row">
+                <div id="shot-dist" class="mt-4 col-md-6"></div>
+                <div id="skill-dist" class="mt-4 col-md-6"></div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block js %}
+<script src="https://code.highcharts.com/highcharts.js"></script>
+<script src="https://code.highcharts.com/highcharts-more.js"></script>
+<script src="https://code.highcharts.com/modules/accessibility.js"></script>
+<script src="/static/js/ggplot-theme.js"></script>
+<script>
+    Highcharts.chart('shot-dist', {
+        credits: {
+            enabled: false
+        },
+        colors: ['#ffd95c', '#ffbc50', '#ff9f4f', '#ff8156', '#ff6361'],
+        chart: {
+            type: 'pie'
+        },
+        title: {
+            text: 'Shots Made',
+        },
+        tooltip: {
+            pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b> ({point.y})'
+        },
+        accessibility: {
+            point: {
+                valueSuffix: '%'
+            }
+        },
+        plotOptions: {
+            pie: {
+                allowPointSelect: true,
+                cursor: 'pointer',
+                dataLabels: {
+                    enabled: true,
+                    format: '<b>{point.name}</b>: {point.percentage:.1f} %'
+                }
+            }
+        },
+        series: [{
+            name: 'Shots Made',
+            colorByPoint: true,
+            data: [{
+                name: 'Free Throws',
+                y: {{ shot_dist["ft"] }}
+            }, {
+                name: '3-Pointers',
+                y: {{ shot_dist["3"] }}
+            },  {
+                name: '2-Pointers',
+                y: {{ shot_dist["2"] }}
+            }]
+        }]
+    });
+
+    Highcharts.chart('skill-dist', {
+        credits: {
+            enabled: false
+        },
+        colors: ['#ffd95c', '#ffbc50', '#ff9f4f', '#ff8156', '#ff6361'],
+        chart: {
+            polar: true,
+            type: 'area',
+        },
+        title: {
+            text: 'Stat Distribution',
+        },
+        pane: {
+            size: '80%'
+        },
+        xAxis: {
+            categories: ['Defending', 'Rebounding', 'Playmaking', 'Inside Scoring', 'Outside Scoring'],
+            tickmarkPlacement: 'on',
+            lineWidth: 0
+        },
+        yAxis: {
+            gridLineInterpolation: 'polygon',
+            lineWidth: 0,
+            min: 0,
+            max: 100,
+            reversed: false
+        },
+        tooltip: {
+            shared: true,
+            pointFormat: 'Percentile: <b>{point.y:,.0f}</b>'
+        },
+        legend: {
+            align: 'right',
+            verticalAlign: 'middle',
+            layout: 'vertical'
+        },
+        series: [{
+            name: null,
+            showInLegend: false,
+            data: [{{ percentiles['def'] }}, {{ percentiles['reb'] }}, {{ percentiles['ast'] }}, {{ percentiles['pts'] }}, {{ percentiles['3pm'] }}],
+            pointPlacement: 'on'
+        }],
+    });
+</script>
+{% endblock %}
