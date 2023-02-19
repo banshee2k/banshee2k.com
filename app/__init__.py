@@ -239,7 +239,7 @@ def player(code):
     games_req = int(total_g * 0.58)
 
     stats = {}
-    for stat in ["pts", "reb", "ast", "stl", "blk", "3pm", "2pm", "ato", "sro", "bro"]:
+    for stat in ["pts", "reb", "ast", "stl", "blk", "3pm", "2pm", "ato"]:
         df[stat] = df[stat].astype(float)
 
         n = float(len(df[stat]))
@@ -322,9 +322,6 @@ def player(code):
             if player['gamertag'] == holder['gamertag']:
                 awards['lr'].add(f"{stat} ({holder[stat]})")
 
-
-    print(awards)
-    by_event = execute("stats_by_event", pid=code)
     return render_template(
         "pages/player.html",
         player=player,
@@ -333,7 +330,7 @@ def player(code):
         games=len(games),
         wins=won / len(games),
         events=len(events),
-        by_event=by_event,
+        by_event=execute("stats_by_event", pid=code),
         highs=highs,
         shot_dist=shot_dist,
         percentiles=percentiles,
