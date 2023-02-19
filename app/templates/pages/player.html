@@ -119,7 +119,23 @@
             </div>
             <div class="card mt-4">
                 <div class="card-body">
-                    <h5 class="card-title">Awards</h5>
+                    <h5 class="card-title">Awards &amp; Accomplishments</h5>
+                    <div class="row">
+                        {% if awards['tr'] %}
+                        <span class="col">
+                            <i data-bs-toggle="tooltip" data-bs-title="{{ awards['tr']|join(', ') }}" data-bs-placement="bottom"
+                                class="fa-solid fa-medal fa-lg" style="color: rgb(140, 98, 245);"></i>
+                            <small class="text-muted">{{ awards['tr']|length }}x Team Record(s)</small>
+                        </span>
+                        {% endif %}
+                        {% if awards['lr'] %}
+                        <span class="col">
+                            <i data-bs-toggle="tooltip" data-bs-title="{{ awards['lr']|join(', ') }}" data-bs-placement="bottom"
+                                class="fa-solid fa-medal fa-lg" style="color: rgb(252, 217, 119);"></i>
+                            <small class="text-muted">{{ awards['lr']|length }}x League Record(s)</small>
+                        </span>
+                        {% endif %}
+                    </div>
                 </div>
             </div>
         </div>
@@ -242,44 +258,44 @@
                 name: 'Free Throws',
                 y: {{ shot_dist["ft"] }}
             }, {
-                name: '3-Pointers',
-                y: {{ shot_dist["3"] }}
-            },  {
-                name: '2-Pointers',
-                y: {{ shot_dist["2"] }}
+        name: '3-Pointers',
+        y: {{ shot_dist["3"] }}
+            }, {
+            name: '2-Pointers',
+            y: {{ shot_dist["2"] }}
             }]
         }],
 
         responsive: {
-            rules: [{
-                condition: {
-                    maxWidth: 500
+        rules: [{
+            condition: {
+                maxWidth: 500
+            },
+            chartOptions: {
+                legend: {
+                    align: 'center',
+                    verticalAlign: 'bottom',
+                    layout: 'horizontal'
                 },
-                chartOptions: {
-                    legend: {
-                        align: 'center',
-                        verticalAlign: 'bottom',
-                        layout: 'horizontal'
+                yAxis: {
+                    labels: {
+                        align: 'left',
+                        x: 0,
+                        y: -5
                     },
-                    yAxis: {
-                        labels: {
-                            align: 'left',
-                            x: 0,
-                            y: -5
-                        },
-                        title: {
-                            text: null
-                        }
-                    },
-                    subtitle: {
+                    title: {
                         text: null
-                    },
-                    credits: {
-                        enabled: false
                     }
+                },
+                subtitle: {
+                    text: null
+                },
+                credits: {
+                    enabled: false
                 }
-            }]
-        }
+            }
+        }]
+    }
     });
 
     Highcharts.chart('skill-dist', {
@@ -322,39 +338,39 @@
             name: null,
             showInLegend: false,
             data: [{{ percentiles['def'] }}, {{ percentiles['reb'] }}, {{ percentiles['ast'] }}, {{ percentiles['pts'] }}, {{ percentiles['3pm'] }}],
-            pointPlacement: 'on'
+        pointPlacement: 'on'
         }],
 
         responsive: {
-            rules: [{
-                condition: {
-                    maxWidth: 500
+        rules: [{
+            condition: {
+                maxWidth: 500
+            },
+            chartOptions: {
+                legend: {
+                    align: 'center',
+                    verticalAlign: 'bottom',
+                    layout: 'horizontal'
                 },
-                chartOptions: {
-                    legend: {
-                        align: 'center',
-                        verticalAlign: 'bottom',
-                        layout: 'horizontal'
+                yAxis: {
+                    labels: {
+                        align: 'left',
+                        x: 0,
+                        y: -5
                     },
-                    yAxis: {
-                        labels: {
-                            align: 'left',
-                            x: 0,
-                            y: -5
-                        },
-                        title: {
-                            text: null
-                        }
-                    },
-                    subtitle: {
+                    title: {
                         text: null
-                    },
-                    credits: {
-                        enabled: false
                     }
+                },
+                subtitle: {
+                    text: null
+                },
+                credits: {
+                    enabled: false
                 }
-            }]
-        }
+            }
+        }]
+    }
     });
 </script>
 {% endblock %}

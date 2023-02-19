@@ -301,6 +301,26 @@ def player(code):
         "def": (stats["blk"][2] + stats["stl"][2]) / 2,
     }
 
+    t_df = pd.DataFrame.from_dict(execute("team-records", name=player['team_name']))
+    l_df = pd.DataFrame.from_dict(execute("records"))
+
+    awards = {'tr': set(), 'lr': set()}
+    for stat in ["pts", "reb", "ast", "stl", "blk", "3pm"]:
+        t_df[stat] = t_df[stat].astype(float)
+        l_df[stat] = l_df[stat].astype(float)
+
+        holders = t_df[t_df[stat] == t_df[stat].max()].to_dict("records")
+        for holder in holders:
+            if player['gamertag'] == holder['gamertag']:
+                awards['tr'].add(f"{stat} ({holder[stat]})")
+
+        holders = l_df[l_df[stat] == l_df[stat].max()].to_dict("records")
+        for holder in holders:
+            if player['gamertag'] == holder['gamertag']:
+                awards['lr'].add(f"{stat} ({holder[stat]})")
+
+
+    print(awards)
     by_event = execute("stats_by_event", pid=code)
     return render_template(
         "pages/player.html",
@@ -314,6 +334,7 @@ def player(code):
         highs=highs,
         shot_dist=shot_dist,
         percentiles=percentiles,
+        awards=awards
     )
 
 
