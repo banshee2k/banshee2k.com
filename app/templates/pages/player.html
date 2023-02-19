@@ -122,18 +122,14 @@
                     <h5 class="card-title">Awards &amp; Accomplishments</h5>
                     <div class="row">
                         {% if awards['tr'] %}
-                        <span class="col">
-                            <i data-bs-toggle="tooltip" data-bs-title="{{ awards['tr']|join(', ') }}"
-                                data-bs-placement="bottom" class="fa-solid fa-medal fa-lg"
-                                style="color: rgb(140, 98, 245);"></i>
+                        <span class="col" data-bs-toggle="tooltip" data-bs-title="{{ awards['tr']|join(', ') }}">
+                            <i class="fa-solid fa-medal fa-lg" style="color: rgb(140, 98, 245);"></i>
                             <small class="text-muted">{{ awards['tr']|length }}x Team Record(s)</small>
                         </span>
                         {% endif %}
                         {% if awards['lr'] %}
-                        <span class="col">
-                            <i data-bs-toggle="tooltip" data-bs-title="{{ awards['lr']|join(', ') }}"
-                                data-bs-placement="bottom" class="fa-solid fa-medal fa-lg"
-                                style="color: rgb(252, 217, 119);"></i>
+                        <span class="col" data-bs-toggle="tooltip" data-bs-title="{{ awards['lr']|join(', ') }}">
+                            <i class="fa-solid fa-medal fa-lg" style="color: rgb(252, 217, 119);"></i>
                             <small class="text-muted">{{ awards['lr']|length }}x League Record(s)</small>
                         </span>
                         {% endif %}
