@@ -316,12 +316,12 @@ def player(code):
         holders = t_df[t_df[stat] == t_df[stat].max()].to_dict("records")
         for holder in holders:
             if player['gamertag'] == holder['gamertag']:
-                awards['tr'].add(f"{stat} ({holder[stat]})")
+                awards['tr'].add(f"{stat} ({holder[stat]})".upper())
 
         holders = l_df[l_df[stat] == l_df[stat].max()].to_dict("records")
         for holder in holders:
             if player['gamertag'] == holder['gamertag']:
-                awards['lr'].add(f"{stat} ({holder[stat]})")
+                awards['lr'].add(f"{stat} ({holder[stat]})".upper())
 
     return render_template(
         "pages/player.html",
