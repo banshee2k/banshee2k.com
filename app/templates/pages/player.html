@@ -123,15 +123,17 @@
                     <div class="row">
                         {% if awards['tr'] %}
                         <span class="col">
-                            <i data-bs-toggle="tooltip" data-bs-title="{{ awards['tr']|join(', ') }}" data-bs-placement="bottom"
-                                class="fa-solid fa-medal fa-lg" style="color: rgb(140, 98, 245);"></i>
+                            <i data-bs-toggle="tooltip" data-bs-title="{{ awards['tr']|join(', ') }}"
+                                data-bs-placement="bottom" class="fa-solid fa-medal fa-lg"
+                                style="color: rgb(140, 98, 245);"></i>
                             <small class="text-muted">{{ awards['tr']|length }}x Team Record(s)</small>
                         </span>
                         {% endif %}
                         {% if awards['lr'] %}
                         <span class="col">
-                            <i data-bs-toggle="tooltip" data-bs-title="{{ awards['lr']|join(', ') }}" data-bs-placement="bottom"
-                                class="fa-solid fa-medal fa-lg" style="color: rgb(252, 217, 119);"></i>
+                            <i data-bs-toggle="tooltip" data-bs-title="{{ awards['lr']|join(', ') }}"
+                                data-bs-placement="bottom" class="fa-solid fa-medal fa-lg"
+                                style="color: rgb(252, 217, 119);"></i>
                             <small class="text-muted">{{ awards['lr']|length }}x League Record(s)</small>
                         </span>
                         {% endif %}
@@ -208,8 +210,16 @@
         </div>
         <div class="tab-pane fade" id="nav-metrics" role="tabpanel" aria-labelledby="nav-metric-tab">
             <div class="row">
-                <div id="shot-dist" class="mt-4 col-md-6"></div>
-                <div id="skill-dist" class="mt-4 col-md-6"></div>
+                <div class="mt-4 col-lg-6">
+                    <figure class="highcharts-figure">
+                        <div id="shot-dist"></div>
+                    </figure>
+                </div>
+                <div class="mt-4 col-lg-6">
+                    <figure class="highcharts-figure">
+                        <div id="skill-dist"></div>
+                    </figure>
+                </div>
             </div>
         </div>
     </div>
@@ -228,10 +238,14 @@
         },
         colors: ['#ffd95c', '#ffbc50', '#ff9f4f', '#ff8156', '#ff6361'],
         chart: {
-            type: 'pie'
+            type: 'pie',
+            backgroundColor: null
         },
         title: {
             text: 'Shots Made',
+        },
+        subtitle: {
+            text: 'A breakdown of made shots by shot type.'
         },
         tooltip: {
             pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b> ({point.y})'
@@ -244,10 +258,11 @@
         plotOptions: {
             pie: {
                 allowPointSelect: true,
+                showInLegend: true,
                 cursor: 'pointer',
                 dataLabels: {
-                    enabled: true,
-                    format: '<b>{point.name}</b>: {point.percentage:.1f} %'
+                    enabled: false,
+                    format: '{point.name}: {point.percentage:.1f} %',
                 }
             }
         },
@@ -265,38 +280,37 @@
             y: {{ shot_dist["2"] }}
             }]
         }],
-
         responsive: {
         rules: [{
             condition: {
                 maxWidth: 500
             },
             chartOptions: {
-                legend: {
-                    align: 'center',
-                    verticalAlign: 'bottom',
-                    layout: 'horizontal'
-                },
-                yAxis: {
-                    labels: {
-                        align: 'left',
-                        x: 0,
-                        y: -5
-                    },
-                    title: {
-                        text: null
-                    }
-                },
-                subtitle: {
-                    text: null
-                },
-                credits: {
-                    enabled: false
+                pane: {
+                    size: '70%'
+                }
+            }
+        },
+        {
+            condition: {
+                maxWidth: 450
+            },
+            chartOptions: {
+                pane: {
+                    size: '60%'
                 }
             }
         }]
     }
     });
+
+    const stat_desc = {
+        'Defending': 'BLK + STL',
+        'Playmaking': 'AST + (AST/TO)',
+        'Outside Scoring': '3-pointers made',
+        'Inside Scoring': '2-pointers made',
+        'Rebounding': 'Total rebounds',
+    }
 
     Highcharts.chart('skill-dist', {
         credits: {
@@ -306,9 +320,13 @@
         chart: {
             polar: true,
             type: 'area',
+            backgroundColor: null
         },
         title: {
             text: 'Stat Distribution',
+        },
+        subtitle: {
+            text: 'An estimate of boxscore contributions relative to the league.'
         },
         pane: {
             size: '80%'
@@ -322,17 +340,28 @@
             gridLineInterpolation: 'polygon',
             lineWidth: 0,
             min: 0,
-            max: 100,
-            reversed: false
+            max: 100
         },
         tooltip: {
             shared: true,
-            pointFormat: 'Percentile: <b>{point.y:,.0f}</b>'
+            pointFormat: 'Percentile: <b>{point.y:,.0f}</b>',
+            formatter: function () {
+                return 'Percentile: ' + Highcharts.numberFormat(this.y, 0) + `<br><br>(${stat_desc[this.x]})`;
+            }
         },
         legend: {
             align: 'right',
             verticalAlign: 'middle',
             layout: 'vertical'
+        },
+        plotOptions: {
+            area: {
+                showInLegend: true,
+                dataLabels: {
+                    enabled: false,
+                    format: '<b>{point.name}</b>: {point.percentage:.1f} %'
+                }
+            }
         },
         series: [{
             name: null,
@@ -340,33 +369,24 @@
             data: [{{ percentiles['def'] }}, {{ percentiles['reb'] }}, {{ percentiles['ast'] }}, {{ percentiles['pts'] }}, {{ percentiles['3pm'] }}],
         pointPlacement: 'on'
         }],
-
         responsive: {
         rules: [{
             condition: {
                 maxWidth: 500
             },
             chartOptions: {
-                legend: {
-                    align: 'center',
-                    verticalAlign: 'bottom',
-                    layout: 'horizontal'
-                },
-                yAxis: {
-                    labels: {
-                        align: 'left',
-                        x: 0,
-                        y: -5
-                    },
-                    title: {
-                        text: null
-                    }
-                },
-                subtitle: {
-                    text: null
-                },
-                credits: {
-                    enabled: false
+                pane: {
+                    size: '70%'
+                }
+            }
+        },
+        {
+            condition: {
+                maxWidth: 450
+            },
+            chartOptions: {
+                pane: {
+                    size: '60%'
                 }
             }
         }]
