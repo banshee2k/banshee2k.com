@@ -72,16 +72,19 @@ def execute(q, **params):
 @app.context_processor
 def inject_globals():
     """ """
+
+    '''
     profiles = {}
     for row in execute("profile-card"):
         profiles[row["id"]] = row
+    '''
 
     return dict(
         teams=execute("teams"),
         slugify=slugify,
         to_ord=make_ordinal,
         social_handle=format_handle,
-        profiles=profiles,
+        # profiles=profiles,
     )
 
 

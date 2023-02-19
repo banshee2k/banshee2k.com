@@ -20,7 +20,7 @@
                 <td>{{ stat|upper }}</td>
                 <td>
                 {% for player in row %}
-                    <a href="/players/{{ player['id'] }}" class="btn btn-link p-0" data-bs-toggle="popover" data-bs-content="{{ profile_card(player['id'], profiles) }}">{{ player['gamertag'] }}</a>
+                    <a href="/players/{{ player['id'] }}" class="btn btn-link p-0">{{ player['gamertag'] }}</a>
                     {%- if not loop.last -%}
                     ,
                     {%- endif -%}

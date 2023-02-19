@@ -203,7 +203,7 @@
                             {% for row in boxscore %}
                             {% if loop.index <= 5 %}
                           <tr>
-                            <td><a href="/players/{{ row['pid'] }}" class="btn btn-link" data-bs-toggle="popover" data-bs-content="{{ profile_card(row['pid'], profiles) }}">{{ row['gamertag'] }}</a></td>
+                            <td><a href="/players/{{ row['pid'] }}" class="btn btn-link">{{ row['gamertag'] }}</a></td>
                             <td>{{ row['pts'] }}</td>
                             <td>{{ row['reb'] }}</td>
                             <td>{{ row['ast'] }}</td>
@@ -239,7 +239,7 @@
                             {% for row in boxscore %}
                             {% if loop.index > 5 %}
                           <tr>
-                            <td><a href="/players/{{ row['pid'] }}" class="btn btn-link" data-bs-toggle="popover" data-bs-content="{{ profile_card(row['pid'], profiles) }}">{{ row['gamertag'] }}</a></td>
+                            <td><a href="/players/{{ row['pid'] }}" class="btn btn-link">{{ row['gamertag'] }}</a></td>
                             <td>{{ row['pts'] }}</td>
                             <td>{{ row['reb'] }}</td>
                             <td>{{ row['ast'] }}</td>
