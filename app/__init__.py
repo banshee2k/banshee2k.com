@@ -265,6 +265,7 @@ def player(code):
 
     games = execute("games", gid=code)
     for game in games:
+        # FIXME: We don't want to do this ...
         boxscore = execute("boxscore", gid=game["game"])
 
         teams = []
