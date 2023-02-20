@@ -37,7 +37,7 @@
                         <div class="card-body">
                             <ul class="list-inline mb-0">
                                 {% for stat, row in stats.items() %}
-                                {% if stat not in ['3pm', '2pm', "ato", "fls", "sro", "bro"] %}
+                                {% if stat not in ['3pm', '2pm', "ato", "fls", "sro", "bro", "3p%"] %}
                                 <li class="list-inline-item px-2">
                                     <div class="StatBlockInner">
                                         <div class="clr-gray-04 n9">{{ stat|upper }}</div>
