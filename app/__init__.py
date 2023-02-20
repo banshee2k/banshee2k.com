@@ -239,7 +239,7 @@ def player(code):
     games_req = int(total_g * 0.58)
 
     stats = {}
-    for stat in ["pts", "reb", "ast", "stl", "blk", "3pm", "2pm", "ato"]:
+    for stat in ["pts", "reb", "ast", "stl", "blk", "3pm", "2pm", "ato", "3p%"]:
         df[stat] = df[stat].astype(float)
 
         n = float(len(df[stat]))
@@ -299,7 +299,7 @@ def player(code):
 
     percentiles = {
         "pts": stats["2pm"][2],
-        "3pm": stats["3pm"][2],
+        "3pm": (stats["3pm"][2] + stats["3p%"][2]) / 2,
         "reb": stats["reb"][2],
         "ast": (stats["ast"][2] + stats["ato"][2]) / 2,
         "def": (stats["blk"][2] + stats["stl"][2]) / 2,
