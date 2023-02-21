@@ -62,12 +62,12 @@
 <section class="section container-fluid mb-2 pb-2">
     <div class="px-4 pt-4 my-2 text-center border-bottom">
         <!--<h1 class="mb-3 fw-semibold">Banshee 2K League</h1>-->
-        <img src="/static/img/logo.png" width="200" height="200" alt="League logo" class="d-block mx-auto mb-3 animate__animated animate__bounceInDown">
+        <img src="/static/img/logo.webp" width="200" height="200" alt="League logo" class="d-block mx-auto mb-3 animate__animated animate__bounceInDown">
         <div class="col-lg-6 mx-auto mb-5">
           <p class="lead mb-4">The Banshee 2K league is a non-toxic, Pro-Am league for NBA 2K23.</p>
           <div class="d-grid gap-2 d-sm-flex justify-content-sm-center mb-2">
             <a class="btn btn-primary btn-lg px-4" href="https://discord.gg/HvJfJEGjUW" role="button" target="_blank">
-                <span><i class="fa-brands fa-discord fa-lg"></i> Learn more <i class="fa-solid fa-arrow-right"></i></span>
+                <span><i class="fa-brands fa-discord fa-lg"></i> Join Discord <i class="fa-solid fa-arrow-right"></i></span>
             </a>
           </div>
           <small class="text-muted"><i class="fab fa-xbox"></i> The league is currently <b>Xbox Series X|S</b> only.</small>
@@ -105,7 +105,7 @@
     <div class="container">
       <div class="row justify-content-center text-center">
         <div id="discord" class="col-sm-14 col-lg-12 mt-3">
-          <iframe style="border-radius: 7px;" src="https://discordapp.com/widget?id=1050862988313239643&theme=dark" width="100%" height="500" allowtransparency="true" sandbox="allow-popups allow-popups-to-escape-sandbox allow-same-origin allow-scripts"></iframe>
+          <iframe title="Discord widget" style="border-radius: 7px;" src="https://discordapp.com/widget?id=1050862988313239643&theme=dark" width="100%" height="500" allowtransparency="true" sandbox="allow-popups allow-popups-to-escape-sandbox allow-same-origin allow-scripts"></iframe>
         </div>
       </div>
     </div>
@@ -114,9 +114,29 @@
 {% endblock %}
 
 {% block js %}
-<script type="text/javascript" src="{{ url_for('static', filename='js/dep/jquery-3.6.2.min.js') }}"></script>
+<script type="text/javascript" src="/static/js/dep/jquery-3.6.3.slim.min.js"></script>
 <script type="text/javascript" src="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
 <script type="text/javascript">
+    jQuery.event.special.touchstart = {
+        setup: function( _, ns, handle ) {
+            this.addEventListener("touchstart", handle, { passive: !ns.includes("noPreventDefault") });
+        }
+    };
+    jQuery.event.special.touchmove = {
+        setup: function( _, ns, handle ) {
+            this.addEventListener("touchmove", handle, { passive: !ns.includes("noPreventDefault") });
+        }
+    };
+    jQuery.event.special.wheel = {
+        setup: function( _, ns, handle ){
+            this.addEventListener("wheel", handle, { passive: true });
+        }
+    };
+    jQuery.event.special.mousewheel = {
+        setup: function( _, ns, handle ){
+            this.addEventListener("mousewheel", handle, { passive: true });
+        }
+    };
     $(document).ready(function() {
         $('.slider').slick({
             autoplay: false,

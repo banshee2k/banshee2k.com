@@ -93,10 +93,10 @@
                     </li>
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle {% if 'teams' in request.path  %}active{% endif %}" href="#"
-                            id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            id="navbarDropdownMenuLink3" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                             Teams
                         </a>
-                        <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                        <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink3">
                             {% for team in teams %}
                             <li><a class="dropdown-item" href="/teams/{{ slugify(team['name']) }}">{{ team["name"]
                                     }}</a></li>
@@ -137,10 +137,7 @@
     <div class="container-fluid">
         <footer class="d-flex flex-wrap justify-content-between align-items-center py-3 my-4 border-top">
             <div class="col-md-4 d-flex align-items-center">
-                <a href="/" class="mb-3 me-2 mb-md-0 text-muted text-decoration-none lh-1">
-                    <img src="/static/img/logo.png" alt="League logo" width="25" height="25" class="d-inline-block align-text-top">
-                </a>
-                <span class="mb-3 mb-md-0 text-muted">&copy; 2023</span>
+                <span class="mb-3 mb-md-0 text-muted">Banshee2k.com &copy; 2023</span>
             </div>
             <!--<ul class="nav col-md-4 justify-content-end list-unstyled d-flex">
             <li class="ms-3"><a class="text-muted" href="https://discordapp.com/users/726518704518594561" target="_blank">Contact</a></li>
