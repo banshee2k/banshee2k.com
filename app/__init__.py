@@ -20,6 +20,15 @@ db.init_app(app)
 
 CURRENT_WEEK = 5
 INDEX_TO_POS = ["PG", "SG", "SF", "PF", "C"]
+TEAMS = [
+    "Fiji Kings",
+    "Generation M",
+    "Purple Haze",
+    "Seattle Buckets",
+    "Sheep Dogs",
+    "Snack Time",
+    "White Walkers"
+]
 
 
 def make_ordinal(n):
@@ -72,16 +81,8 @@ def execute(q, **params):
 
 @app.context_processor
 def inject_globals():
-    """ """
-
-    '''
-    profiles = {}
-    for row in execute("profile-card"):
-        profiles[row["id"]] = row
-    '''
-
     return dict(
-        teams=execute("teams"),
+        teams=TEAMS,
         slugify=slugify,
         to_ord=make_ordinal,
         social_handle=format_handle,
@@ -96,65 +97,6 @@ def format_handle(handle):
     if handle.endswith("/"):
         handle = handle.strip("/")
     return handle.split("/")[-1]
-
-
-@app.context_processor
-def utility_processor():
-    def profile_card(pid, players):
-        player = players.get(pid)
-        if not player:
-            return f"Player '{pid}' not found."
-
-        tags = []
-        if player["admin"]:
-            tags.append('<span class="badge text-bg-secondary">admin</span>')
-        if player["captain"]:
-            tags.append('<span class="badge text-bg-secondary">captain</span>')
-
-        has_handles = (
-            player["discord"]
-            or player["twitch"]
-            or player["instagram"]
-            or player["twitter"]
-            or player["tiktok"]
-        )
-
-        return f"""
-            <div class="card-body p-2">
-                <div class="d-flex justify-content-between align-items-center">
-                    <div class="flex-shrink-0"><img class="avatar p-1" src="/static/img/logos/{player['name']}.png" alt="Jassa Rich"></div>
-                    <div class="flex-grow-1 ps-3">
-                        <h5>{player['gamertag']}</h5>
-                        <p class="text-muted mb-0">{' '.join(tags)}</p>
-                    </div>
-                </div>
-                <hr class="{'hide' if not has_handles else ''} m-0">
-                <ul class="list-group list-group-flush rounded-3">
-                    <li class="no-border list-group-item d-flex justify-content-between align-items-center {'hide' if not player['discord'] else ''}">
-                        <span class="social-icon"><i class="fab fa-discord fa-lg" style="color: #333333;"></i></span>
-                        <p class="mb-0 text-muted">@{format_handle(player['discord'])}</p>
-                    </li>
-                    <li class="no-border list-group-item d-flex justify-content-between align-items-center {'hide' if not player['twitch'] else ''}">
-                        <span class="social-icon"><i class="fab fa-twitch fa-lg" style="color: #333333;"></i></span>
-                        <p class="mb-0 text-muted">@{format_handle(player['twitch'])}</p>
-                    </li>
-                    <li class="no-border list-group-item d-flex justify-content-between align-items-center {'hide' if not player['twitter'] else ''}">
-                        <span class="social-icon"><i class="fab fa-twitter fa-lg" style="color: #333333;"></i></span>
-                        <p class="mb-0 text-muted">@{format_handle(player['twitter'])}</p>
-                    </li>
-                    <li class="no-border list-group-item d-flex justify-content-between align-items-center {'hide' if not player['instagram'] else ''}">
-                        <span class="social-icon"><i class="fab fa-instagram fa-lg" style="color: #333333;"></i></span>
-                        <p class="mb-0 text-muted">@{format_handle(player['instagram'])}</p>
-                    </li>
-                    <li class="no-border list-group-item d-flex justify-content-between align-items-center {'hide' if not player['tiktok'] else ''}">
-                        <span class="social-icon"><i class="fab fa-tiktok fa-lg" style="color: #333333;"></i></span>
-                        <p class="mb-0 text-muted">@{format_handle(player['tiktok'])}</p>
-                    </li>
-                </ul>
-            </div>
-        """
-
-    return dict(profile_card=profile_card)
 
 
 def get_schedule(by_team=None):
@@ -306,23 +248,23 @@ def player(code):
         "def": (stats["blk"][2] + stats["stl"][2]) / 2,
     }
 
-    t_df = pd.DataFrame.from_dict(execute("team-records", name=player['team_name']))
+    t_df = pd.DataFrame.from_dict(execute("team-records", name=player["team_name"]))
     l_df = pd.DataFrame.from_dict(execute("records"))
 
-    awards = {'tr': set(), 'lr': set()}
+    awards = {"tr": set(), "lr": set()}
     for stat in ["pts", "reb", "ast", "stl", "blk", "3pm"]:
         t_df[stat] = t_df[stat].astype(float)
         l_df[stat] = l_df[stat].astype(float)
 
         holders = t_df[t_df[stat] == t_df[stat].max()].to_dict("records")
         for holder in holders:
-            if player['gamertag'] == holder['gamertag']:
-                awards['tr'].add(f"{stat} ({holder[stat]})".upper())
+            if player["gamertag"] == holder["gamertag"]:
+                awards["tr"].add(f"{stat} ({holder[stat]})".upper())
 
         holders = l_df[l_df[stat] == l_df[stat].max()].to_dict("records")
         for holder in holders:
-            if player['gamertag'] == holder['gamertag']:
-                awards['lr'].add(f"{stat} ({holder[stat]})".upper())
+            if player["gamertag"] == holder["gamertag"]:
+                awards["lr"].add(f"{stat} ({holder[stat]})".upper())
 
     return render_template(
         "pages/player.html",
@@ -336,7 +278,7 @@ def player(code):
         highs=highs,
         shot_dist=shot_dist,
         percentiles=percentiles,
-        awards=awards
+        awards=awards,
     )
 
 
