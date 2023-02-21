@@ -18,8 +18,6 @@ app = Flask(__name__)
 app.config["SQLALCHEMY_DATABASE_URI"] = os.environ["DATABASE_URL"]
 db.init_app(app)
 
-Compress(app)
-
 CURRENT_WEEK = 5
 INDEX_TO_POS = ["PG", "SG", "SF", "PF", "C"]
 
@@ -627,3 +625,5 @@ assets.register("js_all", js)
 
 css = Bundle("css/bootstrap.min.css", output="css/lib.min.css")
 assets.register("css_all", css)
+
+Compress(app)
