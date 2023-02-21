@@ -12,6 +12,7 @@ psycopg2-binary = "*"
 flask-sqlalchemy = "*"
 pandas = "*"
 python-slugify = "*"
+flask-compress = "*"
 
 [dev-packages]
 

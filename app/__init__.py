@@ -8,6 +8,7 @@ import numpy as np
 
 from flask import Flask, render_template, request, jsonify
 from flask_assets import Environment, Bundle
+from flask_compress import Compress
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy.sql import text as textual
 from slugify import slugify
@@ -16,6 +17,8 @@ db = SQLAlchemy()
 app = Flask(__name__)
 app.config["SQLALCHEMY_DATABASE_URI"] = os.environ["DATABASE_URL"]
 db.init_app(app)
+
+Compress(app)
 
 CURRENT_WEEK = 5
 INDEX_TO_POS = ["PG", "SG", "SF", "PF", "C"]
