@@ -146,5 +146,42 @@
             "info": "Fiji Kings go 0-2 this past week.",
             "last": 7
         }
+    ],
+    "5": [
+        {
+            "team": "Generation M",
+            "info": "Generation of Miracles is now 10-0!  They beat Purple Haze in a tight 69-58 battle.  They held PurpNowitzki, who holds the league scoring record at 42, to only 10 points on 3/13 shooting in this win, proving once again their defense is no joke.  They average a league team high of 79 points per game, and also hold opposing offenses to a league low 54 points, making them the number 1 ranked offense and defense. They got a forced win against #2 ranked Snack Time, who they beat in the final seconds last time they played each other. The dynamic duo of AromaticComet and TTM Dondada continue to dominate on both ends of the court. These guys are TOUGH!",
+            "last": 1
+        },
+        {
+            "team": "Snack Time",
+            "info": "Snack Time received a forced loss this week to Generation and got a 66-48 win versus Fiji Kings. They now sit at 6-4 on the season. New PG, ITryHardQI, has proven to be a nice pickup in his first 3 games, averaging 20 points and 10 assists so far.  New pickup, Verde2x had a nice debut with a 23 point and 4 steals game.",
+            "last": 2
+        },
+        {
+            "team": "White Walkers",
+            "info": "White Walkers go 2-0 this week with wins against Purple Haze and Seattle Buckets.  Recent pickup Center, I Riot Inc I, has been shooting lights out and now is in 2nd in 3 point percentage, hitting 64% of his shots from downtown. He posted an impressive 16-11-8-3 statline in his game versus Purple Haze.  PG, TicTacTy3204 now leads the league in assists, averaging 9.3 dimes per game.",
+            "last": 4
+        },
+        {
+            "team": "Purple Haze",
+            "info": "Purple Haze would like to forget this past week as they go winless against 2 tough matchups in Generation M and White Walkers.  It wasn’t all negatives this week for PH, as SG, Wild N Out and PF, ExitbigHen were making it rain from downtown, shooting 8/14 and 8/10 respectively from 3 point territory.",
+            "last": 3
+        },
+        {
+            "team": "Seattle Buckets",
+            "info": "This was a tough week for the Buckets as well, who went 0-2 versus White Walkers and Sheep Dogs.  Big man, Raider768083 still leads the league in rebounds with 16.56 rebounds per game.",
+            "last": 5
+        },
+        {
+            "team": "Sheep Dogs",
+            "info": "It was a big week for Sheep Dogs as they get their first league pro am win versus Seattle Buckets in a dominating 75-54 victory!  JamiahDad32 went off for 36 points on 15/18 FG attempts and motoboto set a new assist record with 18 dimes dropped!  Center, SSGSS Skip snagged 19 boards in the game as well.",
+            "last": 6
+        },
+        {
+            "team": "Fiji Kings",
+            "info": "Fiji Kings got a forced win this week and a loss versus Snack Time, 66-48. Center, ANTT FS had a nice 14-14 double double in the loss.",
+            "last": 7
+        }
     ]
 }
