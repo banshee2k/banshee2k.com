@@ -394,7 +394,7 @@ def stats(category):
         week = int(max(sche_df["week"]))
 
         total_g = (week - 1) * 2
-        games_req = int(total_g * 0.60)
+        games_req = 7  # int(total_g * 0.60)
 
         lookup = {}
         if not df.empty:
