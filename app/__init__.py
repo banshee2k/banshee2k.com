@@ -18,7 +18,7 @@ app = Flask(__name__)
 app.config["SQLALCHEMY_DATABASE_URI"] = os.environ["DATABASE_URL"]
 db.init_app(app)
 
-CURRENT_WEEK = 6
+CURRENT_WEEK = 7
 INDEX_TO_POS = ["PG", "SG", "SF", "PF", "C"]
 TEAMS = [
     "Fiji Kings",
