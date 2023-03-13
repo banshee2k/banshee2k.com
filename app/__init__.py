@@ -398,7 +398,7 @@ def stats(category):
 
         lookup = {}
         if not df.empty:
-            df = df[df["gp"] >= games_req]
+            # df = df[df["gp"] >= games_req]
             for stat in [
                 "pts",
                 "reb",
@@ -414,12 +414,14 @@ def stats(category):
                 df[stat] = df[stat].astype(float)
 
                 s_df = df
+                """
                 if stat == "fg%":
                     req = 43.9 * (week / 12)
                     s_df = df[df["fgt"] >= req]
                 elif stat == "3p%":
                     req = 12.00 * (week / 12)
                     s_df = df[df["3pt"] >= req]
+                """
 
                 lookup[stat] = s_df.nlargest(10, [stat]).to_dict("records")
 

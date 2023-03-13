@@ -20,6 +20,7 @@ FROM   stats
        	 ON stats.game = game.id
        JOIN team
          ON player.team != team.id AND (team.id = game.home OR team.id = game.away)
+WHERE game.event=4
 GROUP  BY team.NAME,
           team.abbr
 ORDER  BY pts ASC;

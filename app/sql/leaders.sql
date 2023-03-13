@@ -22,4 +22,7 @@ SELECT
 FROM stats
 JOIN player
     ON stats.player=player.id
+JOIN game
+	on stats.game=game.id
+WHERE game.event=4
 GROUP BY player.name, player.id;

@@ -18,6 +18,9 @@ FROM   stats
          ON stats.player = player.id
        JOIN team
          ON player.team = team.id
+       JOIN game
+	     on stats.game=game.id
+WHERE game.event=4
 GROUP  BY team.NAME,
           team.abbr
 ORDER  BY pts DESC;
