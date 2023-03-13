@@ -176,7 +176,7 @@ def player(code):
     """Render the given player's profile."""
     player = execute("profile", id=code)[0]
 
-    df = pd.DataFrame.from_dict(execute("leaders"))
+    df = pd.DataFrame.from_dict(execute("leaders", eid=3))
 
     total_g = (CURRENT_WEEK - 1) * 2
     games_req = int(total_g * 0.58)
@@ -387,7 +387,7 @@ def stats(category):
     """Render the given stat category."""
     events = execute("events")
     if category == "player":
-        df = pd.DataFrame.from_dict(execute("leaders"))
+        df = pd.DataFrame.from_dict(execute("leaders", eid=4))
 
         reported = get_schedule()
         sche_df = pd.DataFrame.from_dict(reported)

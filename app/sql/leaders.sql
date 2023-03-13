@@ -24,5 +24,5 @@ JOIN player
     ON stats.player=player.id
 JOIN game
 	on stats.game=game.id
-WHERE game.event=4
+WHERE game.event='{eid}'
 GROUP BY player.name, player.id;
