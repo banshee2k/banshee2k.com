@@ -5,6 +5,7 @@ import json
 
 import pandas as pd
 import numpy as np
+import requests
 
 from flask import Flask, render_template, request, jsonify
 from flask_assets import Environment, Bundle
@@ -167,8 +168,8 @@ def get_schedule(by_team=None):
 @app.route("/")
 def home():
     """Render the home page."""
-    recent_games = execute("recent-games")
-    return render_template("pages/home.html", scores=recent_games)
+    r = requests.get("https://banshee2k.onrender.com/recent")
+    return render_template("pages/home.html", scores=r.json())
 
 
 @app.route("/players/<code>")

@@ -13,6 +13,7 @@ flask-sqlalchemy = "*"
 pandas = "*"
 python-slugify = "*"
 flask-compress = "*"
+requests = "*"
 
 [dev-packages]
 
