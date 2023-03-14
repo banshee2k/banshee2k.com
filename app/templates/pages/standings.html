@@ -2,7 +2,8 @@
 {% block title %}Standings{% endblock %}
 
 {% block css %}
-<link href="https://unpkg.com/bootstrap-table@1.20.2/dist/extensions/group-by-v2/bootstrap-table-group-by.css" rel="stylesheet">
+<link href="https://unpkg.com/bootstrap-table@1.20.2/dist/extensions/group-by-v2/bootstrap-table-group-by.css"
+    rel="stylesheet">
 <link rel="stylesheet" href="https://unpkg.com/bootstrap-table@1.20.2/dist/bootstrap-table.min.css">
 {% endblock %}
 
@@ -11,10 +12,12 @@
     <h1 class="text-center">Standings</h1>
     <ul class="nav nav-tabs mb-4">
         <li class="nav-item">
-            <a class="nav-link active" id="nav-overall-tab" data-bs-toggle="tab" data-bs-target="#nav-overall" type="button" role="tab" aria-controls="nav-overall" aria-selected="true">Overall</a>
+            <a class="nav-link active" id="nav-overall-tab" data-bs-toggle="tab" data-bs-target="#nav-overall"
+                type="button" role="tab" aria-controls="nav-overall" aria-selected="true">Overall</a>
         </li>
         <li class="nav-item">
-            <a class="nav-link" id="nav-profile-tab" data-bs-toggle="tab" data-bs-target="#nav-groups" type="button" role="tab" aria-controls="nav-groups" aria-selected="false">Power Rankings</a>
+            <a class="nav-link" id="nav-profile-tab" data-bs-toggle="tab" data-bs-target="#nav-groups" type="button"
+                role="tab" aria-controls="nav-groups" aria-selected="false">Power Rankings</a>
         </li>
     </ul>
     <div class="tab-content" id="nav-tabContent">
@@ -22,30 +25,24 @@
             <div class="table-responsive">
                 <table class="table table-striped table-bordered mt-0">
                     <thead>
-                    <tr>
-                        <th scope="col">TEAM</th>
-                        <th scope="col">W</th>
-                        <th scope="col">L</th>
-                        <th scope="col">PCT</th>
-                        <th scope="col">FORFEITS</th>
-                        <th scope="col">DIFF</th>
-                    </tr>
+                        <tr>
+                            <th scope="col">TEAM</th>
+                            <th scope="col">W</th>
+                            <th scope="col">L</th>
+                            <th scope="col">PCT</th>
+                            <th scope="col">FORFEITS</th>
+                        </tr>
                     </thead>
                     <tbody>
-                    {% for row in standings %}
-                    <tr>
-                        <td><a href="/teams/{{ slugify(row['team']) }}">{{ row['team'] }}</a></td>
-                        <td>{{ row['W'] }}</td>
-                        <td>{{ row['L'] }}</td>
-                        <td>{{ '%0.2f' | format(row['PCT']) }}</td>
-                        <td>{{ row['F'] }}</td>
-                        {% if row['DIFF'] > 0 %}
-                            <td class="table-success">+{{ '%0.2f' | format(row['DIFF']) }}</td>
-                        {% else %}
-                            <td class="table-danger">{{ '%0.2f' | format(row['DIFF']) }}</td>
-                        {% endif %}
-                    </tr>
-                    {% endfor %}
+                        {% for row in standings %}
+                        <tr>
+                            <td><a href="/teams/{{ slugify(row['team']) }}">{{ row['team'] }}</a></td>
+                            <td>{{ row['W'] }}</td>
+                            <td>{{ row['L'] }}</td>
+                            <td>{{ '%0.2f' | format(row['PCT']) }}</td>
+                            <td>{{ row['F'] }}</td>
+                        </tr>
+                        {% endfor %}
                     </tbody>
                 </table>
             </div>
@@ -54,40 +51,43 @@
             <div class="row">
                 <ul class="list-group">
                     {% for row in power %}
-                        {% if row['last'] == 0 or (row['last'] - loop.index) == 0 %}
-                            <a href="/teams/{{ slugify(row['team']) }}" class="list-group-item list-group-item-action">
-                                <div class="d-flex w-100 justify-content-between">
-                                    <h5 class="mb-1">{{ loop.index }}. {{ row['team'] }}</h5>
-                                    <small>change: N/A</small>
-                                </div>
-                                <p class="mb-1 small">{{ row['info'] }}</p>
-                            </a>
-                        {% elif (row['last'] - loop.index) >= 0 %}
-                            <a href="/teams/{{ slugify(row['team']) }}" class="list-group-item list-group-item-action list-group-item-success">
-                                <div class="d-flex w-100 justify-content-between">
-                                    <h5 class="mb-1">{{ loop.index }}. {{ row['team'] }}</h5>
-                                    <small>change: +{{ row['last'] - loop.index }}</small>
-                                </div>
-                                <p class="mb-1 small">{{ row['info'] }}</p>
-                            </a>
-                        {% else %}
-                            <a href="/teams/{{ slugify(row['team']) }}" class="list-group-item list-group-item-action list-group-item-danger">
-                                <div class="d-flex w-100 justify-content-between">
-                                    <h5 class="mb-1">{{ loop.index }}. {{ row['team'] }}</h5>
-                                    <small>change: {{ row['last'] - loop.index }}</small>
-                                </div>
-                                <p class="mb-1 small">{{ row['info'] }}</p>
-                            </a>
-                        {% endif %}
+                    {% if row['last'] == 0 or (row['last'] - loop.index) == 0 %}
+                    <a href="/teams/{{ slugify(row['team']) }}" class="list-group-item list-group-item-action">
+                        <div class="d-flex w-100 justify-content-between">
+                            <h5 class="mb-1">{{ loop.index }}. {{ row['team'] }}</h5>
+                            <small>change: N/A</small>
+                        </div>
+                        <p class="mb-1 small">{{ row['info'] }}</p>
+                    </a>
+                    {% elif (row['last'] - loop.index) >= 0 %}
+                    <a href="/teams/{{ slugify(row['team']) }}"
+                        class="list-group-item list-group-item-action list-group-item-success">
+                        <div class="d-flex w-100 justify-content-between">
+                            <h5 class="mb-1">{{ loop.index }}. {{ row['team'] }}</h5>
+                            <small>change: +{{ row['last'] - loop.index }}</small>
+                        </div>
+                        <p class="mb-1 small">{{ row['info'] }}</p>
+                    </a>
+                    {% else %}
+                    <a href="/teams/{{ slugify(row['team']) }}"
+                        class="list-group-item list-group-item-action list-group-item-danger">
+                        <div class="d-flex w-100 justify-content-between">
+                            <h5 class="mb-1">{{ loop.index }}. {{ row['team'] }}</h5>
+                            <small>change: {{ row['last'] - loop.index }}</small>
+                        </div>
+                        <p class="mb-1 small">{{ row['info'] }}</p>
+                    </a>
+                    {% endif %}
                     {% endfor %}
-                  </ul>
+                </ul>
             </div>
         </div>
     </div>
- </div>
+</div>
 {% endblock %}
 
 {% block js %}
 <script src="https://unpkg.com/bootstrap-table@1.20.2/dist/bootstrap-table.min.js"></script>
-<script src="https://unpkg.com/bootstrap-table@1.20.2/dist/extensions/group-by-v2/bootstrap-table-group-by.min.js"></script>
+<script
+    src="https://unpkg.com/bootstrap-table@1.20.2/dist/extensions/group-by-v2/bootstrap-table-group-by.min.js"></script>
 {% endblock %}
